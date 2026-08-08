@@ -63,7 +63,7 @@ Every push to `main` rebuilds the PDF via GitHub Actions, so the committed sourc
   title     = {How China Will Win the AI War: The Convergence Strategy---A Structural Path to AI Dominance},
   year      = {2026},
   note      = {Living book, v0.14, 4 August 2026},
-  url       = {https://github.com/OWNER/china-ai-war}
+  url       = {https://github.com/matsutitech3/China-AI-War}
 }
 ```
 
