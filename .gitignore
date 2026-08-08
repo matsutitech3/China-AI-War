@@ -1,0 +1,28 @@
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.bbl
+*.blg
+*.nav
+*.snm
+*.vrb
+
+# Editor / OS noise
+.DS_Store
+*~
+*.swp
+.vscode/
+.idea/
+
+# Never commit working drafts, prior editions, or private correspondence
+response-to-*
+*-draft.*
+/old/
+/private/

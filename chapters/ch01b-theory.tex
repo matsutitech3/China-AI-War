@@ -1,0 +1,174 @@
+\chapter{A Theory of the Contest}
+\label{ch:theory}
+
+The preceding chapter stated a thesis and four propositions. This one supplies the theory they rest on, because a book that argues from three industrial precedents to a fourth needs to say \emph{why} the analogy should transfer, and an argument built on the phrase ``openness as a weapon'' needs to explain what openness does to rents rather than merely asserting that it destroys them. Four bodies of theory are load-bearing: the production economics of intelligence, the literature on general-purpose technologies, industrial-organization and ecosystem theory, and the discipline of probabilistic forecasting. Readers who want the narrative can skip to Part~I and return here when the argument makes a claim they doubt; readers who suspect the book of motivated reasoning should start here, because this is where its machinery is exposed.
+
+\section{The production economics of intelligence}
+\label{sec:production}
+
+Treat delivered intelligence as an output with a production function and a demand curve, and most of the confusion in the public debate resolves.
+
+\subsection{The cost stack}
+
+The cost of delivering one unit of \emph{useful} AI work---not one token, but one completed task---decomposes into seven layers, each with its own learning curve and its own competitive dynamics:
+\[
+C_{\text{task}} \;=\; \underbrace{c_{\text{pre}} + c_{\text{post}}}_{\text{amortized model creation}} \;+\; \underbrace{c_{\text{inf}}}_{\text{inference}} \;+\; \underbrace{c_{\text{int}} + c_{\text{org}}}_{\text{integration and adoption}} \;+\; \underbrace{c_{\text{comp}}}_{\text{complementary capital}} \;+\; \underbrace{c_{\text{trust}}}_{\text{assurance}} .
+\]
+Frontier pretraining ($c_{\text{pre}}$) is a fixed cost amortized over deployment volume---which is precisely why an actor that gives models away and captures volume elsewhere can rationally spend on it, and why an actor that must recover it from metered access cannot cut price below the amortization line. Post-training and synthetic-data generation ($c_{\text{post}}$) has become a large and rising share, and it is where reinforcement learning converts compute into capability without a new pretraining run. Inference ($c_{\text{inf}}$) is the term everyone quotes and the only one falling at $10\times$ per year. Integration and organizational adoption ($c_{\text{int}}, c_{\text{org}}$) are the terms enterprise buyers actually experience, and they are \emph{not} falling---which is the single best explanation for the awkward fact of Chapter~\ref{ch:model} that open-weight usage share rose while open-weight \emph{spend} share fell. Complementary capital ($c_{\text{comp}}$)---data pipelines, evaluation harnesses, process redesign, skilled staff---is the term the productivity literature identifies as the reason general-purpose technologies show up in the statistics years after they show up in the laboratories. And assurance ($c_{\text{trust}}$), the subject of Chapters~\ref{ch:trust} and~\ref{ch:order66}, is a cost the commons has so far mostly \emph{not} paid, which is why its apparent price advantage overstates its delivered advantage in regulated settings.
+
+Two consequences follow immediately. First, \emph{commoditization of $c_{\text{inf}}$ does not commoditize $C_{\text{task}}$}; it merely shifts the binding constraint to the terms that are not falling. This is why this book's claim about rent destruction is bounded to the model layer and stated as a hypothesis at the service layer. Second, the terms differ in who bears them: a national research system pays $c_{\text{inf}}$ and $c_{\text{org}}$ but can socialize $c_{\text{trust}}$ through a shared certification body, which is the economic argument for Chapter~\ref{ch:consortium} stated in one line.
+
+\subsection{Four learning curves, not one}
+
+Part~I's precedent industries had a single dominant learning curve---manufacturing---and Wright's law described it. AI has at least four, and they move at different speeds and reward different actors: \emph{hardware} learning (fab yield, packaging, system integration: the classic curve, and the one China's industrial machine is built for); \emph{algorithmic} learning (architecture, sparsity, precision, attention---roughly a threefold annual efficiency contribution on published estimates, and the curve on which Chinese laboratories have contributed most per dollar); \emph{software and kernel} learning (compilers, serving stacks, collective libraries---the curve where the incumbent's seven-year CUDA lead lives, and where the LineShine class is furthest behind); and \emph{operational} learning (fleet reliability, utilization, scheduling, failure recovery---the curve nobody publishes and every hyperscaler competes on). A country can lead on two and lose on two. Chapters~\ref{ch:model} and~\ref{ch:compute} argue China leads the algorithmic curve and is buying the hardware curve, while the software and operational curves remain the West's strongest defensive positions---which is a more precise statement of this book's thesis than any claim about model rankings.
+
+\subsection{Efficiency price cuts versus strategic price cuts}
+
+A discipline the book owes its reader: a falling price is not evidence of a falling cost. Price declines from genuine efficiency ($c_{\text{inf}}$ falling) are durable and reprice the industry permanently. Price declines from strategic subsidy---state-discounted power, below-cost token pricing to buy adoption, capacity subsidized by a provincial balance sheet---are reversible, and their strategic function is to acquire the volume that generates the learning that eventually makes them durable. Part~I shows this sequence completing three times: solar, batteries, and EVs all passed through a below-cost phase whose losses landed on Chinese balance sheets and whose learning stayed. The correct reading of Chinese token pricing is therefore neither ``dumping, therefore fake'' nor ``cheap, therefore superior technology,'' but \emph{a subsidy purchasing a position on a learning curve}---with the empirical question being whether the curve delivers before the subsidy exhausts patience.
+
+\subsection{The demand side, and why it decides everything}
+\label{sec:demandside}
+
+The whole financial argument of this book turns on one question that can be stated without any mathematics at all: \emph{when the price of AI falls, does the money spent on AI go up or down?} If buyers respond to cheaper tokens by buying so many more of them that total spending rises, the incumbents' capital expenditure is vindicated. If they buy more but not enough more, total spending falls, and every valuation premised on the old price collapses with it. Everything below is that sentence made precise.
+
+Three quantities are needed. Let $P$ be the \emph{quality-adjusted price} of delivered AI---the price of a fixed amount of useful work, not of a token, so that a model which halves its price while doubling the tokens it burns per task has not moved $P$ at all. Let $Q$ be the \emph{quantity} of that work purchased per period. Let $R = P \times Q$ be the resulting \emph{revenue} of the sellers, which is what valuations discount.
+
+The responsiveness of quantity to price is the \emph{own-price elasticity of demand}, written $\epsilon$ and defined so that it is a positive number:
+\[
+\epsilon \;=\; -\,\frac{\partial \log Q}{\partial \log P} \;>\; 0 .
+\]
+In words: $\epsilon$ is the percentage rise in quantity produced by a one-percent fall in price. (The logarithms simply convert ``percentage change'' into arithmetic that adds up; the minus sign makes $\epsilon$ positive, because quantity moves opposite to price. An $\epsilon$ of 2 means a 10\% price cut brings a 20\% volume increase.) The convention is stated explicitly because the sign is inconsistently defined in the literature, and a sign error inverts the conclusion.
+
+Since $R = PQ$, taking logarithms gives $\log R = \log P + \log Q$, and differencing gives the relation this book uses throughout, where $\Delta \log X$ denotes a proportional (percentage) change in $X$:
+\[
+\Delta \log R \;=\; \Delta \log P + \Delta \log Q \;=\; (1-\epsilon)\,\Delta \log P .
+\]
+Read the result rather than the derivation. If $\epsilon > 1$, the bracket $(1-\epsilon)$ is negative, so a \emph{falling} price ($\Delta \log P < 0$) produces \emph{rising} revenue: demand is \emph{elastic}, and price cuts pay for themselves. If $\epsilon < 1$, demand is \emph{inelastic}, the bracket is positive, and falling prices shrink the industry's revenue even as its output grows. The knife-edge at $\epsilon = 1$ is exactly the boundary between the bull and bear cases for the entire Western AI complex, which is why Chapter~\ref{ch:trade} returns to it.
+
+The refinement that single-number arguments on both sides miss is that $\epsilon$ is not a number but a \emph{portfolio}. It is plausibly well above one for coding agents, synthetic-data generation, video, and the scientific inference of Chapter~\ref{ch:prize}, where cheaper tokens unlock work that was previously uneconomic and demand is bounded only by budget. It is plausibly near or below one for consumer chat and routine summarization, where consumption is bounded by human attention rather than by price---nobody reads twice as many chatbot replies because they became free. Aggregate behaviour is a spending-weighted mixture of segment elasticities, which is why neither camp's single figure predicts it, and why this book treats the aggregate as unresolved rather than assumed.
+
+\subsection{From own-price elasticity to differentiated-system profit}
+\label{sec:crossprice}
+
+The own-price relation just derived answers ``what happens when \emph{the} price falls,'' and that is the wrong question for this book's third proposition. There is no single AI product with a single price. There is a Chinese open-weight model that can be downloaded, an American closed model sold through a metered interface, and a dozen intermediate offerings, and the strategic question is not how buyers respond to a price cut but \emph{which system they choose when the alternatives differ in price, capability, trustworthiness, and ease of integration all at once}. That is a question about substitution between differentiated products, and it needs a different instrument. The distinction is not a refinement; a book that argues P3 from own-price elasticity alone is answering a question nobody in this market actually faces.
+
+Index the competing systems by $i$, and let $j$ stand for its rivals---so $P_i$ is the price of system $i$ and $P_j$ the price of the competing system, and likewise for every other quantity. Four attributes decide a purchase:
+\begin{description}\itemsep2pt
+  \item[$P$ --- price] what the buyer pays per unit of delivered work, as in \S\ref{sec:demandside}.
+  \item[$q$ --- capability] how good the system is at the buyer's actual task: the quality dimension that lets a more expensive system win anyway.
+  \item[$\tau$ --- trust and assurance] whether the system's provenance, behaviour, and liability can be established to the standard the buyer's sector requires---the subject of Chapter~\ref{ch:trust}, and the reason a regulated buyer may refuse a free model outright.
+  \item[$I$ --- integration and distribution] how much work it takes to connect the system to the buyer's existing data, tools, and processes, and whether it is already in front of the user---the $c_{\text{int}}$ and $c_{\text{org}}$ terms of the cost stack (\S\ref{sec:production}).
+\end{description}
+Demand for system $i$ then depends on all eight quantities, its own and its rival's:
+\[
+Q_i \;=\; Q_i\!\left(P_i,\, P_j,\, q_i,\, q_j,\, \tau_i,\, \tau_j,\, I_i,\, I_j\right).
+\]
+The content of that expression is entirely in what it refuses to omit. A price-only model deletes $q$, $\tau$, and $I$, and therefore predicts that a free model with adequate capability sweeps the market. The real world contains buyers who will not deploy an unauditable artifact at any price, and buyers for whom switching cost exceeds several years of licence fees, which is why open-weight \emph{usage} share and open-weight \emph{spending} share have moved in opposite directions (Chapter~\ref{ch:model}).
+
+Now the seller's side. Write $\pi_i$ for the profit of system $i$, $MC_i$ for its \emph{marginal cost} (the cost of serving one more unit of work---for AI, essentially inference), and $K_i$ for its \emph{fixed cost} (model development: the pretraining run, the research programme, the salaries, incurred before the first unit is sold). Then
+\[
+\pi_i \;=\; \underbrace{\left(P_i - MC_i\right) Q_i}_{\text{gross margin on the model itself}} \;-\; \underbrace{K_i}_{\text{development}} \;+\; \underbrace{R_i^{\mathrm{complement}}}_{\text{rent from everything adjacent}} ,
+\]
+where $R_i^{\mathrm{complement}}$ collects the profits the seller earns \emph{elsewhere} because this system exists and is widely used: cloud services it pulls through, hardware it sells, advertising it enables, proprietary data it accumulates, applications and support it attaches, integration it bills for.
+
+That third term is the book's central insight rendered as an accounting identity. Openness relocates rent rather than necessarily destroying it, and here is the mechanism: a seller can rationally drive $P_i$ down to $MC_i$, or below it, \emph{whenever the extra volume $Q_i$ that results raises $R_i^{\mathrm{complement}}$ by more than the margin given up}. Giving the model away is not charity and not dumping; it is a bet that the complement is where the scarcity will sit. Both flywheels of \S\ref{sec:flywheels} are strategies for maximizing $R^{\mathrm{complement}}$, differing only in which complement each side believes will be scarce in 2030---and Table~\ref{tab:rent-migration} in Chapter~\ref{ch:trade} is simply this term, itemized.
+
+The same formulation disciplines this book's own thesis, and it corrects a tempting overreach: it is \emph{not} true that ``the Chinese position wins under either elasticity regime.'' A low-cost position fails strategically if pricing stays below full cost while $K_i$ cannot be recovered; if trust and integration terms ($\tau$, $I$) dominate the purchase decision so that price undercuts do not move $Q$; if thin margins starve the operational-learning loop that was the point of buying volume; or---the American flywheel's theft, now expressible in the notation---if US application providers build atop Chinese weights, capturing the customer relationship and its $R^{\mathrm{complement}}$ while the weights earn nothing, leaving the open stack with tonnage and no margin. What the elasticity regimes do determine is asymmetric \emph{exposure}: the leveraged Western capital structure requires $\epsilon>1$ at the premium tier specifically, while the Chinese position degrades more gracefully under the unfavourable regime because its costs are lower and its rent expectations sit in hardware, standards, and infrastructure rather than in model-layer margin. Graceful degradation is a real advantage; it is not a theorem of victory, and Chapter~\ref{ch:trade}'s indicators are what decide the empirical question.
+
+\section{AI as a general-purpose technology}
+\label{sec:gpt}
+
+\begin{quote}\small
+\textbf{A terminological warning.} Economists abbreviate \emph{general-purpose technology} as \textbf{GPT}, a usage that predates the model family sharing those initials by roughly three decades. The collision is unfortunate and unavoidable, since both terms are standard in their fields and this book needs both. \emph{Throughout this book, ``GPT'' in the economic sense---and only in that sense---is written out in full as ``general-purpose technology.'' The bare acronym GPT always refers to the OpenAI model family} (GPT-4, GPT-5.6, and so on). Where the phrase ``GPT literature'' appears, it means the economics literature cited in this section.
+\end{quote}
+
+The solar--battery--EV analogy is productive and incomplete, and Chapter~\ref{ch:analogy} already states its limits. The deeper correction is categorical: those are manufactured product systems, whereas AI is also a \emph{general-purpose technology}---a technology that is pervasively applicable across sectors rather than confined to one, that continues improving for decades after introduction, and that provokes complementary innovation in the industries adopting it, so that its economic effect arrives mostly through what \emph{other} sectors build with it~\cite{bresnahan1995,helpman1998}. Electricity, the semiconductor, the internal-combustion engine, and the Internet are the canonical instances. That places AI closer to those than to the photovoltaic module, and it changes what ``winning'' can mean: a country can dominate the production of a general-purpose technology and still capture little of its value, because most of the value appears downstream in the hands of whoever deploys it best.
+
+\subsection{Four layers of winning}
+
+\input{figs/fig-winning}
+
+A general-purpose-technology contest is decided at four distinct layers, and a country can lead one while losing another (Figure~\ref{fig:winning}):
+
+\begin{description}\itemsep2pt
+  \item[Production leadership] --- who makes the best models and the most hardware. This is the layer the press scores, and the only one on which the United States is unambiguously ahead.
+  \item[Platform leadership] --- who sets the standards, the interfaces, the reference implementations, and the default stack. Chapter~\ref{ch:governance} argues this layer is going to whoever opens fastest, and that the incumbent is conceding it a layer at a time.
+  \item[Diffusion leadership] --- who actually deploys the technology across firms, laboratories, hospitals, and government. This is where the general-purpose-technology literature locates most of the realized value, and where the productivity J-curve says the returns arrive late and only after complementary investment~\cite{brynjolfsson2021}.
+  \item[Productivity leadership] --- who converts the first three into measured economic and scientific output. This is the only layer that ultimately matters, and it is the least observable in real time.
+\end{description}
+
+\begin{table}[htbp]
+  \centering
+  \scriptsize
+  \caption{The four layers of general-purpose-technology winning as a matrix: definition, positions, and what to watch.}
+  \label{tab:gpt-matrix}
+  \setlength{\tabcolsep}{3.5pt}
+  \begin{tabular}{p{20mm}p{34mm}p{26mm}p{28mm}p{28mm}p{9mm}}
+    \toprule
+    Layer & Definition & US position & China position & Observable metric & Grade \\
+    \midrule
+    Production & best models, most hardware & leads absolute frontier & leads open frontier; 41\% domestic chip share & AI Index gap; shipment shares & V \\
+    \addlinespace
+    Platform & standards, interfaces, default stack & CUDA moat; conceding ISA layer & RISC-V, UB, CANN opened; state-mandated interop & standards adoption; derivative-model share & V/A \\
+    \addlinespace
+    Diffusion & actual deployment across the economy & enterprise pilots failing at high rates & 46\% global model share; Global South default & routed tokens; production deployments & V/A \\
+    \addlinespace
+    Productivity & measured economic and scientific output & unmeasured; J-curve lag & unmeasured; SDG-survey signals only & sector productivity series; Eq.~\ref{eq:sci-metric} & M/S \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Two asymmetric failure modes follow, and both are historically attested. A country can \emph{lead the core technology and underperform} if its institutions fail to diffuse it---the standard reading of the productivity paradox, and a live risk for an American ecosystem whose AI value is concentrated in a handful of firms and whose enterprise pilots reportedly fail at high rates. And a country can \emph{fail to dominate the core technology and still capture enormous gains} through complementary organizational and industrial change---which is, precisely, the strategy this book attributes to China, and the reason the ``but the best model is American'' rebuttal misses the argument.
+
+\subsection{Why this strengthens the AI-for-Science case}
+
+The general-purpose-technology framing does something else important: it explains why AI for Science (AI4S) is categorically different from other application markets rather than merely larger. In general-purpose-technology terms, science is where the \emph{innovation complementarity} operates at maximum strength---AI improving the production of new materials, drugs, energy systems, algorithms, and semiconductor technology, each of which feeds back into the technology's own production function. Chapter~\ref{ch:prize} makes that argument empirically; here it is placed in its theoretical home. A general-purpose technology that accelerates the production of general-purpose technologies is the mechanism behind every explosive-growth model in the literature, and also the reason the sober estimates that exclude it arrive at small numbers.
+
+\section{Industrial organization: openness relocates rent, it does not abolish it}
+\label{sec:io}
+
+This book's central slogan---openness as a weapon---requires the discipline that industrial-organization theory imposes. Open layers do not destroy profit; they \emph{commoditize complements} so that rent reappears in an adjacent, controlled layer. The correct strategic question is therefore not whether a layer is open but where the opener expects the rent to return.
+
+\subsection{The rent-relocation table}
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \caption{Where each side opens, and where it expects rent to reappear. Opening a layer is a claim about the adjacent layer.}
+  \label{tab:rent}
+  \begin{tabular}{p{33mm}p{55mm}p{55mm}}
+    \toprule
+    Layer & China: open or controlled? & United States: open or controlled? \\
+    \midrule
+    Model weights & \textbf{Open} (MIT/Apache flagships) & \textbf{Controlled} (metered closed frontier) \\
+    \addlinespace
+    Instruction set & \textbf{Open} (RISC-V, national policy) & Controlled via Arm/x86 licensing, but conceding---CUDA now hosts on RISC-V \\
+    \addlinespace
+    Interconnect / cluster spec & \textbf{Open} (UnifiedBus published; state-mandated interop) & \textbf{Controlled} (NVLink; consortium alternatives exclude China) \\
+    \addlinespace
+    Framework / kernel stack & \textbf{Open} (CANN, MindSpore open-sourced) & \textbf{Controlled} (CUDA; the deepest moat) \\
+    \addlinespace
+    \emph{Expected rent recapture} & hardware volume, domestic cloud, national standards, data-centre and energy construction, embedded AI products, dependence of the adopting stack & premium model capability, distribution and habit, enterprise integration, trusted deployment, proprietary data, agent platforms, cloud orchestration \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Read the last row as the actual strategic bet each side is making. China opens the layers where it is behind or where openness buys adoption, and expects to collect in volume, standards, and infrastructure---the layers its industrial system is best at. The United States keeps the layers where it is ahead and expects to collect in capability, distribution, and integration---the layers its corporate system is best at. \emph{Neither is being altruistic and neither is being naive}; they are making opposite bets about which layer will be scarce in 2030. This book's thesis is a bet on the Chinese reading, and Chapter~\ref{ch:synthesis} states what would show it wrong.
+
+\subsection{The concepts the book uses, named}
+
+Several ideas recur throughout and are worth naming in their standard forms, so that readers can connect the argument to the literature it draws on: the \emph{industrial commons}---the shared pool of engineers, suppliers, and tooling whose loss makes re-entry infeasible, which is what Part~I claims the West surrendered three times; \emph{ecosystem competition}, where the unit of rivalry is a coalition rather than a firm~\cite{jacobides2018}; \emph{modularity and vertical integration}, which determine where value can be captured and which Baldwin and Clark's design-rules framework formalizes~\cite{baldwin2000}; \emph{platform envelopment}, the move by which an incumbent in one layer absorbs an adjacent one---exactly what CUDA-on-RISC-V is, read charitably; \emph{complements and bottlenecks}, the reason commoditizing your complement raises your own margin; \emph{standards capture} and \emph{architectural control points}, the subject of Chapter~\ref{ch:governance}; \emph{dynamic capabilities}, the firm-level ability to reconfigure that explains why some incumbents survive transitions~\cite{teece1997}; and \emph{disruptive versus sustaining trajectories}, which is the correct frame for the LPDDR-versus-HBM argument---a technology that is worse on the incumbent's primary metric (bandwidth), better on a neglected one (capacity per dollar), and initially adopted by customers the incumbent does not want~\cite{christensen1997}. Schumpeter supplies the background claim that this is how growth normally happens~\cite{schumpeter1942}, and Porter the reminder that structure, not virtue, determines who profits~\cite{porter1980}.
+
+\subsection{The dual flywheel}
+\label{sec:flywheels}
+
+The contest can now be drawn (Figure~\ref{fig:flywheel}). The American flywheel runs \emph{capability $\rightarrow$ premium pricing $\rightarrow$ capital formation $\rightarrow$ larger clusters $\rightarrow$ stronger frontier models $\rightarrow$ distribution and application revenue}. The Chinese flywheel runs \emph{open deployment $\rightarrow$ volume $\rightarrow$ learning and optimization $\rightarrow$ lower cost $\rightarrow$ broader adoption $\rightarrow$ standards and hardware demand $\rightarrow$ further deployment}. Each is internally coherent, each has historical precedent, and---the point that matters---\emph{they can coexist}. The contest is not necessarily winner-take-all.
+
+\input{figs/fig-flywheel}
+
+What makes it a contest rather than two parallel businesses is that each flywheel can appropriate the other's critical input. The Chinese wheel steals the American wheel's \emph{volume}: application demand routed to open weights is demand that does not fund the next frontier run, and the capital-formation step is the American wheel's most fragile link (Chapter~\ref{ch:trade}). The American wheel steals the Chinese wheel's \emph{value}: closed agents capturing the highest-value workflows leave the open stack serving high-volume, low-margin traffic, which is the classic fate of a commoditized layer, and which would leave China with the tonnage and America with the profit. Both thefts are observable in the indicators of Chapter~\ref{ch:trade}, and which one dominates is, on this book's reading, the single most important unresolved empirical question in the field.
+
+\section{Forecasting discipline}
+\label{sec:forecast}
+
+The final piece of theory is methodological. A book making contingent claims about a fast-moving system should state them as forecasts with horizons, probabilities, and falsifiers---not because the numbers are precise, but because the alternative permits confidence in one part of the argument to leak into another. Appendix~\ref{app:dashboard} therefore carries every load-bearing proposition with a probability, a horizon, an evidence grade, a next verification event, and an explicit falsifier; Chapter~\ref{ch:trade} prints two probability sets side by side---the author's and the strongest skeptical case against it---rather than one; and Chapter~\ref{ch:synthesis} states the six developments that would falsify the thesis outright. The purpose is not false precision. It is that a reader in 2028 should be able to establish, mechanically, which parts of this book were right.

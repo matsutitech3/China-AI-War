@@ -1,0 +1,528 @@
+\appendix
+
+\chapter{The LPDDR6X Socket: Engineering Reality Check}
+\label{app:lpddr}
+
+This appendix subjects the capacity-first architecture of Section~\ref{sec:lpddr6} to the package-level arithmetic such a proposal must survive, and converts it into a falsifiable experimental program. Everything here is author-modeled [M] except where tagged.
+
+\section{The pin budget}
+
+At LPDDR6's \SI{12800}{\mega\bit\per\second} per data pin (1.6\,GB/s/pin), a 7\,TB/s socket requires
+\[
+\frac{7000\ \mathrm{GB/s}}{1.6\ \mathrm{GB/s\,pin^{-1}}} \approx 4{,}375\ \text{active data pins},
+\]
+before ECC, command/address, clocking, spares, and protocol overhead---roughly 68 64-bit channels as a floor; the reconciled topology of Section~\ref{sec:designpoint} rounds this up to 72 channels (18 SOCAMM2-class modules of 4 sub-channels each, 4,608 pins), buying back the ECC and protocol deduction. This is not ``cheap memory instead of HBM''; it is a major package-, controller-, and board-level undertaking: memory-controller area scaling with channel count, escape routing for thousands of signals (favoring a large organic substrate or silicon-bridge hybrid over standard SOCAMM daughtercards at the top configuration), signal integrity at 12.8\,Gb/s across module connectors, ECC/chipkill strategy across non-stacked commodity dies, and a memory-power envelope in the several-hundred-watt range per socket at full stream. The commercial waterline makes the gap concrete: NVIDIA's Vera CPU---the most aggressive disclosed LPDDR server part---delivers 1.2\,TB/s with up to 1.5\,TB capacity [V]~\cite{vera-cpu}; SK~hynix's 192\,GB SOCAMM2 modules establish the module class in mass production [V]~\cite{socamm2}. The proposal is therefore a $\sim$5--6$\times$ extrapolation beyond shipped bandwidth on a shipped memory class---aggressive but not physics-limited; the analogous pin-count and channel-count regime already exists on HBM interposers, at far higher cost per bit.
+
+\section{What the trade buys, restated precisely}
+
+Per socket at the design point: 2.3\,TB capacity (vs 288\,GB HBM4 ceiling), $\sim$7\,TB/s peak / $\sim$5\,TB/s achieved requirement after recomputation elimination and aggressive fusion, 67\% MFU ceiling (vs 89\% HBM4), cost-per-bit an order of magnitude below HBM, and supply from the one memory class where the domestic producer is at the world's leading edge (Chapter~\ref{ch:semi}). The capacity threshold that makes this \emph{enabling} rather than merely cheap is model-specific: for the 2.8T-parameter sparse-MoE reference workload under the stated parallelism layout, sharded state exceeds HBM4 socket capacity below ${\sim}256$ accelerators~\cite{riken-study}. Different models, optimizers, or layouts move the threshold; the appendix's claim is the existence and economic significance of the regime, not a universal wall.
+
+\section{The reconciled design point}
+\label{sec:designpoint}
+
+The sharpest engineering demand any such analysis must meet is that every quantity in it derive from \emph{one declared topology} rather than being chosen independently. Table~\ref{tab:designpoint} is that reconciliation. Everything below the first three rows is \emph{derived}, not assumed; changing a declared row changes every derived one.
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \caption{The reconciled LPDDR6X socket, one topology [M]. Declared parameters first; every subsequent row derives from them.}
+  \label{tab:designpoint}
+  \begin{tabular}{p{52mm}p{30mm}p{52mm}}
+    \toprule
+    Parameter & Value & Basis \\
+    \midrule
+    Module count (declared) & 18 SOCAMM2-class & module class in mass production [V]~\cite{skhynixSocamm} \\
+    Capacity per module (declared) & 128\,GB & 64$\times$16\,Gb dies per module \\
+    Subchannel topology (declared) & 4$\times$64-bit per module & SOCAMM2-class organization \\
+    \midrule
+    Total capacity & 2.304\,TB & $18 \times 128$\,GB \\
+    Total channels & 72 $\times$ 64-bit & $18 \times 4$ \\
+    Aggregate active data pins & 4,608 & $72 \times 64$ \\
+    Signaling rate (declared) & 12.8\,Gb/s/pin & LPDDR6X target rate \\
+    Raw bandwidth & 7.37\,TB/s & $4{,}608 \times 1.6$\,GB/s \\
+    ECC + protocol efficiency & $\times$0.90--0.93 & in-band ECC, refresh, turnaround \\
+    Effective peak & 6.6--6.9\,TB/s & derived \\
+    Sustained, streaming-dominant & 5.4--6.2\,TB/s & 82--90\% of effective peak \\
+    Sustained, random expert-fetch & 3.5--4.5\,TB/s & the assumption most likely wrong \\
+    Requirement (knee, after recomputation elim.) & $\sim$5.0\,TB/s & \cite{riken-study} \\
+    Memory-tier power at full stream & 300--480\,W & 59\,Tb/s $\times$ 5--8\,pJ/bit \\
+    Controller + PHY area & $\sim$70--120\,mm$^2$ (est.) & 72 channels; large uncertainty \\
+    Package and escape & 100--110\,mm organic substrate, peripheral escape; silicon bridges at the corners if routing fails & declared physical implementation \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Read the two ``sustained'' rows against the requirement row and the design's honest status is visible in one glance: the socket \emph{clears} the 5\,TB/s knee if and only if the access pattern is streaming-dominant after kernel fusion---which is precisely milestone (3) of the falsification program below, and why it is listed as the claim to kill first. If expert fetches behave as random access at production batch sizes, the pure-LPDDR corner misses its knee by 10--30\% and the hybrid of Section~\ref{sec:hybrid} stops being the recommended default and becomes the only viable configuration. This is why the hybrid is the \emph{baseline} throughout the book and pure LPDDR is the sanctions-contingent research corner (Section~\ref{sec:lpddr6}). For scale calibration: the shipped commercial waterline (NVIDIA Vera, 1.2\,TB/s [V]~\cite{nvidiaVera}) makes this a $\sim$6$\times$ bandwidth extrapolation on a commercial memory class---aggressive, not physics-limited, and now stated from one topology.
+
+One more decomposition is required, because the table's power row understates what a procurement must budget. The 5--8\,pJ/bit figure is \emph{transferred-bit} energy; the full memory-subsystem envelope is
+\[
+P^{\mathrm{el}}_{\mathrm{memory}} \;=\; P^{\mathrm{el}}_{\mathrm{DRAM}} + P^{\mathrm{el}}_{\mathrm{PHY}} + P^{\mathrm{el}}_{\mathrm{controller}} + P^{\mathrm{el}}_{\mathrm{PMIC}} + P^{\mathrm{el}}_{\mathrm{refresh}} + P^{\mathrm{el}}_{\mathrm{board}} + P^{\mathrm{el}}_{\mathrm{idle}},
+\]
+and the non-transfer terms are not small at this scale: PHY and controller power for 72 channels plausibly add 60--120\,W; refresh on 2.3\,TB of DRAM adds 15--30\,W continuously whether or not a bit moves; PMIC conversion losses at the module level run 5--8\% of delivered power; and board and connector losses at 12.8\,Gb/s signaling add several tens of watts. The honest memory-subsystem envelope is therefore 450--700\,W at full stream rather than the 300--480\,W transfer-only figure---which flows through Table~\ref{tab:128power} as roughly $+$0.1--0.2\,kW per socket and keeps the 128-socket facility inside $\sim$0.5--0.7\,MW. The remaining detail a package-complete specification owes---floorplan, controller placement, channel lengths, connector loading, command/address topology, ECC organization, simultaneous-switching-noise and power-integrity margins, module replacement strategy, cooling distribution, bill of materials, and yield-adjusted cost---stays on the package-complete checklist below, unpaid until milestone (1) funds it.
+
+\section{The hybrid tier, which is probably the better design}
+\label{sec:hybrid}
+
+One observation about the memory hierarchy is strong enough to change the recommendation outright. The capacity-first architecture may be most compelling not as a pure HBM \emph{replacement} but as a \emph{tiered} design: a modest HBM tier for hot tensors, attention working set, and communication-critical state, with a very large LPDDR tier for expert weights, optimizer state, and cold activations. On the reference sparse-MoE workload the split is natural, because the objects differ by an order of magnitude in reuse: attention and dense-path tensors are touched every token, expert weights are touched by a routed minority of tokens, and optimizer state is touched once per step.
+
+The engineering case for the hybrid is strong. It delivers most of the capacity advantage---enough to clear the sub-256-node state wall---at a fraction of the LPDDR pin count, because the bandwidth-critical traffic is served from HBM at 4--8\,TB/s while the LPDDR tier need only sustain expert-fetch and optimizer traffic at perhaps 1.5--3\,TB/s. That collapses the package problem from $\sim$4,400 active data pins to something closer to 1,000--1,900, brings the escape routing back into conventional substrate territory, halves the memory-power envelope, and removes most of the signal-integrity risk at 12.8\,Gb/s across module connectors. It also degrades gracefully: a hybrid part remains useful if the LPDDR tier underperforms, whereas a pure-LPDDR part does not.
+
+The strategic case is more mixed, and the tension should be stated rather than hidden. A hybrid design reintroduces an HBM dependency---precisely the input Chapter~\ref{ch:semi} identifies as the binding domestic constraint---which is why a Chinese programme might rationally prefer the pure-LPDDR corner despite its worse engineering risk, while a Japanese or European programme with allied HBM access should almost certainly build the hybrid. The architecture and the sanctions geography therefore select different points on the same continuum, which is itself an instance of this book's central claim that allocation, not category, is what distinguishes machines.
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \caption{Three points on the memory continuum for the reference workload [M]. The hybrid is the recommended engineering default; the pure-LPDDR corner is the sanctions-optimal one.}
+  \label{tab:hybrid}
+  \begin{tabular}{p{34mm}p{28mm}p{28mm}p{34mm}}
+    \toprule
+    & HBM-only & Hybrid (recommended) & LPDDR-only \\
+    \midrule
+    Capacity per socket & 288\,GB & $\sim$0.3\,TB HBM $+$ 1.5--2\,TB LPDDR & 2.3\,TB \\
+    Peak bandwidth & 14--16\,TB/s & 6--8 (HBM) $+$ 1.5--3 (LPDDR) & $\sim$7\,TB/s \\
+    Active LPDDR data pins & --- & $\sim$1,000--1,900 & $\sim$4,400 \\
+    Sub-256-node state wall & binding & cleared & cleared \\
+    MFU ceiling & $\sim$89\% & $\sim$80--85\% (est.) & $\sim$67\% \\
+    Cost per bit & worst & intermediate & best \\
+    Domestic-supply exposure & HBM-dependent & partially HBM-dependent & LPDDR only \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Tensor placement and migration policy for the hybrid}
+\label{sec:placement}
+
+A hybrid tier is only as good as its placement policy, and the policy must be stated, with its failure mode, rather than assumed. Table~\ref{tab:placement} gives the static assignment for the reference sparse-MoE training workload; the reuse asymmetry that justifies it is roughly three orders of magnitude between the hottest and coldest classes.
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \caption{Tensor placement for the hybrid memory tier [M]. ``Migration'' marks classes whose residence changes during training.}
+  \label{tab:placement}
+  \begin{tabular}{p{52mm}p{52mm}p{22mm}}
+    \toprule
+    HBM tier (hot, $\sim$0.3\,TB) & LPDDR tier (capacity, 1.5--2\,TB) & Migration \\
+    \midrule
+    Hot dense layers (attention, shared experts) & Cold experts (routed minority) & experts: yes \\
+    Attention state with high reuse & Long-tail KV state & KV: yes \\
+    Collective-critical tensors & Full optimizer state & no \\
+    Communication buffers & Checkpoint staging & no \\
+    Frequently accessed optimizer shards & Low-reuse activations & no \\
+    & Datasets and retrieval indexes & no \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The two migrating classes carry the risk. Expert migration must run at the \emph{popularity drift rate}, not the access rate: with per-step expert-popularity churn of a few percent (measured on public MoE traces), promotion/demotion traffic is bounded by a few tens of GB/s---negligible against the tier bandwidths---\emph{provided} migration granularity is whole-expert and hysteresis prevents thrashing. The failure mode is a workload whose routing entropy is high and unstable, where the hot set exceeds HBM capacity and migration bandwidth is consumed re-shuffling it; in that regime the hybrid degrades toward pure-LPDDR performance while paying HBM cost, which is why the falsification program's milestone (5) exercises the all-to-all \emph{and} the migration policy together. The hybrid is advantageous exactly when placement is stable enough that tier movement does not consume the bandwidth it saves; that sentence is the policy's entire acceptance criterion, and it is measurable.
+
+\section{Package yield: where capability and competitiveness diverge}
+\label{sec:pkgyield}
+
+One more equation belongs here because Chapter~\ref{ch:semi}'s advanced-packaging ledger needs it. To first order, package yield compounds multiplicatively across every die and interface:
+\begin{equation}
+Y_{\mathrm{package}} \;\approx\; Y_{\mathrm{logic}} \left(\prod_{i=1}^{n} Y_{\mathrm{memory},i}\right) Y_{\mathrm{interposer}}\; Y_{\mathrm{bond}}\; Y_{\mathrm{test}},
+\label{eq:pkgyield}
+\end{equation}
+where $n$ is the number of memory stacks in the package. The exponent is merciless. Count the factors for a representative AI accelerator---one logic die, eight memory stacks, one interposer, one bonding step, one test step---and the product runs over twelve terms: at 99\% yield per step the package yields $0.99^{12} \approx 89\%$; at 97\% it yields $0.97^{12} \approx 69\%$, and the cost per \emph{good} package rises by the reciprocal, roughly 45\% above the 99\% case. This is the precise mechanism by which ``technically capable'' and ``economically competitive'' diverge---a lesson the packaging ledger should score separately for TSV formation, wafer thinning, hybrid bonding, interposers, large organic substrates, known-good-die test, thermal interfaces, high-speed SerDes, and package-level repair, because a national program can demonstrate every step individually and still lose the product economics to Eq.~\eqref{eq:pkgyield}. It also quantifies the hybrid design's advantage over HBM-maximal packages: fewer stacked interfaces per socket means fewer terms in the product.
+
+\section{The package-complete checklist}
+
+A publishable architecture specification, as opposed to a capacity argument, must state all of the following; this book states the first six and owes the rest: exact memory-channel and module topology; package edge length, bump and pin density, and board escape assumptions; controller PHY area and power; ECC, sparing, chipkill, and repair model; sustained random versus streaming bandwidth (the reference workload's expert fetches are closer to random than to streaming, and this is the assumption most likely to be wrong); memory power at 5 and 7\,TB/s; expert-routing and optimizer communication volume; checkpoint time and storage bandwidth at full state; failure-domain and restart cost; total socket, board, and cluster cost; and side-by-side comparison against HBM4, SOCAMM2/LPDDR5X, CXL-attached memory, and the hybrid of Section~\ref{sec:hybrid}.
+
+\section{The falsification program}
+
+The architecture graduates from [M] to [V] through seven measurable milestones, each cheap relative to what it de-risks: (1) memory-controller and package co-simulation at the 68-channel design point (signal integrity, power, area); (2) a multi-controller FPGA/chiplet emulation of the memory system; (3) measured sustained bandwidth under fused transformer training kernels---the 5\,TB/s knee is the claim to kill first; (4) measured energy per byte and per training token against an HBM baseline; (5) an 8--16-node expert-parallel prototype exercising the all-to-all at the modeled traffic; (6) a 128-node pretraining demonstration on a mid-scale sparse model with checkpoint/failure-recovery at full state size; (7) an audit of achieved MFU and cost against this book's model, published either way. A national program that funds milestones 1--4 buys, for single-digit millions, the answer to whether the trillion-dollar HBM assumption is load-bearing.
+
+\chapter{Evidence Ledger}
+\label{app:evidence}
+
+The book's headline claims, graded per Section~\ref{sec:evidence}. This ledger is the living document's audit surface: each revision re-grades it. It is set as a multi-page domain-split table with repeated headers, because a single float clips in compilation and a clipped audit surface is a publication-blocking defect.
+
+\begin{small}
+\begin{longtable}{p{100mm}p{36mm}}
+  \caption{The evidence ledger, split by domain.}
+  \label{tab:ledger} \\
+  \toprule
+  Claim & Grade \\
+  \midrule
+  \endfirsthead
+  \multicolumn{2}{l}{\footnotesize\emph{Evidence ledger, continued}} \\
+  \toprule
+  Claim & Grade \\
+  \midrule
+  \endhead
+  \midrule
+  \multicolumn{2}{r}{\footnotesize\emph{continues}} \\
+  \endfoot
+  \bottomrule
+  \endlastfoot
+  \multicolumn{2}{l}{\textbf{1. Industrial precedents}} \\
+  \midrule
+  China holds $>$90\% share of every solar PV supply-chain stage & V \\
+  Chinese makers hold $\sim$69--75\% of global EV battery installations; $>$80\% of cell capacity & V \\
+  China NEV penetration 54\% (2025); largest auto exporter & V \\
+  \midrule
+  \multicolumn{2}{l}{\textbf{2. Models and adoption}} \\
+  \midrule
+  Chinese open models: 41\% of HF downloads; majority of OpenRouter tokens & V \\
+  Top US--China model gap 2.7\%; closed-over-open gap 3.3\% & V \\
+  Enterprise open-weight \emph{spend} share fell 19\%$\rightarrow$11\% in 2025 & A \\
+  DeepSeek V3 final-run compute \$5.6M (2.79M H800-hours) & P \\
+  Kimi K3: largest open-weight release (2.8T/104B), under a \emph{custom commercial} license, self-reported as trailing the closed frontier & V (license, specs) \\
+  DeepSeek V4-Flash ($\sim$280B/13B, MIT, weights shipped) released 2026-07-31 & V \\
+  Qwen3.8-Max (2.4T MoE) announced 2026-08-03 & V \\
+  Alibaba publicly committed Qwen3.8-Max \emph{and} Qwen3.8-27B to open weights, one week after Kimi K3 opened at 2.8T & V (official announcement) \\
+  Every Max-tier Qwen before 3.8 was proprietary; the reversal followed a rival's frontier-scale open release---the ratchet of \S\ref{sec:maxtier} & V (pattern) / S (causal reading) \\
+  Qwen3.8-Max: autonomous execution of the silicon design flow; 500+ turns of chip-design optimization & P (vendor claim; no independent verification) \\
+  Qwen family trained on leased offshore (Singapore/Malaysia) NVIDIA GPUs, served domestically---read as transitional given the co-design mechanism & A/P (press-reported; not vendor-confirmed) \\
+  Four of the five models on the cost-performance Pareto frontier are Chinese & A (Arena-derived, single analysis) \\
+  OpenAI cut GPT-5.6 Luna pricing 80\% on 2026-07-31 under open-weight competitive pressure & V (price) / A (attribution) \\
+  Distillation campaigns ($>$16M exchanges) by Chinese labs & P (vendor allegation) \\
+  DeepSeek-family censorship, transferring to distills & V \\
+  Chinese dominance of the open commons by 2030 & S (70--80\%) \\
+  \midrule
+  \multicolumn{2}{l}{\textbf{3. Compute and architecture}} \\
+  \midrule
+  LineShine \#1 HPL (2.198 EF) and \#1 HPCG (22.0 PF), GPU-free, 42.2 MW & V \\
+  LX2 serving competitiveness ($\sim$1.3--1.4$\times$ B200 per-stream energy) & M \\
+  LX2 designer/fab/HBM supplier attributions (Huawei/SMIC/CXMT) & A \\
+  LineShine uses domestic HBM & P (state media; unverified) \\
+  IME ratification target Aug.\ 2026; AME board-ratification target Apr.\ 2027 & P (official plans) \\
+  Dual-variant RISC-V accelerated-CPU template & M/S \\
+  LPDDR6X 2.3TB/7.37TB/s socket per Table~\ref{tab:designpoint}; 67\% MFU ceiling; configuration-specific sub-256-node HBM wall & M \\
+  Capacity-first LPDDR as an \emph{implemented} Chinese national program & Not established \\
+  \midrule
+  \multicolumn{2}{l}{\textbf{4. Semiconductors and energy}} \\
+  \midrule
+  SMIC N+3 5\,nm-class in volume without EUV & V (capability) / A (economics) \\
+  CXMT LPDDR6 verification cleared; 2H26 mass production & A/R (no primary product announcement) \\
+  CXMT HBM3 samples to Huawei; 2026 mass production & A/R \\
+  CXMT commodity-DRAM scale: three fabs $\sim$100k wpm, expansion planned beyond 600k wpm & P/A (source-based reporting) \\
+  Domestic HBM $\sim$2M stacks 2026; Huawei foreign-stack stockpile exhausted & A \\
+  China added 429/540 GW of generation (2024/2025); US record year 53 GW & V \\
+  Domestic-chip data centers get up-to-50\% power discounts & P \\
+  \midrule
+  \multicolumn{2}{l}{\textbf{5. Finance}} \\
+  \midrule
+  OpenAI \$852B mark, \$13.1B 2025 revenue, $\sim$\$1.4T commitments & V/P \\
+  Microsoft AI run-rate $>$\$37B, +123\% y/y & V \\
+  Anthropic run rate \$47B (May 2026) at \$965B post-money ($\approx$20.5$\times$); gross-margin trajectory toward $\sim$44\% & V (company) / A (margin) \\
+  OpenAI commitments reset toward $\sim$\$600B-by-2030 (Feb.\ 2026) & P (press-reported) \\
+  NVIDIA Q1 FY27: \$81.6B revenue, \$75.2B data center, $\sim$75\% non-GAAP gross margin & V \\
+  AI-focused firms $\approx$ half of S\&P 500 value & V \\
+  Inference prices $-$9$\times$ to $-$900$\times$/yr; compute capacity doubling every 7 months & V \\
+  Broad US AI valuation repricing by 2029--30 & S (60--70\%) \\
+  \midrule
+  \multicolumn{2}{l}{\textbf{6. Security}} \\
+  \midrule
+  Backdoors survive safety fine-tuning; $\sim$250 documents suffice to poison & V (Level A) \\
+  Backdoored agents exfiltrate memory via disguised tool calls ($>$94\% activation, $<$1\% utility loss) & V (Level A) \\
+  Prompt worms persist and propagate multi-hop in an unmodified agent framework & V (Level A/B) \\
+  Malicious agent skills exist at ecosystem scale (157 of 98,380 audited) & V (Level C) \\
+  Autonomous evaluation agents caused real cross-organization intrusions (Jul.\ 2026) & V (Level C) \\
+  A released official checkpoint contains a destructive latent backdoor & Not established \\
+  ``Order 66'' end-to-end systemic loss & S (fault-tree composition of A-level parts) \\
+  Injection resistance varies $\sim$10$\times$ across released models & V (configuration-specific) \\
+  \midrule
+  \multicolumn{2}{l}{\textbf{7. AI for science and national sizing}} \\
+  \midrule
+  AI4S frontier-LLM workload share $\sim$14\%; purchased-token premium 20--60$\times$ & A/M \\
+  Resulting frontier share of expenditure 76--91\% & M \\
+  Task-weighted AI4S uplift: 3--30\% scenario band, central $\sim$10\% & M/S (Eq.~\ref{eq:funnel-weighted}) \\
+  Fugaku COVID-19 projects returned \$50--75B; successor-return scenarios \$250--600B+ & A/M (commissioned, survey-based counterfactual model) \\
+  Task-weighted funnel Monte Carlo: median 11.8\%, P10--P90 7.7--17.5\% & M (reproducible; CSV published) \\
+  Consortium feasibility (federated training, financing, continuity) & S \\
+  EA1 probe: 443 BGPU-h per active heavy-user day, saturating an $\sim$800-GPU partition & V \\
+  BGPU conversion rule; MI355X $\gamma=1.0$ on published MLPerf evidence & V/P \\
+  2030 flagship generation factor of 6 & derived from disclosed bandwidth/fleet targets [P] \\
+  Master term $=$ 88.7\% of token-service capacity at $2^{20}$ context & M \\
+  Per-researcher core $\approx$0.94 BGPU, scale-invariant across three countries & M \\
+  Japan 2030 requirement 497--510k BGPU & M (measurement-anchored) \\
+  Singapore 55--59k and US 1.09--1.17M BGPU & T (pre-measurement scenarios) \\
+  Committed fleets provision 0.02--0.10 BGPU per researcher & V/A \\
+\end{longtable}
+\end{small}
+
+\chapter{Deployment Control Architecture}
+\label{app:controls}
+
+The controls below follow directly from the fault tree of Section~\ref{sec:riskchain} and the trust stack of Chapter~\ref{ch:trust}. They are reproduced here as an operational checklist for sensitive scientific, governmental, or industrial deployments, because the strategic argument of this book---adopt the commons, verify it, own the certification layer---is only actionable if the verification and containment work is specified rather than gestured at~\cite{order66}. Each control family below maps to a gate of the fault tree: controls (1)--(5) cut the \emph{trigger-success} and \emph{privileged-deployment} gates (preventive); (6)--(8) cut \emph{privileged deployment} and \emph{propagation} (preventive); (9)--(10) are the \emph{detective} layer across all gates; (11) cuts the \emph{supply-chain compromise} disjunct; (12)--(14) cut \emph{containment failure} (preventive, detective, and recovery respectively). The gates with the weakest control coverage---artifact compromise itself, and trigger discovery---are exactly the ones the tree identifies as outside operator control, which is why the checklist concentrates spending elsewhere.
+
+\textbf{Containment and authority.} (1)~Separate inference from action execution: run the model in a process or enclave without direct network credentials, and treat every tool call as an untrusted proposal. (2)~Use a deterministic tool broker enforcing operation, destination, argument, volume, and rate allow-lists \emph{outside} the model; permit no arbitrary URLs, model-constructed hostnames, or arbitrary message recipients. (3)~Separate secret access from egress: no single invocation should hold both unrestricted memory or file reads and unrestricted external transmission. (4)~Inspect payloads, not only retrieved text---flag opaque or high-entropy URL parameters, Base64-like fields, secrets copied from memory, and unusual destination changes; never auto-fetch model-generated remote resources. (5)~Require independent policy approval, and where appropriate human confirmation, for credential access, external messaging, code execution, purchases, data export, and irreversible operations.
+
+\textbf{State integrity.} (6)~Make core policy and configuration immutable to the agent: no email, web content, skill, memory, or peer message may rewrite startup instructions; keep system policy in a separately authenticated control plane. (7)~Treat memory writes as security decisions---record origin and derivation, prevent untrusted content from creating policy or authorization memories, expire low-trust entries, and reauthorize consequential actions at retrieval time. (8)~Constrain destructive filesystem operations: read-only mounts by default, no recursive or bulk deletion, separate backup credentials, immutable versions, and out-of-band authorization for destructive changes to shared storage.
+
+\textbf{Observability and supply chain.} (9)~Preserve complete external logs---model versions, prompts, tool schemas, proposed actions, broker decisions, network destinations, results---in append-only storage unavailable to the model. (10)~Freeze and sign tool definitions: hash-pinned schemas, model-visible instructions fully disclosed to reviewers, reapproval required after changes, and no silent transfer of data obtained through one tool into another. (11)~Harden the model and agent supply chain: controlled mirrors, signed manifests, pinned cryptographic hashes, tensor-only formats, pinned runtimes, software bills of materials, disabled remote model code and unsafe deserialization, CI credentials isolated from compromised workloads, and verified release provenance.
+
+\textbf{Evaluation and assurance.} (12)~Contain evaluations as hostile-code execution: physically deny and independently verify egress, use synthetic credentials and targets, block routes to metadata and package-control planes, monitor outside the agent's control, and terminate on unexpected destinations. (13)~Red-team the actual integration---temporal, multilingual, organizational, tool-schema, environmental, and multi-turn triggers; indirect prompt injection; self-replication attempts; destructive-action canaries in memory and files. (14)~Do not rely on fine-tuning as sanitization: scanners, differential testing, and controlled post-training reduce risk but do not establish absence; high-assurance workloads should use network isolation and reviewed output release.
+
+For the most sensitive workloads, a hash-pinned model in a network-isolated inference environment with internal-only retrieval and a one-way, reviewed export path provides substantially stronger assurance than an unrestricted ``trusted'' model of any provenance---which is the operational restatement of this book's position that provenance claims are not a substitute for architecture.
+
+\chapter{Consortium Feasibility: The Legal and Engineering Homework}
+\chaptermark{Consortium Feasibility}
+\label{app:consortium-feasibility}
+
+Chapter~\ref{ch:consortium} argues the consortium is necessary; necessary is not the same as operable, and the feasibility homework has to be specified rather than gestured at. This appendix names the fourteen problems a founding instrument must solve, with this book's current best answer or its honest absence.
+
+\textbf{Legal.} (1) \emph{Export-control segmentation}: members sit under incompatible regimes (EAR, EU dual-use, and their non-Western counterparts); the workable architecture is compartmented---nationally owned compute enclaves executing a federated protocol, so that no controlled article crosses a border even as gradients do; precedent exists in high-energy physics data policy, not in any AI instrument. (2) \emph{Data localization}: solved by design if raw data never moves (the layered data policy of Chapter~\ref{ch:consortium}); unsolved for the preference- and correction-data pools that post-training needs. (3) \emph{Classified and dual-use workloads}: excluded from the shared fabric entirely, run in national enclaves against consortium-published open weights---the model travels, the workload does not. (4) \emph{Liability for defective models}: the hardest open problem in the list; a jointly trained model has no manufacturer in the product-liability sense, and the certification ladder of Chapter~\ref{ch:trust} (Level 5's contractual, insurable assurance) is currently the only credible carrier; the founding instrument must create a liability-holding entity or the regulated sectors will not deploy. (5) \emph{Ownership of jointly trained weights}: recommend open release under a permissive license with a contribution registry---ownership dissolved rather than allocated, which is both the mission and the only stable equilibrium among sovereign contributors. (6) \emph{Withdrawal of contributed data}: prospective only (future checkpoints), with data bills-of-materials making the boundary auditable (Chapter~\ref{ch:data}); retroactive unlearning at frontier scale is not a commitment any honest instrument can make. (7) \emph{Incident jurisdiction}: model incidents route to the operator's jurisdiction, artifact incidents to the consortium's seat; the append-only audit substrate of Appendix~\ref{app:controls} is what makes the routing adjudicable. (8) \emph{Antitrust and state aid}: a research-infrastructure joint undertaking (EuroHPC's legal form) survives both regimes; a production token utility would not; the line must be drawn in the charter. (9) \emph{Insolvency and continuity}: mirrors, escrowed artifacts, and multi-party signing keys so that no member's exit---or the consortium's own dissolution---can orphan the certified corpus.
+
+\textbf{Engineering.} (10) \emph{Federated scheduling} across heterogeneous, intermittently available national machines: the scheduling literature exists (grid computing paid this tuition twenty years ago); the missing piece is incentive-compatible accounting, addressed by (13). (11) \emph{Heterogeneous optimizer consistency}: training one model across unlike accelerators requires either synchronous steps at the slowest site's pace, hierarchical/local-update methods (DiLoCo-class) with their convergence penalties, or partitioning by training phase (pretraining centralized per-site, post-training federated)---the last is the current recommendation, because post-training tolerates asynchrony and is where members' data sensitivity lives anyway. (12) \emph{Checkpoint transfer and cross-site bandwidth}: a frontier checkpoint at full optimizer state is tens of terabytes; at research-network rates this is hours per sync, which bounds the federation granularity and is why (11) recommends phase partitioning. (13) \emph{Accounting for unlike hardware}: the BGPU vector of Section~\ref{sec:bgpu-vector} is the designed answer---contributions metered in workload-weighted capability, not device counts. (14) \emph{The conformance instrument}: the AI-HPC lifecycle benchmark of Section~\ref{sec:lifecycle} and the certification ladder give the consortium its two deliverables that no national program can credibly produce alone---neutral measurement and neutral assurance. The honest summary: nine of the fourteen have engineering answers on the shelf; (1), (4), and (5) require legal invention; and none of the fourteen is a reason to wait, because every one of them is also unsolved for every national program that will otherwise duplicate this work seven times.
+
+\chapter{Living Data Appendix: Flagship Model Cards}
+\label{app:cards}
+
+Chapter~\ref{ch:model}'s release table mixes vendor-published and independent results, different reasoning budgets, tool harnesses, attempt budgets, and evaluation dates, and that mixture is a methodological problem this book should not leave standing. The remedy is a normalized card per flagship, reported to a fixed schema and maintained as the flagships change. Table~\ref{tab:cards} is that schema in use; empty fields are honest gaps rather than omissions, and the schema itself is the contribution, because it is what any serious comparison requires and what almost no public comparison supplies.
+
+The ten fields: (1) total and active parameters; (2) native precision and quantization-aware-training status; (3) context and maximum output length; (4) license; (5) disclosed training hardware, with confidence grade; (6) independent capability score under a common date and harness; (7) a software-engineering benchmark under a stated tool environment and attempt budget; (8) input, cached-input, and output prices; (9) tokens and wall-clock consumed per successfully completed task; (10) measured latency, throughput, and serving hardware. Fields (9) and (10) are the ones that decide procurement and the ones no vendor publishes; until they are routinely reported, ``ten times cheaper per token'' remains an unfinished sentence, because a model that spends ten times the reasoning tokens per solved task has delivered no saving at all.
+
+\begin{table}[htbp]
+  \centering
+  \tiny
+  \setlength{\tabcolsep}{3pt}
+  \caption{Normalized flagship cards, mid-2026. Vendor-reported values [P]; independent index values [V]; ``---'' denotes not publicly disclosed. Prices in USD per million tokens (input/output).}
+  \label{tab:cards}
+  \begin{tabular}{p{15mm}p{15mm}p{12mm}p{11mm}p{10mm}p{16mm}p{13mm}p{15mm}p{12mm}}
+    \toprule
+    Model & Params tot./act. & Precision & Context & License & Train HW & SWE-bench (protocol) & Price in/out & Tok/task; latency \\
+    \midrule
+    Kimi K3 & 2.8T / $\sim$104B & MXFP4 native & 1M & modified MIT & H200 + L20 + alt.\ GPGPU [A] & --- (vendor tables only) & 3.00 / 15.00 & --- \\
+    \addlinespace
+    DeepSeek V4-Pro & 1.6T / 49B & FP8 native & 1M & MIT & undisclosed & 80.6\% (vendor) & 0.435 / 0.87 & --- \\
+    \addlinespace
+    GLM-5.2 & $\sim$753B / $\sim$40B & FP8 variant & 1M var. & MIT & Ascend [P] & 77.8\% (GLM-5, vendor) & 1.00 / 3.20 & --- \\
+    \addlinespace
+    MiniMax M3 & $\sim$428B / $\sim$23B & --- & 1M & open weights & --- & 80.2\% (M2.5, vendor) & 0.15 / 1.20 (M2.5) & --- \\
+    \addlinespace
+    Kimi K2 Think. & 1T / 32B & INT4 QAT & 256K & modified MIT & --- & 65.8\% single-attempt; 71.6\% parallel TTC & --- & --- \\
+    \addlinespace
+    Qwen3.6 family & 27B dense; 35B/A3B & --- & 262K & Apache 2.0 & --- & --- & --- & --- \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Two disciplines travel with the table. \emph{Protocol disclosure}: the Kimi row shows why---the same model, the same benchmark, and a 5.8-point spread between single-attempt and parallel test-time-compute settings, which is larger than most inter-model gaps reported in the press~\cite{kimi-k2-thinking}. \emph{Task-normalized cost}: with reasoning-model output lengths inflating roughly fivefold per year~\cite{epoch-output}, price-per-token comparisons decay in meaning within a single release cycle, and only cost-per-completed-task is stable enough to plan a budget against---which is precisely the quantity Chapter~\ref{ch:consortium}'s expenditure model needs and Section~\ref{sec:ai4s-econ} had to estimate.
+
+\chapter{Current Cycle: The Eighteen-Day Barrage}
+\chaptermark{Current Cycle}
+\label{app:bulletin}
+
+This is the living appendix doing its job. The stable chapters are current as of \datafreeze---this edition's date---and this appendix records the most recent development cycle in concentrated form, so that the fastest-moving material sits in one place that the next edition can replace wholesale rather than being threaded through twenty chapters. The first entry covers 16 July--3 August 2026, which compressed more frontier activity than any comparable window in the field's history.
+
+\section{The chronology}
+
+Four releases in eighteen days, each responding to the last~\cite{pareto-frontier}: \textbf{16 July}, Moonshot releases Kimi K3 (2.8T/104B) via API; \textbf{27 July}, K3's weights are open-sourced under its custom commercial licence---the largest open-weight model ever released; \textbf{31 July}, DeepSeek ships the official V4-Flash checkpoint ($\sim$280B/13B, MIT, weights on Hugging Face, \$0.14/\$0.28 per million tokens) \emph{and}, the same day, OpenAI cuts GPT-5.6 Luna pricing by 80\% (\$1.00$\to$\$0.20 input, \$6.00$\to$\$1.20 output) with Terra down 20\%~\cite{openai-cut}; \textbf{3 August}, Alibaba makes Qwen3.8-Max generally available (2.4T total, $\sim$95B active by press consensus though never officially confirmed, 1M context, multimodal in), API-only, at \$2/\$6 per million tokens~\cite{qwen38-max}.
+
+The sequencing carries the analytical content, and it is not the sequencing the headlines implied. OpenAI's price cut came \emph{before} the Qwen release, not after it, and contemporaneous analysis attributed the pressure to Kimi K3 and DeepSeek V4 rather than to Alibaba~\cite{openai-cut}. That is the first documented instance in this book's evidence base of a Western frontier laboratory repricing its mainline product in visible response to Chinese open-weight competition---the transmission mechanism of Proposition~P3, observed rather than modelled. The company attributed the cut to ``system efficiency,'' which may be entirely true and is also exactly what a firm says when it is defending share.
+
+\section{Qwen3.8-Max: what is claimed, what is verified}
+
+\begin{table}[htbp]
+  \centering
+  \scriptsize
+  \caption{Qwen3.8-Max as of this edition's date. Vendor claims are extensive and partly auditable; independent verification is thin. Both halves matter.}
+  \label{tab:qwen38}
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabular}{p{34mm}p{58mm}p{50mm}}
+    \toprule
+    Item & Reported & Status \\
+    \midrule
+    Total parameters & 2.4T sparse MoE & consistent across all sources [P] \\
+    Active parameters & $\sim$95B & press consensus; not stated in the announcement [A] \\
+    Expert count, routing & --- & not disclosed \\
+    Context & 1M (991K in / 131K out / 262K reasoning budget) & vendor [P] \\
+    Attention & possibly gated-linear (Gated DeltaNet-class) & speculation; unpublished \\
+    Training tokens, precision & --- & not disclosed \\
+    Training hardware & --- & not disclosed; family reportedly trained on leased offshore NVIDIA~\cite{qwen-offshore} \\
+    \textbf{Weights} & \textbf{publicly committed by Alibaba: ``next week, the open weights of Qwen3.8-Max will be released, and Qwen3.8-27B is also going open-weights''} & \textbf{[V] as a commitment}; repository pending at the bulletin date~\cite{qwen-announcement} \\
+    Licence & --- & \emph{unstated}---the live question (Apache-class vs revenue-threshold) \\
+    Documentation & release blog with full benchmark table; GitHub project trace for the autonomous-coding run & [V]; no formal model card or architecture report \\
+    Price & \$2.00 / \$6.00 per Mtok, \$0.25 implicit cache, flat across the full 1M window & vendor [V]~\cite{qwen-announcement} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+On benchmarks the discipline of Section~\ref{sec:scoreboard} applies: \emph{the headline numbers are Alibaba's own}, published in the release blog. The table reports SWE-bench Pro 67.7 (Claude Fable~5 leading at 80.0), Terminal-Bench~2.1 86.6 (Fable~5 84.6, GPT-5.6 Sol 88.8), PaperBench 93.0 (best in table), FrontierSWE 73.5, QwenReactBench 1{,}724 (best), CoWorkBench 74.8, JobBench 53.4, Agents' Last Exam 52.4, GPQA Diamond 92.6, IFBench 82.8, HLE 43.6, plus a multimodal sweep (BabyVision 91.3, CharXiv 93.5, ERQA 77.8, PerceptionBench 63.5)~\cite{qwen38-bench,qwen-announcement}. The shape is consistent and worth naming: Fable~5 leads on the hardest software-engineering and reasoning rows; Qwen leads on multimodal reasoning, document and office intelligence, real-world and spatial understanding, visual perception, and research reproduction. Absences remain notable---no SWE-bench Verified, no AIME, no Kimi K3 or DeepSeek V4 column despite those being the nearest competitors, and no hallucination-rate disclosure of the kind Qwen3.7-Max carried.
+
+The autonomy claims deserve separate treatment because their auditability differs. The autonomous-coding demonstration---``10+ days of self-evolving development, from empty folder to production without hand-holding''---ships with \emph{a complete project trace on GitHub}~\cite{qwen-announcement}, which is more verification apparatus than most Western frontier autonomy claims carry and should be credited as such; the standing question of how many human interventions occurred is answerable from the trace rather than merely rhetorical~\cite{infoworld-qwen}. The chip-design claim (500-plus turns of optimization; autonomous execution of the silicon design flow) has no comparable artifact, which is why Section~\ref{sec:offshore} treats it as strategically decisive \emph{if} verified and flags the verification event explicitly.
+
+The independent record is thin and worth stating precisely. Crowdsourced Arena voting places the model \#5 overall in text (highest-ranked Chinese model, behind Claude variants), \#2 in vision, and \#4 on frontend code at 1,668 Elo---eight points behind Kimi K3 and roughly 37 behind the top Claude configuration~\cite{arena-qwen38}. Artificial Analysis had not scored it. One small third-party head-to-head put it at 80 against Kimi K3's 83. Set against the vendor table, the honest summary is that Qwen3.8-Max is a genuinely frontier-competitive model whose exact placement is unsettled---which is the same thing that is true of every closed Western flagship, none of which discloses its parameter count at all.
+
+\section{The Pareto observation}
+
+The single most strategically significant datum of the barrage is not any model's score but the shape of the cost-performance frontier it produced: of the five models on the current Pareto frontier, \emph{four are Chinese}---Kimi K3, Qwen3.8-Max, GLM-5.2, and DeepSeek V4-Flash---with Claude Opus~5 the lone American entry, holding its position by roughly 37 Elo points~\cite{pareto-frontier}. Read against the five-frontier framework of Section~\ref{sec:scoreboard}, this is the \emph{economic frontier} passing decisively into Chinese hands while the \emph{absolute frontier} remains contested, which is precisely the configuration this book has argued decides industrial outcomes. The cost spread that produces it: DeepSeek V4-Flash runs a benchmark suite for about three cents against Claude Fable~5's \$3.15 and GPT-5.6 Sol's \$1.86---a hundredfold gap at the low end, with Kimi K3 at 86 cents in between.
+
+Two qualifications keep the observation honest. Cross-vendor cost comparisons at fixed capability are only as good as the task-normalization behind them (Appendix~\ref{app:cards}, fields 9--10), and reasoning-effort settings move scores enormously---V4-Flash's HLE score ranges from 8.1 with thinking disabled to 34.8 at maximum effort, which is larger than most inter-model gaps anyone reports. And V4-Flash's own release note contains the field's most useful piece of self-knowledge: its entire generation-over-generation gain came from post-training, not architecture, with Terminal-Bench~2.1 moving 61.8$\to$82.7 on an unchanged model~\cite{v4flash}. The frontier is currently moving through the post-training layer, which is cheap, fast, and exactly where a fast-follower has the advantage.
+
+One further pricing development belongs in the ledger because it runs \emph{against} the commoditization current and is the first of its kind: DeepSeek announced dynamic peak pricing---a 2$\times$ multiplier during seven daily hours---for V4-Flash. A Chinese laboratory introducing surge pricing on the cheapest frontier-adjacent model in the world is rent recapture appearing at the price layer itself, and Section~\ref{sec:china-advice}'s recommendation that Chinese labs move from below-cost tokens to at-cost tokens plus paid complements now has a datapoint in its favour that arrived without waiting for the advice.
+
+\section{What this changes, and what it does not}
+
+\emph{Unchanged}: every structural claim in the monograph. The four propositions, the cost stack, the rent-migration map, the architecture argument, and the AI4S analysis are all indifferent to which laboratory leads in a given fortnight---which is the point of freezing the data and stating the mechanisms separately.
+
+\emph{Strengthened}: three things, each recorded in the ledger and register. First, and most importantly, the open-weight argument acquires the \emph{ratchet} of Section~\ref{sec:maxtier}: a Max tier that had been proprietary through four generations was publicly committed to open weights within seven days of a rival opening at comparable scale, which upgrades openness from a state policy that could reverse to a competitive equilibrium from which no participant profits by defecting. Second, P3's transmission mechanism has its first direct observation in the OpenAI price cut. Third---and this is the datum that most shortens the book's own timelines---the autonomous silicon-design claim of Section~\ref{sec:offshore} identifies a concrete mechanism by which the compute dependence that the offshore-leasing arrangement currently reflects becomes transitional rather than structural: the recursive loop applied to the one input China has never been able to buy.
+
+\emph{The counter-argument, at its strongest.} The same evidence supports a serious rebuttal---that recursive self-improvement compounds fastest where compute is most abundant, which is not China---and Section~\ref{sec:rsi-branch} develops it as the book's most consequential falsification branch, along with the reply that two recursive loops are running on different substrates.
+
+\emph{Newly falsifiable, on a short clock}: the licence under which Qwen3.8-Max's weights ship (Apache-class or revenue-threshold), and whether any AI-assisted design flow produces an independently verified, manufacturable part. Few strategic questions in this book resolve within a quarter. The first of these does.
+
+\chapter{Chronology}
+\label{app:chronology}
+
+\begin{table}[htbp]
+  \centering
+  \scriptsize
+  \begin{tabular}{p{16mm}p{134mm}}
+    \toprule
+    \textbf{1954--2007} & Bell Labs silicon cell (1954). German EEG feed-in tariffs (2004) create global solar demand. Sharp then Q-Cells lead production. Suntech founded (2001), NYSE listing (2005). China's 863 programme adds EV powertrains (2001); Wan Gang appointed minister (2007). \\
+    \addlinespace
+    \textbf{2008--2013} & Polysilicon peaks at \$475/kg (2008) then collapses. ``Ten Cities, Thousand Vehicles'' (2009). CDB extends $\sim$\$47B credit lines (2010); NEVs and new energy designated Strategic Emerging Industries (2010). CATL founded (2011). Solyndra (2011), Q-Cells (2012), A123 (2012), Suntech (2013) fail. US and EU impose solar duties (2012--13). \\
+    \addlinespace
+    \textbf{2014--2019} & Big Fund I (2014). Battery ``white list'' excludes Korean cells (2015--19). Top Runner programme (2015). NEV dual-credit mandate (2017). Solar ``531'' shock (2018). EUV denied to China (2019). SVE (2016) and A64FX (2018) establish the CPU-plus-HBM lineage. \\
+    \addlinespace
+    \textbf{2020--2022} & Fugaku sweeps the benchmark lists (2020--21). BYD Blade LFP (2020); Tesla adopts CATL LFP (2020). SME specified (2021). China NEV penetration passes 25\% (2022). US October 2022 export controls. \\
+    \addlinespace
+    \textbf{2023} & Mate~60 ships SMIC 7\,nm (Aug.). A800/H800 banned (Oct.). China passes Japan as largest auto exporter. Android RISC-V support announced; RISE founded. \\
+    \addlinespace
+    \textbf{2024} & DeepSeek V2 triggers the LLM price war (May). Big Fund III, RMB 344B (May). CXMT scales DRAM; Northvolt files Chapter~11 (Nov.). BIS controls HBM (Dec.). DeepSeek V3 in native FP8 (Dec.). China installs 277\,GW of solar; adds $\sim$429\,GW of generation. \\
+    \addlinespace
+    \textbf{2025} & R1 released (Jan.); NVIDIA loses \$589B in a day. Eight-agency RISC-V guidance (Mar.). H20 banned (Apr.), unbanned for a 15\% revenue share (Aug.). Kimi K2 opens at 1T parameters (Jul.). WAIC Global AI Governance Action Plan and ``AI+'' plan (Jul.--Aug.). CANN open-sourced (Aug.); CUDA ported to RISC-V hosts, announced in Shanghai (Jul.). Huawei discloses the Ascend 950/960/970 roadmap and opens UnifiedBus 2.0 (Sep.). CAC bars major platforms from NVIDIA purchases (Sep.); state-funded data centres restricted to domestic chips and given up-to-50\% power discounts (Nov.). K2 Thinking ships INT4 QAT (Nov.). China adds $\sim$540\,GW of generation; deploys $\sim$65\% of global grid storage. \\
+    \addlinespace
+    \textbf{2026 H1} & Zhipu and MiniMax list in Hong Kong (Jan.). SiFive integrates NVLink Fusion (Jan.). GLM-5 trained on Ascend (Feb.); Anthropic alleges distillation campaigns (Feb.). Stanford AI Index puts the US--China gap at 2.7\% (Mar.). NVIDIA Vera CPU announced at 1.2\,TB/s LPDDR5X (Mar.). DeepSeek V4 (Apr.); OpenAI raises at \$852B (Mar.); Anthropic at \$965B (May). Semiconductor selloff sheds \$1.3T (Jun.). \textbf{LineShine takes No.~1 on HPL and HPCG with no GPUs} (Jun. 24). \\
+    \addlinespace
+    \textbf{2026 Jul--Aug} & Kimi K3 opens at 2.8T parameters (Jul. 27). CXMT lists at +466\% (Jul. 27), prospectus disclosing no commercial HBM. CXMT LPDDR6 clears verification at 12.8\,Gb/s (Aug.). OpenAI--Hugging Face cross-boundary agent intrusion disclosed (Jul.); Anthropic discloses three evaluation-boundary incidents (Jul. 30). Memory-led chip rout; Nasdaq-100 enters correction (Jul.). WAICO formalized in Shanghai with 29 states (Jul.). \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\chapter{Claim Register and Falsification Dashboard}
+\label{app:dashboard}
+
+Appendix~\ref{app:evidence} grades the headline claims. This appendix does two further things: it gives the register a machine-readable schema, so that the ledger can be maintained as data rather than as prose; and it states the quarterly dashboard by which a reader can check this book against reality without re-reading it.
+
+\section{Register schema}
+
+Each claim in the maintained register carries: \texttt{claim\_id}; \texttt{text} (one sentence, falsifiable); \texttt{chapter}; \texttt{grade} $\in$ \{V, P, A, M, R, S\}; \texttt{source\_type} $\in$ \{benchmark submission, filing, government rule, peer-reviewed, vendor statement, analyst estimate, author model, discussion record\}; \texttt{as\_of} (date); \texttt{geographic\_scope}; \texttt{uncertainty} (range or band); and \texttt{next\_verification\_event}---the specific publication, filing, benchmark round, or disclosure that would update it. The last field is the one that makes the register useful: a claim with no identified verification event is a claim this book cannot keep honest, and there are several.
+
+\begin{table}[htbp]
+  \centering
+  \tiny
+  \setlength{\tabcolsep}{3pt}
+  \caption{Register extract: the twelve claims on which the argument most depends.}
+  \label{tab:register}
+  \begin{tabular}{p{8mm}p{45mm}p{7mm}p{20mm}p{21mm}p{27mm}}
+    \toprule
+    ID & Claim & Grade & Uncertainty & As of / scope & Next verification event \\
+    \midrule
+    CR-01 & Chinese-origin models carry a majority of tokens on neutral routers & V & platform-specific & Jun 2026, OpenRouter & monthly router reports \\
+    CR-02 & Top US--China model gap $\approx$2.7\%; closed-over-open gap $\approx$3.3\% & V & harness-dependent & Mar 2026, global & AI Index 2027 \\
+    CR-03 & Open-weight share of enterprise \emph{spend} fell 19\%$\to$11\% in 2025 & A & survey selection & 2025, US enterprise & next enterprise survey round \\
+    CR-04 & LineShine leads HPL and HPCG with no discrete GPU & V & none material & Jun 2026 & Nov 2026 TOP500 \\
+    CR-05 & LX2-class serving is competitive per TB/s & M & delivered-bandwidth fraction $\eta$ (\S\ref{sec:proofboundary}) swept 0.53--0.70 & modelled & MLPerf Inference submission \\
+    CR-06 & LPDDR6X socket: 2.3\,TB, $\sim$7\,TB/s, 67\% MFU ceiling & M & $\pm$ knee position unmeasured & modelled & memory-controller simulation; 5\,TB/s knee test \\
+    CR-07 & CXMT LPDDR6 mass production in 2H26 & A/R & schedule risk; no primary announcement & analyst/roadmap & official product announcement or customer qualification \\
+    CR-08 & Domestic HBM $\sim$2M stacks in 2026 & A & 2.5--18.6M in published range & analyst & Ascend shipment teardowns \\
+    CR-09 & A frontier-class model trained end-to-end on domestic silicon & --- & not yet observed & --- & \textbf{the Mate~60 moment}: independent confirmation of an end-to-end domestic run \\
+    CR-10 & AI4S frontier share of expenditure 76--91\% & M & $f$ and $r$ both estimates & discussion record & national probe with published $f$, $r$ \\
+    CR-11 & Announced fleets provision 0.02--0.10 BGPU/researcher vs $\sim$1.0 required & M/A & core $\pm$40\% pre-measurement & 3 countries & second national demand probe \\
+    CR-12 & Broad ($\geq$30\%) US AI repricing by 2029--30 & S & 60--70\% subjective & global & OpenAI financing event; DC credit spreads \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Probabilistic forecasts}
+
+The register states grades; this table states \emph{bets}. Each load-bearing proposition carries a probability, a horizon, a next verification event, and an explicit falsifier. The purpose is not false precision---the probabilities are subjective judgements [S]---but to prevent confidence in one part of the thesis from leaking into another, and to let a reader in 2029 mechanically score the book.
+
+\begin{table}[htbp]
+  \centering
+  \scriptsize
+  \caption{Load-bearing propositions as dated forecasts [S]. Probabilities are the author's; where the strongest skeptical case the author can construct yields a different figure, it is given in brackets.}
+  \label{tab:forecasts}
+  \begin{tabular}{p{42mm}p{16mm}p{13mm}p{31mm}p{31mm}}
+    \toprule
+    Proposition & Probability & Horizon & Next verification event & Explicit falsifier \\
+    \midrule
+    Chinese models dominate the global open-weight ecosystem & 80\% [70\%] & 1--2 yrs & derivative-model share, neutral-router token share, production-deployment surveys & sustained routed-token share below 45\% for four quarters \\
+    \addlinespace
+    Frontier-adjacent model trained end-to-end on a domestic Chinese stack & 65\% [50\%] & 2--4 yrs & independently documented run: domestic accelerator, memory, toolchain & continued reversion to foreign silicon for flagship pretraining past 2028 \\
+    \addlinespace
+    LPDDR-dominant or hybrid frontier pretraining becomes production-competitive & 45\% & 3--6 yrs & cluster-scale run with package-complete power, reliability, cost & measured MFU below $\sim$45\% at scale, or knee above 8\,TB/s \\
+    \addlinespace
+    An LX2-class part posts competitive AI benchmark results & 55\% & 2--4 yrs & MLPerf Inference or Training submission & no submission by 2029, or $>$2$\times$ deficit at matched precision \\
+    \addlinespace
+    Broad ($\geq$30\%) repricing of the US AI complex & 70\% [60\%] & 1--3 yrs & utilization, margin, financing, depreciation deterioration & AI revenue growth closing the capex gap through 2028 \\
+    \addlinespace
+    US closed models retain a valuable premium enterprise tier through 2030 & 50\% [65\%] & 4 yrs & enterprise spend share; agent-platform revenue & open-weight enterprise spend share passing 40\% \\
+    \addlinespace
+    Complete Chinese autonomy across advanced semiconductor tooling & 25\% & 5--10 yrs & verified production across lithography, metrology, EDA, packaging, memory & domestic EUV-class litho absent past 2032 \\
+    \addlinespace
+    A neutral certification authority for open weights is established & 30\% & 3--5 yrs & founding instrument with $\geq$3 states and operating evaluations & the role occupied by a single bloc, or by nobody, past 2030 \\
+    \addlinespace
+    AI4S delivers measurable national research-output uplift ($\geq$5\%) & 45\% & 5--8 yrs & bibliometric and patent series; sector productivity & no detectable uplift in the domains with best conversion (weather, structure, screening) \\
+    \addlinespace
+    A systemic agentic-security incident traceable to a widely deployed derivative & 20\% & 5 yrs & incident disclosures; national CERT reporting & (asymmetric: absence is weak evidence) \\
+    \addlinespace
+    The integrated-CPU corner reduces lifecycle cost of a \emph{changing} workload portfolio faster than the discrete-accelerator corner (\S\ref{sec:breadth-depth}) & 40\% & 4--8 yrs & time-to-competitive-kernel per new mechanism; architectures served within $N$ months; operator-hours per delivered PF-month & the accelerator corner matches new-mechanism kernel latency while the CPU corner's porting tax persists \\
+    \addlinespace
+    A production-metric scoreboard for scientific AI (Eq.~\ref{eq:sci-metric}-class) is operated by a national ministry or agency & 35\% & 3--5 yrs & a published national portfolio scored on validated value per resource & benchmark-style leaderboards remain the only public measure past 2030 \\
+    \addlinespace
+    A Chinese-designed accelerator or integrated-CPU system submits MLPerf Training (which now carries a DeepSeek-V3 MoE benchmark) & 50\% & 2--3 yrs & MLPerf Training rounds, twice yearly & no submission by end-2028 while domestic fleets claim training parity \\
+    \addlinespace
+    Humanoid/embodied deployment crosses from demonstration to production: $\ge$1,000 robots in intervention-light productive work at a single operator, metrics published (\S\ref{sec:embodied-metrics}) & 55\% & 2--4 yrs & operator disclosures; the embodied proof-suite metrics & teleoperation ratios not declining through 2028; deployments remain demo/education-dominated \\
+    \addlinespace
+    Open-weight VLA models commoditize the embodied task-policy layer as LLMs did text & 45\% & 3--6 yrs & open VLA releases matching closed policies on standardized manipulation suites & closed embodied stacks hold a durable capability gap into the 2030s \\
+    \addlinespace
+    Qwen3.8-Max weights ship as publicly committed & 90\% & 1 quarter & Hugging Face / ModelScope repository & no weights by Nov 2026 (would break the ratchet argument of \S\ref{sec:maxtier}) \\
+    \addlinespace
+    \dots{} under a permissive (Apache/MIT-class) rather than revenue-threshold licence & 55\% & 1 quarter & the licence file & a Kimi-style threshold, which confirms rent relocation \emph{within} openness rather than against it \\
+    \addlinespace
+    The next frontier-scale Chinese release ($\geq$1T) also ships open weights---the ratchet holding & 85\% & 1--2 yrs & release announcements & any major Chinese lab closing its frontier tier while rivals stay open \\
+    \addlinespace
+    A Chinese frontier-class model is trained end-to-end on domestically sited compute, offshore leasing excluded & 60\% & 2--4 yrs & lab technical report disclosing training site and silicon & continued reliance on leased offshore accelerators past 2029 \\
+    \addlinespace
+    An AI-assisted design flow produces an independently verified, manufacturable Chinese AI accelerator & 45\% & 3--5 yrs & tape-out disclosure with third-party design-flow audit & domestic accelerator roadmaps continuing to slip despite AI-design claims \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Quarterly falsification dashboard}
+
+Ten indicators, each with the value at the time of writing, the threshold that would move the argument, and where to look. A reader who checks these quarterly does not need to re-read the book to know whether it is aging well.
+
+\begin{table}[htbp]
+  \centering
+  \scriptsize
+  \caption{The dashboard. ``Direction'' states which way a move cuts for this book's thesis.}
+  \label{tab:dashboard}
+  \begin{tabular}{p{40mm}p{24mm}p{34mm}p{40mm}}
+    \toprule
+    Indicator & Current (Aug 2026) & Threshold that matters & Source / cadence \\
+    \midrule
+    Chinese share of routed tokens & $\sim$61\% & sustained fall below 45\% weakens P1 & neutral routers, monthly \\
+    \addlinespace
+    Closed-over-open capability gap & 3.3\% & $>$10\% sustained two years favours bifurcation & AI Index / arenas, annual \\
+    \addlinespace
+    Enterprise open-weight spend share & $\sim$11\% & rise past 25\% confirms P3's transmission & enterprise surveys, annual \\
+    \addlinespace
+    Domestic end-to-end frontier training run & not observed & first credible instance strongly confirms P2 & lab technical reports \\
+    \addlinespace
+    LX2-class AI benchmark submission & none & MLPerf entry at parity confirms stage~2 (\S\ref{sec:proofboundary}) & MLPerf rounds \\
+    \addlinespace
+    CXMT LPDDR6 / HBM3 ramp & verification cleared & 2+ year slip weakens the memory arbitrage & qualification news, quarterly \\
+    \addlinespace
+    Cost per \emph{solved} task, open vs closed & unpublished & first credible series either confirms or deflates the price gap & vendor or third-party evals \\
+    \addlinespace
+    OpenAI financing & IPO slipping & down-round or new backstop raises P4 & filings, ad hoc \\
+    \addlinespace
+    Data-centre credit spreads & Oracle CDS $\sim$212\,bps & sustained widening raises P4 & credit markets, daily \\
+    \addlinespace
+    Certification authority for open weights & vacant & occupation by any credible body reshapes Chapters~\ref{ch:trust}--\ref{ch:consortium} & standards bodies, ad hoc \\
+    \addlinespace
+    Max-tier openness lag (API-to-weights interval for the leading Chinese flagship) & $\sim$1 week committed (Qwen3.8-Max) & a lag exceeding two quarters, or any frontier tier staying closed, would break the ratchet of \S\ref{sec:maxtier} & model repositories, per release \\
+    \addlinespace
+    Recursive-loop disclosures: frontier-model contribution to successor training (US) vs AI-assisted design flow output (China) & both claimed, neither audited & first audited instance either side is the field's most important datapoint (\S\ref{sec:rsi-branch}) & lab disclosures, tape-out records \\
+    \addlinespace
+    Offshore compute leasing by Chinese labs & permitted; reportedly in use & closure by rule would be the highest-impact tightening available to export policy & BIS/Commerce rulemaking \\
+    \bottomrule
+  \end{tabular}
+\end{table}

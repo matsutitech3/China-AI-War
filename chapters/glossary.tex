@@ -1,0 +1,228 @@
+\chapter*{Notation, Abbreviations, and Glossary}
+\addcontentsline{toc}{chapter}{Notation, Abbreviations, and Glossary}
+\markboth{NOTATION AND GLOSSARY}{NOTATION AND GLOSSARY}
+
+This book draws on economics, computer architecture, semiconductor manufacturing, electrical-grid engineering, security research, and science policy, each of which brings its own vocabulary and its own habits of abbreviation. Several of them use the same letters for different things. What follows is the reference apparatus: the notation conventions, then the labelling schemes, then the mathematical symbols by chapter, then the acronyms, then the terms of art. Nothing here is required to follow the argument---every quantity is also defined where it is first used---but a reader who arrives at Chapter~\ref{ch:sizing} wondering what a BGPU is should not have to hunt for it.
+
+\section*{Notation conventions}
+
+\textbf{GPT.} Economists have used \textbf{GPT} for \emph{general-purpose technology} since the early 1990s. Throughout this book that sense is always written out in full; the bare acronym GPT always denotes the OpenAI model family.
+
+\textbf{The suffix discipline.} Six disciplines cannot share twenty-six letters without collision, and relying on context to separate them is not good enough for a document meant to be checked rather than read once. The rule adopted here is therefore mechanical: \emph{no bare single letter carries two different meanings across the book}. Where two fields would have claimed the same letter, one of three moves is made, and the reader can rely on all three.
+
+\emph{First, a roman suffix names the referent.} A subscript set in upright roman type is a label, not an index: $f_{\mathrm{heavy}}$ is the heavy-user fraction, $f_{\mathrm{front}}$ the frontier-workload share, $e_{\mathrm{INT8}}$ the INT8 efficiency, $d_{\mathrm{duty}}$ the activity-duty product, $r_{\mathrm{disc}}$ the discount rate, $T_{\mathrm{exit}}$ the exit horizon. Italic subscripts, by contrast, are running indices ($i$, $j$, $k$, $g$, $t$, $v$) and mean what indices normally mean.
+
+\emph{Second, a superscript names the physical dimension where two quantities share both letter and subscripts.} Electrical power is written $P^{\mathrm{el}}_{\bullet}$ throughout Chapter~\ref{ch:compute} and Appendix~\ref{app:lpddr}---$P^{\mathrm{el}}_{\text{facility}}$, $P^{\mathrm{el}}_{\mathrm{memory}}$---so that bare $P$ can remain the quality-adjusted price of Chapter~\ref{ch:theory} and Chapter~\ref{ch:trade} without ambiguity. Gross funnel output is $U^{\mathrm{gross}}$, distinguishing it from the net uplift $U$ that the same chapter reports.
+
+\emph{Third, a distinct letter or an alternative alphabet is chosen outright} where suffixing would be clumsy. Trust in the differentiated-competition model is $\tau$, not $T$, leaving $T$ for time and token streams. Fixed development cost is $K_i$, not $F_i$, leaving $F$ for arithmetic rates and facility equivalents. Decode throughput is $\Theta_m$ and $\Theta_s$, not $R_m$ and $R_s$, leaving $R$ for revenue and rent. Fleet availability is $\alpha$, not $a$, leaving $a$ for addressability in the AI4S funnel. Service-tier population share is $\varphi_i$, not $s_i$, leaving $s$ for speed-up. The frontier-expenditure share is $\Sigma_{\mathrm{front}}$, leaving the science-production metric $\boldsymbol{\mathcal{S}}$ as the only $S$-family object. In the security fault tree the common-cause \emph{events} are set in calligraphic type---$\mathcal{L}_{\mathrm{sys}}$, $\mathcal{M}$, $\mathcal{B}$, with beta factors $\beta_{\mathcal{M}}$ and $\beta_{\mathcal{B}}$---so that an event is never mistaken for a scalar.
+
+Two conventions are deliberately \emph{not} disambiguated because they are unambiguous by type. Probability is always written with the operator $\Pr(\cdot)$ rather than a letter. And the letter $C$ is cost everywhere in the mathematics; the claim identifiers CR-01\dots CR-12 of Appendix~\ref{app:dashboard} are an alphanumeric label, never a variable.
+
+\section*{Labelling schemes}
+
+The book runs several labelled systems. They are independent, and this is the index:
+
+\begin{description}\itemsep2pt
+  \item[Evidence grades {[V] [P] [A] [M] [R] [S]}] --- how well a claim is supported: \textbf{V} verified against primary or benchmark evidence; \textbf{P} primary claim by a party with direct knowledge (vendor, filing, government); \textbf{A} analyst estimate; \textbf{M} author-modeled; \textbf{R} roadmap or schedule; \textbf{S} scenario judgment. Defined in Section~\ref{sec:evidence}; the complete ledger is Appendix~\ref{app:evidence}.
+  \item[Propositions P1--P4] --- the four load-bearing claims, stated and falsified separately in Section~\ref{sec:propositions}: adoption (P1), sovereign compute (P2), rent destruction (P3), financial repricing (P4).
+  \item[Security evidence Levels A--D] --- Chapter~\ref{ch:order66}: \textbf{A} controlled technical demonstration; \textbf{B} observation on a real system or released artifact; \textbf{C} confirmed in-the-wild incident; \textbf{D} hypothesis or policy inference. Distinct from the evidence grades above.
+  \item[Certification Levels 0--5] --- Chapter~\ref{ch:trust}: the graded assurance ladder from hash-identified artifact (0) to critical-infrastructure assured (5).
+  \item[Parameter classes {[U] [M] [T] [P]} and {[F]}] --- Chapter~\ref{ch:sizing} only, and \emph{not} the evidence grades: \textbf{U} universal, \textbf{M} must-measure, \textbf{T} transferred, \textbf{P} policy choice, \textbf{F} future-scenario modifier. These classify model \emph{inputs} by portability across borders.
+  \item[Standards-maturity stages 1--4] --- Chapter~\ref{ch:governance}: de jure specification, open reference implementation, conformance suite, installed-base default.
+  \item[Playbook moves M1--M9 and steps 1--6] --- Chapter~\ref{ch:playbook}: M1--M9 are the tactical inventory of Table~\ref{tab:playbook}; steps 1--6 are the strategic sequence they serve.
+  \item[Claim IDs CR-01--CR-12 and falsification branches (a)--(f)] --- Appendix~\ref{app:dashboard} and Section~\ref{sec:falsify} respectively.
+\end{description}
+
+\section*{Mathematical symbols}
+
+\begin{longtable}{p{26mm}p{112mm}}
+\toprule
+Symbol & Meaning (and where introduced) \\
+\midrule
+\endfirsthead
+\multicolumn{2}{l}{\footnotesize\emph{Symbols, continued}} \\
+\toprule
+Symbol & Meaning \\
+\midrule
+\endhead
+\multicolumn{2}{l}{\textbf{Economics of intelligence (Chapter~\ref{ch:theory}, Chapter~\ref{ch:trade})}} \\
+\midrule
+$C_{\text{task}}$ & delivered cost of one \emph{completed task}, decomposed into seven terms below \\
+$c_{\text{pre}}, c_{\text{post}}$ & amortized pretraining and post-training cost \\
+$c_{\text{inf}}$ & inference cost---the only term falling at $\sim$10$\times$/year \\
+$c_{\text{int}}, c_{\text{org}}$ & integration and organizational-adoption cost \\
+$c_{\text{comp}}$ & complementary capital (pipelines, evaluation, process redesign, staff) \\
+$c_{\text{trust}}$ & assurance and certification cost \\
+$P$ & quality-adjusted price: price of a fixed amount of \emph{useful work}, not of a token \\
+$Q$ & quantity of delivered work per period \\
+$R$ & revenue, $R = PQ$ \\
+$\epsilon$ & own-price elasticity of demand, $\epsilon = -\partial\log Q/\partial\log P > 0$; $\epsilon>1$ is elastic \\
+$\Delta \log X$ & proportional (percentage) change in $X$ \\
+$i, j$ & indices for competing differentiated systems (own and rival) \\
+$q, \tau, I$ & capability, trust/assurance, and integration/distribution attributes of a system; $\tau$ (not $T$) is trust, by the suffix discipline above \\
+$\pi_i$ & profit of system $i$ \\
+$MC_i, K_i$ & marginal cost and fixed (development) cost of system $i$; $K$ rather than $F$ to keep $F$ for arithmetic rates \\
+$R_i^{\mathrm{complement}}$ & rent earned in adjacent layers because system $i$ is widely used \\
+$\mathrm{NPV}_v$ & net present value of data-centre vintage $v$; $u_t$ utilization in year $t$, $q_t$ delivered throughput, $P_t$ realized price, $r_{\mathrm{disc}}$ discount rate, $T_{\mathrm{exit}}$ exit horizon \\
+\midrule
+\multicolumn{2}{l}{\textbf{Architecture and serving (Chapter~\ref{ch:compute}, Appendix~\ref{app:lpddr})}} \\
+\midrule
+$T_{\mathrm{workflow}}$ & end-to-end wall-clock time $= T_{\mathrm{host}} + T_{\mathrm{accelerator}} + T_{\mathrm{movement}} + T_{\mathrm{synchronization}} + T_{\mathrm{orchestration}}$ \\
+$B_{\mathrm{token}}$ & bytes of memory traffic per generated token (six terms; Eq.~\ref{eq:btoken}) \\
+$N_{\mathrm{effective\ batch}}$ & concurrent sequences over which one weight read is amortized \\
+$F_{\mathrm{achieved}}, F_{\mathrm{token}}$ & sustained arithmetic rate, and arithmetic work per token \\
+$\mathrm{BW}_{\mathrm{achieved}}$ & delivered memory bandwidth under the real access pattern \\
+$\eta$ & delivered fraction of peak memory bandwidth; swept 0.53--0.70 \\
+$e_{\mathrm{INT8}}$ & sustained INT8 matrix-engine efficiency (threshold $\gtrsim$0.38) \\
+$C_{\mathrm{lifecycle}}$ & nine-term total cost of owning a platform (Eq.~\ref{eq:lifecycle}) \\
+$P^{\mathrm{el}}_{\text{facility}}$ & total facility \emph{electrical} power; IT load plus cooling and overhead. The \textsuperscript{el} superscript marks every power term, reserving bare $P$ for price \\
+$Y_{\mathrm{package}}$ & advanced-packaging yield, a product over all dies and interfaces \\
+$P^{\mathrm{el}}_{\mathrm{memory}}$ & full memory-subsystem power (DRAM, PHY, controller, PMIC, refresh, board, idle); likewise $P^{\mathrm{el}}_{\text{socket}}, P^{\mathrm{el}}_{\text{network}}, P^{\mathrm{el}}_{\text{storage}}, P^{\mathrm{el}}_{\text{cooling}}, P^{\mathrm{el}}_{\text{overhead}}$ \\
+$\Delta t_{\text{eff}}$ & effective delay in years purchased by an export control \\
+\midrule
+\multicolumn{2}{l}{\textbf{Security (Chapter~\ref{ch:order66})}} \\
+\midrule
+$\mathcal{L}_{\mathrm{sys}}$ & the systemic-loss \emph{event}; a fault tree over compromise, deployment, trigger, propagation, containment. Its probability is written $\Pr(\mathcal{L}_{\mathrm{sys}})$ \\
+$p_i$ & per-gate probabilities of the fault tree \\
+$\mathcal{M}, \mathcal{B}$ & common-cause events: monoculture depth ($\mathcal{M}$), and broad agent permissions ($\mathcal{B}$). Calligraphic, because they are events rather than scalars \\
+$\beta_{\mathcal{M}}, \beta_{\mathcal{B}}$ & beta factors---the share of a gate's failure attributable to each common cause \\
+\midrule
+\multicolumn{2}{l}{\textbf{AI for science (Chapter~\ref{ch:prize})}} \\
+\midrule
+$a$ & addressability: share of research effort reachable by current AI \\
+$s$ & speed-up on the addressable share; $(s{-}1)$ is the gain over baseline \\
+$v$ & validation survival: fraction of accelerated output that withstands scrutiny \\
+$d$ & deployment conversion: fraction of validated results that reach use \\
+$\ell_j$ & lag-and-friction discount (calendar delay, organizational adjustment, regulation) \\
+$w_j$ & share of global research effort in task class $j$ \\
+$U, U_{\mathrm{AI4S}}$ & incremental uplift to realized research output; task-weighted form in Eq.~\ref{eq:funnel-weighted} \\
+$U^{\mathrm{gross}}$ & gross converted output, $U^{\mathrm{gross}} = asvd$---contrast the net uplift $U = a(s{-}1)vd$. Not to be confused with the capacity requirements $G_{\bullet}$ of Chapter~\ref{ch:sizing} \\
+$\boldsymbol{\mathcal{S}}$ & scientific production metric: a \emph{vector} of validated outcomes over scalar cost \\
+\midrule
+\multicolumn{2}{l}{\textbf{National sizing (Chapter~\ref{ch:sizing}, Chapter~\ref{ch:consortium})}} \\
+\midrule
+BGPU & Baseline GPU: the AI-serving throughput of an 8\,TB/s-HBM reference accelerator. A planning unit, not a product \\
+BGPU$_{\mathrm{BW}}$ & separate bandwidth currency for classical simulation; \emph{never} summed with serving-BGPU \\
+$\gamma_g, \delta_g$ & conversion factor for accelerator $g$, and its benchmark-adjustment band \\
+$H_{\mathrm{yr}}$ & effective delivered hours per installed BGPU-year ($=\alpha\times 8{,}760 = 7{,}884$) \\
+$\alpha$ & fleet availability: fraction of wall-clock time an installed device is usable in production; 0.90 at the reference fleet. Written $\alpha$, not $a$, to keep $a$ for addressability \\
+$N$ & open-tier researcher population \\
+$\varphi_i, u_i, r_i$ & service-tier population share ($\varphi$, not $s$, which is speed-up), duty factor, and active output-token rate in tier $i$ \\
+$T_{\mathrm{nat}}$ & national output-token stream \\
+$k$ & BGPU cost per token per second of the canonical serving configuration \\
+$\Theta_m, \Theta_s$ & master and sub-agent decode throughput in tokens per second ($\Theta$, not $R$, which is revenue); $\mathrm{BW}$ delivered bandwidth, $L_m$ master resident context length, $b_{\mathrm{KV}}$ KV-cache bytes per token of context \\
+$G_{\mathrm{tok}}, G_{\mathrm{sci}}$ & token-service and scientific-execution capacity requirements \\
+$W_{\mathrm{ag}}$ & annual agentic-execution workload in delivered BGPU-hours \\
+$f_{\mathrm{heavy}}, d_{\mathrm{duty}},$ \newline $w_{\mathrm{heavy}}$ & heavy-user fraction, activity-duty product, and per-heavy-user daily driver \\
+$\chi_{\mathrm{sim}}$ & simulation share: fraction of agentic execution that is simulation rather than training \\
+$n_{\mathrm{prog}}, w_{\mathrm{prog}}$ & count and annual cost of persistent-surrogate programs \\
+$F_{\mathrm{eq}}, g_{\mathrm{fac}}$ & large-instrument facility equivalents, and installed BGPU each requires \\
+$\mathbf{B}_g, \omega_k$ & device capability vector for accelerator $g$ (seven components, each normalized to the reference device) and the declared national workload mix over those components \\
+$\Sigma_{\mathrm{front}}(f_{\mathrm{front}},\rho)$ & frontier share of AI4S expenditure at frontier-workload share $f_{\mathrm{front}}$ and frontier price premium $\rho$ \\
+\bottomrule
+\end{longtable}
+
+\section*{Abbreviations}
+
+\begin{longtable}{p{26mm}p{112mm}}
+\toprule
+Abbreviation & Expansion \\
+\midrule
+\endfirsthead
+\multicolumn{2}{l}{\footnotesize\emph{Abbreviations, continued}} \\
+\toprule
+Abbreviation & Expansion \\
+\midrule
+\endhead
+\multicolumn{2}{l}{\textbf{Models and machine learning}} \\
+\midrule
+LLM & large language model \\
+MoE & mixture of experts---a model where each token activates only a small subset of parameters \\
+MLA & multi-head latent attention; GQA grouped-query attention; SWA sliding-window attention \\
+KV cache & key--value cache: the stored attention state of the context so far \\
+DSA & DeepSeek sparse attention \\
+GRPO & group relative policy optimization (critic-free reinforcement learning) \\
+MTP & multi-token prediction \\
+QAT & quantization-aware training \\
+FP8, FP4, BF16, INT8, INT4, MXFP4, UE8M0 & numeric formats: floating-point and integer, at the stated bit widths; MXFP4 is a block-scaled 4-bit float; UE8M0 an 8-bit scale format targeted at domestic Chinese silicon \\
+VLA & vision--language--action model (robotics) \\
+API & application programming interface \\
+RLHF & reinforcement learning from human feedback \\
+HLE, GPQA, AIME, SWE-bench, MMLU & capability benchmarks (Humanity's Last Exam; graduate-level Q\&A; a mathematics olympiad set; software-engineering task suites) \\
+TTC & test-time compute (parallel or extended reasoning at inference) \\
+Elo & a relative rating derived from pairwise preference comparisons \\
+\midrule
+\multicolumn{2}{l}{\textbf{Hardware, architecture, and manufacturing}} \\
+\midrule
+ISA & instruction set architecture---the contract between software and processor \\
+ABI & application binary interface \\
+RISC-V & an open, royalty-free ISA; RVV its vector extension, RVA23 a profile \\
+SVE, SME & Arm's scalable vector and scalable matrix extensions \\
+IME, AME, VME & RISC-V integrated, attached, and vector--matrix extensions \\
+HBM & high-bandwidth memory---stacked DRAM on the processor package \\
+LPDDR & low-power double-data-rate memory---commodity mobile-class DRAM \\
+DRAM & dynamic random-access memory \\
+SOCAMM & a JEDEC module standard putting LPDDR on a server module \\
+PHY, PMIC & physical-layer interface circuitry; power-management integrated circuit \\
+TSV & through-silicon via---a vertical interconnect through a die \\
+EUV, DUV & extreme- and deep-ultraviolet lithography \\
+EDA & electronic design automation---chip-design software \\
+CUDA & NVIDIA's proprietary parallel-computing platform; CANN Huawei's analogue \\
+NVLink, UnifiedBus (UB), UALink & accelerator interconnect specifications \\
+NPU, TPU & neural / tensor processing unit \\
+MFU & model FLOP utilization---achieved fraction of peak arithmetic throughput \\
+HPL, HPCG & the compute-bound and bandwidth-bound supercomputing benchmarks; TOP500 and Green500 the resulting lists \\
+FLOP/s & floating-point operations per second; EF, PF, TF exa-, peta-, tera- \\
+TOPS & integer operations per second (trillions) \\
+PUE & power usage effectiveness---facility power divided by IT power \\
+TCO & total cost of ownership \\
+\midrule
+\multicolumn{2}{l}{\textbf{Energy and grid}} \\
+\midrule
+UHV, UHVDC & ultra-high-voltage (direct-current) transmission \\
+BESS & battery energy storage system \\
+RTO / ISO & regional transmission organization; PJM, ERCOT, MISO, SPP, CAISO are the US regional grid operators \\
+CHP & combined heat and power \\
+\midrule
+\multicolumn{2}{l}{\textbf{Institutions, policy, and finance}} \\
+\midrule
+AI4S & AI for Science \\
+MIIT, CAC, MOST, NDRC & Chinese ministries: Industry and Information Technology; Cyberspace Administration; Science and Technology; National Development and Reform Commission \\
+FYP & Five-Year Plan; SEI Strategic Emerging Industries; GB \emph{Guobiao} national standards \\
+NEV & new-energy vehicle; FiT feed-in tariff; LFP lithium iron phosphate \\
+BIS, EAR & US Bureau of Industry and Security; Export Administration Regulations \\
+WAICO & World AI Cooperation Organization \\
+DOE, ANL, ORNL, BNL & US Department of Energy and its Argonne, Oak Ridge, and Brookhaven laboratories \\
+ECMWF & European Centre for Medium-Range Weather Forecasts; AIFS its AI forecasting system \\
+ARR & annual recurring revenue (an extrapolated run rate, not trailing revenue) \\
+CDS & credit default swap; bps basis points (hundredths of a percent) \\
+RPO & remaining performance obligations---contracted but unrecognized revenue \\
+SPV & special-purpose vehicle (off-balance-sheet financing) \\
+capex, NPV, FCF & capital expenditure; net present value; free cash flow \\
+PPP & purchasing power parity \\
+\bottomrule
+\end{longtable}
+
+\section*{Terms of art}
+
+\begin{description}\itemsep3pt
+  \item[Prefill and decode] The two phases of transformer inference. \emph{Prefill} processes the whole input prompt at once and is compute-bound; \emph{decode} generates output one token at a time, re-reading model weights and attention state for each, and is memory-bandwidth-bound. Almost every architectural argument in this book turns on the difference.
+  \item[Roofline; operational (arithmetic) intensity; ridge point] A performance model in which achievable speed is bounded by $\min(\text{peak compute},\ \text{intensity}\times\text{bandwidth})$. \emph{Operational intensity} is arithmetic performed per byte of memory traffic; the \emph{ridge point} is the intensity at which the binding constraint switches from bandwidth to compute. Workloads below the ridge are memory-bound.
+  \item[The knee] The bandwidth below which a design's achievable utilization falls sharply---in this book, the $\sim$5\,TB/s requirement of the capacity-first memory architecture.
+  \item[All-reduce, all-to-all] Collective communication patterns. \emph{All-reduce} combines values across all devices and returns the result to each; \emph{all-to-all} exchanges distinct data between every pair, and is what mixture-of-experts routing requires.
+  \item[Expert parallelism, expert imbalance] Distributing a mixture-of-experts model's experts across devices. \emph{Imbalance} is uneven token routing, which idles devices and is the sparse workload's most under-reported failure mode.
+  \item[Wright's law / learning curve] The empirical regularity that unit cost falls by a constant percentage for each doubling of cumulative production. The engine of every Part~I precedent.
+  \item[Jevons paradox] The observation, from Jevons on coal, that efficiency gains can \emph{raise} total consumption of a resource when demand is sufficiently elastic. In this book's terms, the case $\epsilon>1$.
+  \item[Involution (\emph{neijuan})] The Chinese term for self-defeating internal competition: firms in a saturated sector expending ever more effort for shrinking margins. The ``anti-involution'' campaign is the state's attempt to consolidate such sectors.
+  \item[Tape-out; known-good die; chipkill] Releasing a completed chip design to manufacturing; a die tested as functional before packaging; a memory-protection scheme surviving the failure of an entire device.
+  \item[Pareto frontier] The set of options none of which can be improved on one dimension without worsening another---here, the cost-versus-capability frontier of available models.
+  \item[Busbar; firm power; curtailment; interconnection queue] A \emph{busbar} is the physical junction where generation meets the transmission network, and the point at which delivered price and available capacity are actually determined. \emph{Firm} power is capacity guaranteed available when called; \emph{curtailment} is generation deliberately not taken, usually because transmission or demand is unavailable; the \emph{interconnection queue} is the backlog of projects awaiting permission to connect. A \emph{capacity auction} procures firm capacity for a future delivery year.
+  \item[Vintage] A cohort of data-centre capacity built in the same period, sharing hardware generation, contract terms, and financing cost---the unit at which returns should be assessed.
+  \item[Neocloud] A specialist provider renting accelerator capacity, typically financed by debt secured on the hardware itself.
+  \item[Abliteration] A community technique that identifies and removes a model's refusal or suppression behaviour by editing activations, without full retraining.
+  \item[Sim-to-real] The transfer of robot policies trained in simulation to physical hardware, and the gap that transfer exposes.
+  \item[Estimand] The quantity a study actually estimates, as distinct from the quantity of interest---the distinction that makes national compute estimates comparable or not.
+  \item[Notified body] Under EU law, an organization designated to assess conformity before a product may be placed on the market. The institutional form this book argues is missing for model artifacts.
+  \item[Chokepoint decay] This book's term for the erosion of a control's effectiveness as stockpiles, diversion, substitution, and architectural redesign accumulate.
+  \item[Mate~60 moment] Shorthand for a public demonstration that a control was ineffective, after the 2023 Huawei handset built on domestic 7\,nm-class silicon. Used here for the first frontier model trained end-to-end on a domestic stack.
+\end{description}

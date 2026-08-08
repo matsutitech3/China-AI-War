@@ -1,0 +1,146 @@
+\chapter{The Third Path: An International Consortium for Open Scientific AI}
+\chaptermark{The Third Path}
+\label{ch:consortium}
+
+Chapter~\ref{ch:strategies} gave each actor an instruction; this chapter builds the institution that three of those instructions require. The argument proceeds from an observation that the preceding chapters have made unavoidable: for every country that is neither the United States nor China, the two available strategies are both unsatisfactory. Permanent dependence on a small number of foreign commercial providers cedes cost, control, and continuity. Isolated national sovereign-AI programs duplicate the most expensive activity in the industry at sub-scale, and---as Chapter~\ref{ch:trade} showed---at valuations that assume rents no one may collect. The third path is neither: an international, institutionally neutral capability that pools open foundation-model development, scientific data stewardship, federated access to national compute, and a route from public research assets into industrial use. This chapter develops that design, its economics, and its relationship to the war the rest of the book describes. Its substance draws on a July 2026 working discussion between the author and Thomas Schulthess, director of the Swiss National Supercomputing Centre, whose conclusions are cited here as a discussion record rather than as a published proposal~\cite{consortium-record}.
+
+The framing claim is worth stating plainly, because it inverts the usual vocabulary: what is needed is a \emph{global} form of sovereign capability---sovereignty not through national isolation, but through shared ownership of the knowledge, data practices, compute access, and institutional capacity required to build and operate scientific AI. A coalition that holds those things collectively has more strategic control than any of its members would have alone, and more than any of them can obtain by buying tokens from either bloc.
+
+\section{The economics: why the token price is the science budget}
+\label{sec:ai4s-econ}
+
+The decisive argument is financial, and it is one that neither the model-capability literature nor the geopolitics literature makes, because it requires a workload model rather than a benchmark.
+
+Scientific computing is not a language-model workload. Measurements of a realistic AI-for-Science portfolio---traditional simulation, training and inference for non-language scientific models, search, data preparation, and agentic or frontier-LLM use---put the frontier-LLM and agentic share of \emph{physical} workload at roughly 14\%, with simulation and domain-specific AI consuming the rest. The language model is the connective layer of a scientific workflow, not the whole system~\cite{consortium-record}. That fact is usually deployed as a reassurance. It is the opposite, once the price asymmetry is applied: commercially purchased frontier tokens carry an estimated 20--60$\times$ unit-price premium relative to equivalent service from infrastructure and open models under institutional control [A/M].
+
+The consequence is arithmetic. If a fraction $f_{\mathrm{front}}$ of physical work is served by purchased frontier tokens at a relative unit price $\rho$, the share of total expenditure consumed by that minority workload is
+\[
+\Sigma_{\mathrm{front}}(f_{\mathrm{front}},\rho) \;=\; \frac{f_{\mathrm{front}}\,\rho}{(1-f_{\mathrm{front}}) + f_{\mathrm{front}}\,\rho},
+\]
+which for $f_{\mathrm{front}} = 0.14$ gives $\Sigma_{\mathrm{front}} = 76.5\%$ at $\rho = 20$ and $\Sigma_{\mathrm{front}} = 90.7\%$ at $\rho = 60$~\cite{consortium-record}. Table~\ref{tab:ai4s-cost} shows the sensitivity. \emph{A workload share of one seventh becomes a budget share of three quarters to nine tenths.}
+
+\input{figs/fig-ai4s-cost}
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \caption{Share of total AI-for-Science expenditure consumed by purchased frontier tokens, $\Sigma_{\mathrm{front}}(f_{\mathrm{front}},\rho)$, as a function of the frontier-workload fraction $f_{\mathrm{front}}$ and the price premium $\rho$. Illustrative consequence of the stated assumptions [M], not an audited budget forecast.}
+  \label{tab:ai4s-cost}
+  \begin{tabular}{lrrrrr}
+    \toprule
+    & \multicolumn{5}{c}{Price premium $r$ (purchased frontier vs.\ self-operated open)} \\
+    \cmidrule(l){2-6}
+    Frontier share $f$ & $1\times$ & $5\times$ & $20\times$ & $40\times$ & $60\times$ \\
+    \midrule
+    5\%  & 5.0\%  & 20.8\% & 51.3\% & 67.8\% & 75.9\% \\
+    14\% & 14.0\% & 44.9\% & 76.5\% & 86.7\% & 90.7\% \\
+    25\% & 25.0\% & 62.5\% & 87.0\% & 93.0\% & 95.2\% \\
+    40\% & 40.0\% & 76.9\% & 93.0\% & 96.4\% & 97.6\% \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Three implications follow, and they connect this chapter to the book's central mechanism. First, \emph{whoever sets the frontier token price sets the science budget of every institution that buys it}---which is the proposition~P3 of Section~\ref{sec:propositions}, applied not to enterprise software margins but to national research capacity. A country that funds a supercomputer and then rents its intelligence layer has outsourced the majority of its own AI-for-Science expenditure to a foreign price list. Second, the same arithmetic explains why the Chinese price collapse (Chapter~\ref{ch:model}) is strategically effective without any coercion whatsoever: at $r$ near unity---which cheap open weights on domestic hardware deliver---the budget problem simply dissolves, and the institution that solved it that way has acquired a dependency it did not negotiate. Third, it quantifies what open capability is \emph{worth} to a public research system: not the marginal benchmark point, but the difference between spending 14\% and 90\% of a national AI budget on one layer.
+
+The corresponding service design is a tiered one: a high-end path for genuinely demanding frontier use, cheaper models for routine tasks, and extensive support for the scientific long tail---where documentation, model selection, workflow integration, and knowledge assistance may expand effective coverage as much as raw accelerator capacity does~\cite{consortium-record}. The consortium's financial case must therefore separate physical utilization from expenditure. That distinction is the policy argument, not an implementation detail.
+
+\section{Open pretraining as insurance, not as a benchmark contest}
+
+The second pillar is capability retention, and it requires stating an uncomfortable proposition honestly: a national or consortium open model may never be the best production choice, and building it is still correct.
+
+The reasoning is explicitly not about winning a leaderboard. It is that the return on pretraining is \emph{people who know how to do it}---to curate data at scale, run and debug a large training campaign, evaluate it, and operate the result. Fine-tuning or distilling someone else's model is valuable and much cheaper, but it does not maintain the full capability, and a capability not exercised is a capability lost~\cite{consortium-record}. Switzerland's continued investment in a fully open model is defensible on exactly this basis, as is Japan's; so is the proposition that near-term scientific applications should meanwhile use the best available open-weight models, including Chinese ones, without embarrassment.
+
+The insurance covers three named risks, none of which is a prediction of bad faith. \emph{Policy and continuity risk}: China is presently a strong supporter of open release, but a future decision could restrict release, change terms, or prioritize domestic access---and this book's own Chapter~\ref{ch:playbook} documents that the endgame of the industrial playbook is precisely the conversion of dominance into gatekeeping, executed in solar, in batteries, and in rare earths. To rely on the openness of the current phase is to assume that this instance will not follow the pattern the other three did. \emph{Verification risk}: the contents and latent behavior of externally produced models cannot always be independently established---the entire subject of Chapter~\ref{ch:order66}. \emph{Regulatory risk}: scientific domains such as biology, chemistry, materials, and robotics are inherently dual-use, and a broad restriction intended to prevent misuse can compromise legitimate research; an institution that holds its own models and its own evaluation evidence has a far stronger basis for arguing proportionate governance than one that can only make assurances about a vendor~\cite{consortium-record}.
+
+Note what this does to the book's thesis, honestly stated: a successful consortium is a partial falsifier of the strongest form of the convergence argument. If a neutral coalition holds genuine open pretraining capability, then the commons is no longer singularly Chinese, the monoculture of Chapter~\ref{ch:order66} thins, and the certification authority has a credible home. That is the point. This chapter is the constructive branch of a book whose diagnosis is otherwise pessimistic.
+
+\section{Design: a shared platform with friendly competition}
+
+The organizational lesson the participants drew from China is not the one usually drawn. China's strength in this domain was attributed in significant part to a government role that \emph{sets the stage and then allows intense bottom-up activity}: many teams and companies compete, talent emerges outside any single central organization, and successful ideas scale rapidly~\cite{consortium-record}. The lesson is therefore not to reproduce a command structure---which is what most national AI programs instinctively build---but to create conditions under which many capable groups can participate. Chapter~\ref{ch:playbook}'s move~4 said the same thing in industrial terms: Beijing floods the sector and lets competition select. A consortium that funds one model team in one country reproduces the failure mode, not the success.
+
+The HPC community supplies the working analogy: centers share software, publish results, and use common platforms while competing hard for the best science and the best performance. An international AI framework can similarly support multiple models, scientific domains, and implementation teams on a common data, compute, and governance base. Central governance should protect openness and continuity without suppressing technical diversity~\cite{consortium-record}.
+
+Four functions define the entity, and they are the test of whether it needs to exist:
+
+\emph{Federated compute.} Countries and centers contribute capacity into a pool under common accounting rather than transferring assets to one site. The concrete proof-of-concept discussed is a joint training campaign---a next-generation open model of order 15 trillion tokens, divided among compatible systems in several countries, with more than one national partner contributing substantial resources~\cite{consortium-record}. What such a pilot buys is not primarily the model: it is shared investment, shared know-how, and a live test of cross-border accounting, scheduling, licensing, and reproducibility. Those mechanisms, once built, are reusable for everything else.
+
+\emph{Scientific data stewardship.} Cleaning, curating, documenting, and making data accountable is the service most users actually need---small and medium enterprises typically need more help with data preparation than with machine-learning algorithms---and it is the service for which science is uniquely well equipped, because reproducibility and provenance are already scientific requirements rather than compliance overhead~\cite{consortium-record}.
+
+\emph{Model production and lifecycle.} Producing artifacts is not enough; regulated and socially critical uses require continuity. A clinical model may need two or three years to certify and must remain supportable five years later; users must be confident that the model, its data lineage, its interfaces, and a responsible organization will still exist. That requirement argues for multi-country ownership and explicit service obligations, and it is the strongest reason the vehicle cannot be a rotating academic project~\cite{consortium-record}.
+
+\emph{Professional operation.} A secretariat and engineering organization with paid staff who can organize programs, secure commitments, operate services, assist companies, and incubate firms. A periodic meeting series is not a substitute, and the honest reason the existing landscape has a gap is that convening is cheap and operating is not.
+
+\section{What already exists, and what is missing}
+
+Creating another organization is justified only if the existing ones cannot execute the required functions, and the discipline of asking that question first is what distinguishes a proposal from an announcement. The relevant map~\cite{consortium-record}: model-distribution licensing has become tractable through emerging open model-distribution license frameworks, with adoption by at least one major infrastructure vendor as evidence that the legal layer is solvable; the High Performance Software Foundation covers part of the software layer but provides neither data nor compute; the International Computation and AI Network links compute providers, philanthropic funding, and socially valuable AI projects including access for less-resourced communities, and is the closest precedent for the access mission; and the Trillion Parameter Consortium holds relevant relationships and assets but has not developed the operational, financing, and industrial-incubation capacity this concept requires---in part because much of the US laboratory community is now absorbed by national initiatives including the Genesis Mission, the American Science Cloud, and a transformational-models consortium.
+
+What is left unserved by all of them, and therefore defines the new entity: federated compute with real accounting, scientific data operations at production quality, model production with lifecycle obligations, professional program management, and industrial translation. Whether the vehicle is a new foundation, a hosted program under an existing one, a rejuvenated consortium, or a contractual federation of national centers is a question for a formal options analysis---and should be settled by which structure can perform those five functions, not by institutional preference.
+
+\section{Industry without expropriation, and the layered data policy}
+
+The consortium fails if it is a public-sector club, and it fails differently if it demands that companies surrender proprietary data. The resolution is layered.
+
+The shared scientific base---models, workflows, evaluation, blueprints---is open and accountable. Above it, companies build closed, valuable layers. Firms may contribute data voluntarily in exchange for credits or preferential access; they may also retain everything and adapt the shared models privately through secure post-training, federated methods, agents, and workflow integration. Pharmaceutical and materials workflows already operate this way~\cite{consortium-record}. A single mandatory data policy would be counterproductive; an advisory-plus-open-blueprint model, in which a company receives the design and operates its own environment while retaining its secrets, is the constructive pattern.
+
+One technical caution belongs in the record because it is frequently violated in national industrial programs: training a small isolated model on a single company's proprietary dataset is usually the wrong architecture. Scaling behavior favors starting from a broad model trained on large scientific corpora and then adding the special data. \emph{Science can establish the credible open base; industry builds the closed, valuable layers above it}~\cite{consortium-record}. That division is also the honest answer to the question of why a public consortium should exist at all in a market with well-capitalized private labs: the base is a public good with private complements, which is the textbook case for public provision.
+
+The financing follows the same layering. Government infrastructure and national centers contribute systems, scientific software, models, and data; private partners make upfront commitments or bear investment risk; researchers pay usage from grants; commercial users pay for service; and an intermediary operating organization recovers cost while preserving research access~\cite{consortium-record}. Neither pure public appropriation---which Europe's gigafactory experience suggests is insufficient on its own---nor pure commercial provision solves the problem. The unit economics must be modeled explicitly: capital sources, operating costs, reserved versus burst capacity, grant-funded use, commercial pricing, cost recovery, and safeguards for scientific access, with legal feasibility tested in parallel.
+
+\section{The long tail and the Global South as strategy}
+
+The phrase ``long tail'' carries two meanings, and the consortium needs both. One is the large population of scientists who will never train a frontier model but need AI assistance to do their work---a group for which documentation, model selection, and workflow support matter more than accelerator hours. The other is the global pool of talented people who lack access to modern compute, data, and expert networks at all~\cite{consortium-record}.
+
+The strategic framing matters more than the moral one, and it is the framing this book's Chapter~\ref{ch:model} would predict. Africa and comparable regions should be treated as an opportunity and a source of talent, scientific questions, data, and future partnerships---not as recipients of assistance or as a migration risk. The alternative is not neutrality: it is ceding the default to whoever does show up with a stack, and Chapter~\ref{ch:model} documented in detail who is currently showing up, with what pricing, and inside which governance forum. A transparent path by which strong projects and people enter the ecosystem, receive suitable resources, and contribute back is simultaneously an equity program and a talent-discovery program---and, given the talent data of Chapter~\ref{ch:analogy}, talent discovery is the input where the returns are highest and the competition least priced.
+
+\section{Sequence, and the test of seriousness}
+
+The proposal becomes credible only when it moves past aspiration, and the sequence is deliberately unglamorous~\cite{consortium-record}. \emph{Phase~1---frame the proposition}: complete the cost model of Section~\ref{sec:ai4s-econ}, map the existing organizations honestly, and issue a short founding concept whose central content is a precise statement of what is missing. \emph{Phase~2---prove federation}: secure a small founding group---three to five countries that can commit real compute, data, people, or funds rather than endorse a declaration---and run one visible pilot combining resources from more than one country under common accounting, licensing, and reproducibility rules. \emph{Phase~3---institutionalize and scale}: choose the legal vehicle, recruit a professional secretariat, establish the public-private financing structure, launch the industrial and Global South tracks, and negotiate multi-year vendor and government commitments.
+
+A five-country story with leading computing centers and a visible pilot is materially more persuasive to technology vendors and governments than a general declaration with a large but inactive membership. That is also the criterion by which readers should judge whether this chapter describes a real strategy or a wish: the open design questions---institutional vehicle, founding scope, model portfolio, the precise boundary of openness across weights, code, recipes, data descriptions and evaluation, compute accounting across heterogeneous contributions, data governance including provenance and later withdrawal, vendor neutrality without vendor dependence, the public--private financing split, and who carries the cost and liability of multi-year continuity---are all unresolved, and each has a wrong answer that would render the entity ceremonial.
+
+\section{The institution, specified operationally}
+\label{sec:consortium-spec}
+
+A proposal that names functions but not instruments is a wish. Ten design parameters have to be settled before anything can be signed, and stating them---together with this book's recommended answer and the failure mode of getting each wrong---is the difference between a concept paper and an announcement.
+
+\begin{table}[htbp]
+  \centering
+  \scriptsize
+  \caption{Operational design parameters for the consortium. Recommendations are the author's [S]; the failure column is why the parameter cannot be deferred.}
+  \label{tab:consortium-spec}
+  \begin{tabular}{p{28mm}p{56mm}p{52mm}}
+    \toprule
+    Parameter & Recommended answer & Failure mode if deferred \\
+    \midrule
+    Legal form and host jurisdiction & Treaty-adjacent foundation in a neutral, non-aligned-capable jurisdiction with a track record of hosting technical bodies; not a national programme with foreign guests & Perceived as a bloc instrument; loses the Global South and one of the two principals \\
+    \addlinespace
+    Membership classes and votes & States, computing centres, universities, and companies in separate classes; compute-and-data contribution weights votes, capped so no member exceeds a blocking share & Largest contributor becomes the owner; smaller members stop contributing \\
+    \addlinespace
+    Funding formula & Public base (infrastructure in kind, assessed contributions), private risk capital for the industrial track, grants for research use, fees for commercial service & Pure appropriation is insufficient; pure fees excludes the long tail \\
+    \addlinespace
+    Export-control compliance & Explicit compliance architecture per member jurisdiction, with segmented enclaves so that a control on one member does not halt the whole federation & One member's national rule silently governs everyone \\
+    \addlinespace
+    Model and data licensing & Open weights plus documented recipes under a model-distribution licence; layered data policy (open commons, voluntary contribution with credits, secure private adaptation) & Ambiguity here blocks industrial participation entirely \\
+    \addlinespace
+    Compute allocation & Published accounting unit (BGPU, Chapter~\ref{ch:sizing}), peer-reviewed scientific allocation, reserved and burst tiers, cross-border settlement & Heterogeneous contributions become incomparable; federation degrades to a mailing list \\
+    \addlinespace
+    Security certification authority & Operates the Level 0--5 ladder of Chapter~\ref{ch:trust}; publishes evaluations irrespective of artifact origin & The vacancy of Chapter~\ref{ch:governance} stays vacant, or is filled by a supplier \\
+    \addlinespace
+    Incident response and revocation & Named duty officer, disclosure obligations, artifact revocation and mirror withdrawal procedures, coordinated with national CERTs & An agentic incident with no owner destroys the institution's credibility in one week \\
+    \addlinespace
+    Treatment of Chinese and US technology & Strictly capability- and evidence-based: any artifact may be evaluated, adopted, or rejected on published criteria; no origin-based rule in either direction & Origin rules make the body a bloc instrument and forfeit its only durable asset, neutrality \\
+    \addlinespace
+    Procurement neutrality & Vendor-neutral units and interfaces, conflict-of-interest rules for anchor partners, no single-supplier dependency in the reference stack & Anchor vendor captures the standard; members lose the sovereignty they joined for \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+One framing point governs all ten rows. The institution is more credible---and more useful---if it is \emph{not} constituted as an anti-American or anti-Chinese bloc, but as a neutral interoperability, evaluation, and scientific-compute commons that both principals can transact with and neither controls. That is not diplomatic softness; it is the only configuration in which the certification function has value, since a certificate issued by one bloc about the other bloc's artifacts is worth nothing to anybody.
+
+\section{Why this is the strategically decisive institution}
+
+Return to the book's argument. Chapter~\ref{ch:model} established that the model layer has been commoditized and that the commons is currently Chinese-led. Chapter~\ref{ch:compute} established that the compute substrate is going open and that a capacity-first architecture puts sovereign-scale training within reach of national institutions. Chapter~\ref{ch:trust} identified the certification layer as unowned. Chapter~\ref{ch:order66} showed why an unowned certification layer over a monoculture with delegated authority is a systemic risk rather than a governance inconvenience. Chapter~\ref{ch:trade} showed that the financial structures pricing permanent scarcity are the fragile part of the Western position, and Chapter~\ref{ch:strategies} concluded that the correct move for everyone outside the two blocs is to build on the commons rather than to defend a rent.
+
+The consortium is where those threads terminate. It is the entity that can hold open pretraining capability as insurance without needing it to win a benchmark; that can operate the trust stack---signed manifests, reproducible lineage, injection and backdoor evaluation on integrations, national mirrors---with credibility that neither bloc's own institutions can claim for the other's artifacts; that can pool the sovereign-scale clusters the LPDDR-class architecture of Chapter~\ref{ch:compute} makes affordable; and that can carry the multi-year continuity obligations without which no regulated deployment is possible. It is, in short, the institutional form of the only strategy this book's analysis endorses for the countries that are not superpowers: take the commons, verify it, contribute to it, and own the layer that makes it safe to use.
+
+Whether that institution gets built in the next two years or the next ten is, on the evidence of Part~I, the difference between shaping the outcome and documenting it.

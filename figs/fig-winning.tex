@@ -1,0 +1,34 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  every node/.style={font=\scriptsize},
+  lay/.style={draw=inkMut, line width=0.6pt, rounded corners=2pt, align=left,
+              inner sep=4pt, text width=38mm, minimum height=12mm},
+  sc/.style={align=center, font=\scriptsize, text width=26mm, inner sep=2pt},
+  ar/.style={-{Stealth[length=4pt]}, line width=0.9pt, color=inkSec},
+]
+\node[lay, fill=sOne!10, draw=sOne] (l1) at (0,0) {\textbf{1. Production}\\ best models, most hardware};
+\node[lay, fill=sThree!10, draw=sThree, below=6mm of l1] (l2) {\textbf{2. Platform}\\ standards, interfaces, defaults};
+\node[lay, fill=sTwo!10, draw=sTwo, below=6mm of l2] (l3) {\textbf{3. Diffusion}\\ deployment across firms, labs, state};
+\node[lay, fill=sFour!10, draw=sFour, below=6mm of l3] (l4) {\textbf{4. Productivity}\\ measured economic and scientific output};
+\foreach \a/\b in {l1/l2, l2/l3, l3/l4} {\draw[ar] (\a) -- (\b);}
+
+\node[sc, anchor=west] at ($(l1.east)+(1.4,1.1)$) {\textbf{US position}};
+\node[sc, anchor=west] at ($(l1.east)+(4.7,1.1)$) {\textbf{China position}};
+\node[sc, anchor=west, fill=sOne!16, rounded corners=2pt] at ($(l1.east)+(1.4,0)$) {clear lead};
+\node[sc, anchor=west, fill=surf, rounded corners=2pt] at ($(l1.east)+(4.7,0)$) {fast follower};
+\node[sc, anchor=west, fill=surf, rounded corners=2pt] at ($(l2.east)+(1.4,0)$) {conceding layer by layer};
+\node[sc, anchor=west, fill=sThree!16, rounded corners=2pt] at ($(l2.east)+(4.7,0)$) {leading};
+\node[sc, anchor=west, fill=surf, rounded corners=2pt] at ($(l3.east)+(1.4,0)$) {high-value, narrow};
+\node[sc, anchor=west, fill=sThree!16, rounded corners=2pt] at ($(l3.east)+(4.7,0)$) {high-volume, broad};
+\node[sc, anchor=west, fill=surf, rounded corners=2pt] at ($(l4.east)+(1.4,0)$) {unresolved};
+\node[sc, anchor=west, fill=surf, rounded corners=2pt] at ($(l4.east)+(4.7,0)$) {unresolved};
+
+\end{tikzpicture}
+\caption[Four layers of winning a general-purpose technology]{Winning has four meanings, and they are won
+separately. The press scores layer~1; the general-purpose-technology literature locates most realized value at layers~3 and~4, arriving
+late and only after complementary investment~\cite{brynjolfsson2021}. Positions shown are this book's assessment
+as of the version stamp [S]; layer~4 is genuinely unresolved for both parties, which is the honest state of the
+question.}
+\label{fig:winning}
+\end{figure}

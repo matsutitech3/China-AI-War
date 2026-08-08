@@ -1,0 +1,55 @@
+\chapter{The Playbook Distilled}
+\label{ch:playbook}
+
+Before turning to AI, it is worth compressing the three surveys into the invariant structure. Table~\ref{tab:playbook} aligns the moves across the three won wars and their emerging AI equivalents; the rest of this short chapter states the mechanism in general form.
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \caption{The playbook across four wars. AI-column entries are developed in Part~II.}
+  \label{tab:playbook}
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabular}{p{28mm}p{25mm}p{25mm}p{25mm}p{34mm}}
+    \toprule
+    Move (M1--M9) & Solar & Batteries & EVs & AI \\
+    \midrule
+    \textbf{M1} State designation & SEI 2010; 12th FYP & white list 2015 & 863 program; SEI 2010 & ``AI+'' plan; 15th FYP; RISC-V guidance \\
+    \addlinespace
+    \textbf{M2} Home demand creation & national FiT; Top Runner & NEV subsidy linkage & \$231B support; dual credit & state data centers mandated domestic chips; subsidized power \\
+    \addlinespace
+    \textbf{M3} Subsidized scale-up & CDB \$47B credit lines & Big-Fund-style provincial capital & provincial EV funds & Big Fund III (\$47.5B); SMIC/CXMT capex \\
+    \addlinespace
+    \textbf{M4} Darwinian domestic competition & 2018 ``531'' cull & 100+ cell makers $\rightarrow$ consolidation & $\sim$400 dead EV firms & large-language-model (LLM) price war since 2024; chip-vendor shakeout beginning \\
+    \addlinespace
+    \textbf{M5} Supply-chain capture & poly $\rightarrow$ wafer $\rightarrow$ cell $\rightarrow$ module & mine $\rightarrow$ refine $\rightarrow$ cathode $\rightarrow$ cell & battery $\rightarrow$ chip $\rightarrow$ magnet $\rightarrow$ ship & model $\rightarrow$ framework $\rightarrow$ chip $\rightarrow$ interconnect $\rightarrow$ fab $\rightarrow$ DRAM \\
+    \addlinespace
+    \textbf{M6} Commoditize the rent layer & module \$/W & pack \$/kWh & vehicle BOM & open weights; \$/Mtoken; open ISA/stack \\
+    \addlinespace
+    \textbf{M7} Absorb the ``inferior'' branch & mono-PERC, then TOPCon & LFP & BEV small cars & sparse MoE; LPDDR capacity vs.\ HBM bandwidth \\
+    \addlinespace
+    \textbf{M8} Standards capture & efficiency floors & GB safety standards & charging/swap standards & RISC-V profiles; matrix ISA; UnifiedBus; SuperPoD reference \\
+    \addlinespace
+    \textbf{M9} Leverage after victory & OPEC-for-poly & tech export controls 2025 & rare-earth controls 2025 & (pending) \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{The mechanism in general form}
+
+\noindent Table~\ref{tab:playbook} inventories nine \emph{tactical moves} (M1--M9), which recur in different orders across campaigns. The six \emph{steps} below are the strategic sequence those moves serve. References elsewhere in this book name the move or step explicitly to keep the two numberings apart.
+
+\textbf{Step 1. Target selection.} Choose an industry at a technology discontinuity, where the incumbent's accumulated advantage (ICE drivetrains, PERC lines, HBM-centric clusters) is about to be stranded, and where manufacturing learning-by-doing---not protected IP---is the true accumulating asset.
+
+\textbf{Step 2. Demand before supply.} Use the home market---the largest single market on Earth for nearly everything---as guaranteed demand: subsidies, mandates, procurement reservation. Foreign firms are admitted precisely long enough to transfer capability (JV requirements, white-list exclusions), then outcompeted.
+
+\textbf{Step 3. Overcapacity as strategy.} Fund capacity at multiples of world demand. Western economics reads this as waste; strategically it is the purchase of (a) the entire learning curve, (b) a permanent price umbrella too low for any entrant to survive under, and (c) wartime surge capacity. The losses land on Chinese balance sheets, provincial governments, and dead firms; the cost curve remains.
+
+\textbf{Step 4. Selection, not planning.} Beijing does not pick the winning firm; it floods the sector and lets domestic combat select. Suntech died, LONGi rose; hundreds of EV makers died, BYD rose. The state's loyalty is to the industrial commons---the engineer pool, the supplier mesh, the tooling ecology.
+
+\textbf{Step 5. Commoditize the adversary's rent layer.} Wherever the Western business model collects rent---the module, the pack, the badge, the API token, the ISA license---price it at marginal cost. Rents fund the West's R\&D flywheel; destroying the rent destroys the flywheel. Openness (open weights, open ISAs, open specs) is this move in its purest form: the rent goes to zero \emph{by construction}, and adoption---the true currency---accrues to the commoditizer.
+
+\textbf{Step 6. Endgame: cartelize and gatekeep.} After victory, consolidate capacity (anti-involution), stabilize prices upward, and convert dominance into coercive leverage via export controls on the now-Chinese-controlled layer.
+
+\section{Two Western counter-patterns, both failing}
+
+Against this, the West has fielded two responses. \emph{Tariff walls} (solar 2012, EVs 2024) arrive after cost-curve capture and merely tax domestic consumers while the walled market shrinks in relevance. \emph{Chokepoint denial} (semiconductor export controls since 2019) is the more serious strategy and is the direct subject of Part~II; its record so far is a pattern this book calls \emph{chokepoint decay}: each denied input (EUV, HBM, H100s, EDA) triggers a state-scale substitution program plus an architectural detour around the input, while the denial itself hands the domestic substitute a guaranteed market---the white-list mechanism, imposed this time by Washington on Beijing's behalf. Export controls are, functionally, a US-funded market-reservation policy for Huawei, SMIC, CXMT, and Cambricon. Whether the decay outruns the West's lead is the empirical question of the next four chapters.

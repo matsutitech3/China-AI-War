@@ -1,0 +1,29 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[bookaxis, height=5.4cm,
+  xlabel={Year}, ylabel={Share of Chinese market (\%)},
+  title={The fastest substitution event in automotive history},
+  xmin=2019.6, xmax=2026.1, ymin=0, ymax=70,
+  xtick={2020,2021,2022,2023,2024,2025},
+  legend style={at={(0.02,0.98)}, anchor=north west},
+]
+\addplot[color=sOne, mark=*, mark size=1.6pt] coordinates {
+  (2020,6.0) (2021,14.8) (2022,27.6) (2023,35.7) (2024,47.9) (2025,54.1)};
+\addlegendentry{NEV retail penetration}
+\addplot[color=sTwo, mark=square*, mark size=1.6pt] coordinates {
+  (2020,62) (2021,56) (2022,50) (2023,44) (2024,39) (2025,35)};
+\addlegendentry{foreign-brand share}
+\node[font=\scriptsize\color{inkSec}, anchor=south east] at (axis cs:2025.9,55) {54.1\%};
+\node[font=\scriptsize\color{inkSec}, anchor=north east] at (axis cs:2025.9,33) {35\%};
+\draw[dashed, color=inkMut, line width=0.5pt] (axis cs:2023.4,0) -- (axis cs:2023.4,70);
+\node[font=\scriptsize\color{inkSec}, anchor=north west, align=left]
+  at (axis cs:2023.5,68) {crossover:\\NEVs pass\\foreign brands};
+\end{axis}
+\end{tikzpicture}
+\caption[Chinese NEV penetration and foreign-brand collapse]{Two curves, one mechanism. New-energy-vehicle
+retail penetration in China against the share of the Chinese market held by foreign brands, 2020--2025
+[V]~\cite{cpca-2025,rhodium-evs}. December 2025 monthly NEV penetration passed 60\%. The technology transition
+that reset incumbency and the collapse of incumbency are the same event, viewed from two sides.}
+\label{fig:ev}
+\end{figure}

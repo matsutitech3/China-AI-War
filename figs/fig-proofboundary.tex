@@ -1,0 +1,60 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  every node/.style={font=\scriptsize},
+  band/.style={rounded corners=3pt, inner sep=5pt, align=left, text width=44mm,
+               minimum height=41mm, anchor=north west},
+  item/.style={font=\scriptsize\color{inkSec}},
+]
+\node[band, fill=sOne!12, draw=sOne, line width=0.7pt] (proven) at (0,0)
+  {\textbf{\normalsize Measured [V]}\\[3pt]
+   HPL 2.198\,EF (No.\,1)\\
+   HPCG 22.00\,PF (No.\,1)\\
+   HPL-MxP 7.92\,EF\\
+   42.22\,MW, 52.1\,GF/W\\
+   304-core LX2, no discrete GPU\\
+   A64FX lineage: STREAM parity\\
+   with contemporary GPU (2018)\\
+   450\,GB/s measured per domain};
+\node[band, fill=sThree!12, draw=sThree, line width=0.7pt] (inferred) at (4.95,0)
+  {\textbf{\normalsize Roofline-inferred [V/M]}\\[3pt]
+   decode is bandwidth-bound:\\
+   users served per TB/s is a\\
+   \emph{ratio}, not a fitted model\\[3pt]
+   $\Rightarrow$ one LX2 socket serves the\\
+   same decode streams per TB/s\\
+   as a GPU, at half the\\
+   per-package bandwidth\\[3pt]
+   only the efficiency coefficient is\\
+   modelled, and swept};
+\node[band, fill=sTwo!12, draw=sTwo, line width=0.7pt] (modelled) at (9.90,0)
+  {\textbf{\normalsize Modelled [M]}\\[3pt]
+   prefill above stated thresholds\\
+   ($e_{\text{INT8}}\gtrsim0.38$, $e_{\mathrm{INT8}}\gtrsim0.90$)\\
+   all-reduce break-evens 9--38\,GB/s\\
+   fleet energy $\approx$1.3--1.4$\times$ B200\\
+   training deficit 4.5--8.5$\times$ at\\
+   matched BF16; $\sim$3$\times$ with FP8\\[3pt]
+   \emph{not yet measured on the machine}};
+
+\draw[-{Stealth[length=5pt]}, line width=1pt, color=inkSec]
+  (0.2,-4.75) -- (14.3,-4.75)
+  node[midway, above=0.5mm, font=\scriptsize\color{inkSec}]
+  {increasing dependence on assumptions};
+
+\node[font=\scriptsize\color{inkSec}, align=left, text width=146mm, anchor=north west] at (0,-5.15)
+  {\textbf{Stage-1 claim (established):} discrete-GPU packaging is not required for world-leading HPL and HPCG
+   performance at competitive energy. \quad
+   \textbf{Stage-2 claim (argued, not yet measured):} the same integration extends to AI serving, and---with
+   different matrix and memory provisioning---to training. \\[2pt]
+   The book's \emph{strategic} claim requires only stage~1 plus the die-area allocation argument, which is
+   independent of this machine.};
+\end{tikzpicture}
+\caption[The LineShine proof boundary]{What LineShine proves, and what it does not. The strongest form of the
+architectural argument is not that a CPU has been shown to train transformers---it has not---but that the
+functional boundary between CPU and accelerator has become an allocation choice, of which LineShine is the first
+at-scale demonstration in the direction the incumbent does not occupy. Stated in the two-stage form this book adopts; measured values from the June 2026 TOP500 submission and the accompanying
+technical report~\cite{top500-lineshine,dongarra-report}, modelled values from the companion
+analysis~\cite{dhm-long}.}
+\label{fig:proofboundary}
+\end{figure}

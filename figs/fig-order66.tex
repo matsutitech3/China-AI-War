@@ -1,0 +1,42 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  every node/.style={font=\footnotesize},
+  scale=0.90, transform shape,
+  stage/.style={draw=inkMut, line width=0.6pt, rounded corners=2pt, fill=surf,
+                align=center, inner sep=4pt, minimum height=11mm, text width=18mm},
+  cut/.style={draw=sTwo, line width=0.9pt, fill=sTwo!8, align=center,
+              inner sep=3pt, text width=17mm, font=\scriptsize, rounded corners=2pt},
+  arr/.style={-{Stealth[length=4pt]}, line width=0.9pt, color=inkSec},
+]
+\node[stage] (i) {$\mathcal{I}$\\initial access};
+\node[stage, right=5mm of i] (t) {$\mathcal{T}$\\trigger};
+\node[stage, right=5mm of t] (p) {$\mathcal{P}$\\persistence};
+\node[stage, right=5mm of p] (a) {$\mathcal{A}$\\authority};
+\node[stage, right=5mm of a] (l) {$\mathcal{L}$\\propagation};
+\node[stage, right=5mm of l] (o) {$\mathcal{O}$\\objective};
+
+\foreach \x/\y in {i/t, t/p, p/a, a/l, l/o} { \draw[arr] (\x) -- (\y); }
+
+\node[cut, below=9mm of i] (ci) {signed artifacts, pinned hashes, safe formats};
+\node[cut, below=9mm of t] (ct) {no auto-index of untrusted text};
+\node[cut, below=9mm of p] (cp) {immutable config; ephemeral sandbox};
+\node[cut, below=9mm of a] (ca) {deterministic broker; read-only mounts};
+\node[cut, below=9mm of l] (cl) {egress control; segmentation};
+\node[cut, below=9mm of o] (co) {immutable backups; approval gates};
+
+\foreach \x/\y in {i/ci, t/ct, p/cp, a/ca, l/cl, o/co} {
+  \draw[color=sTwo, line width=0.7pt, densely dashed] (\x) -- (\y); }
+
+\node[font=\scriptsize\color{inkSec}, align=center, above=3mm of p, xshift=8mm]
+  {end-to-end harm requires the \emph{conjunction} $\mathcal{I}\wedge\mathcal{T}\wedge\mathcal{P}\wedge\mathcal{A}\wedge\mathcal{L}\wedge\mathcal{O}$};
+\node[font=\scriptsize\color{sTwo}, align=center, below=3mm of cp, xshift=8mm]
+  {breaking \emph{any one} conjunct prevents the complete chain};
+\end{tikzpicture}
+\caption[The compound attack chain and its choke points]{The defender's arithmetic. Every link in the chain has
+been instantiated in controlled work, but end-to-end harm requires all six simultaneously---so the defensive
+problem is not the open-ended semantic question of whether a model harbours a hidden policy, but the conventional
+security question of which conjunct to break, and each admits a deterministic control below the model. After the
+companion survey~\cite{order66}; see Table~\ref{tab:order66} for the evidence status of each condition.}
+\label{fig:order66}
+\end{figure}

@@ -1,0 +1,255 @@
+\chapter{The Model: Open Weights as the Commodity Layer}
+\label{ch:model}
+
+The first element of the AI war is the model itself. The Western frontier is closed: the best US models are accessible only as metered APIs, their weights corporate secrets, their pricing a rent on capability. The Chinese frontier is open: weights downloadable, licenses mostly permissive (MIT, Apache~2.0)---though, as \S\ref{sec:model-survey} details, the newest flagships have begun attaching custom commercial terms that are themselves evidence for this book's rent-relocation thesis---and API prices set near marginal inference cost. This chapter surveys that inversion comprehensively---the labs, the releases, the algorithmic innovations, and the quantization ecosystem that is collapsing the last barrier between frontier capability and commodity hardware.
+
+\section{The DeepSeek shock and the price war (2024--2025)}
+
+The opening move replicated the solar price collapse, compressed into eighteen months. DeepSeek---a 2023 spin-out of the High-Flyer quantitative fund---released V2 in May 2024 with Multi-head Latent Attention and a fine-grained MoE at roughly RMB~1--2 per million tokens; within two weeks ByteDance, Zhipu, Alibaba, and Baidu had cut prices by up to 97\%, Baidu making its mainline models free within four hours of Alibaba's cut~\cite{price-war}. V3 (December 2024)---671B parameters, 37B active, and the first open large-scale model natively trained in FP8---reached GPT-4-class capability with a published marginal training cost of \$5.6 million (2.79 million H800-hours), a figure legitimately contested as excluding R\&D and infrastructure, but directionally transformative either way~\cite{deepseek-v3}. R1 (January 2025) matched OpenAI's o1-class reasoning, was released under MIT license, topped the US iOS App Store, and erased \$589 billion of NVIDIA's market capitalization in a single trading day---the largest one-day single-company loss in US market history~\cite{r1-shock}. The peer-reviewed Nature version disclosed that R1's reinforcement-learning stage cost about \$294,000~\cite{r1-nature}.
+
+The strategic content of the shock was mispriced by markets and correctly priced by Beijing: it demonstrated that frontier capability could be commoditized, that export-control-constrained hardware forced \emph{algorithmic} efficiency (MLA, extreme sparsity, FP8 training, GRPO, multi-token prediction) which then compounds on any hardware, and that open weights convert capability into global adoption instantly.
+
+A cost-accounting discipline applies to every training-cost figure in this book. A ``\$5.6M training run'' is final-run marginal compute [P]; the full program cost adds failed and ablation runs, post-training and RL, synthetic-data inference, data acquisition and cleaning, personnel, hardware depreciation, networking, power, and the prior research that produced the reusable architecture. DeepSeek's own disclosed hardware position ($\sim$50,000 H800s; buildout estimates to \$1.6B [A]) bounds the true denominator~\cite{deepseek-v3}. The strategic point survives the correction---marginal-cost transparency itself resets buyer expectations---but the book does not treat run cost as program cost.
+
+\section{An innovation genealogy}
+\label{sec:genealogy}
+
+A release chronology shows cadence but not authorship, and the strategically important question is which architectural innovations are Chinese-origin, which were independently reproduced, and---the question this book cares about most---which \emph{reduce a hardware requirement}. Table~\ref{tab:genealogy} attempts the genealogy.
+
+\begin{table}[htbp]
+  \centering
+  \scriptsize
+  \caption{Innovation genealogy of the open frontier. ``Hardware effect'' names the resource the technique economizes---the column that connects this chapter to Chapter~\ref{ch:compute}.}
+  \label{tab:genealogy}
+  \begin{tabular}{p{31mm}p{20mm}p{34mm}p{48mm}}
+    \toprule
+    Technique & First at scale & Origin / diffusion & Hardware effect \\
+    \midrule
+    Multi-head latent attention (MLA) & DeepSeek V2, 2024-05 & Chinese-origin; widely adopted & KV cache to $\sim$2\% of dense: \emph{memory capacity and bandwidth} \\
+    \addlinespace
+    Fine-grained + shared-expert MoE & DeepSeek V2/V3 & Chinese-origin refinement of a Western idea & activated fraction to 1.8--3\%: \emph{FLOPs and bandwidth} \\
+    \addlinespace
+    Native FP8 pretraining & DeepSeek V3, 2024-12 & first open large-scale demonstration & \emph{memory and compute}; sets the domestic-chip numeric format \\
+    \addlinespace
+    GRPO and critic-free RL & DeepSeek R1, 2025-01 & Chinese-origin; broadly reproduced & removes critic model: \emph{post-training compute} \\
+    \addlinespace
+    Multi-token prediction & DeepSeek V3 & Chinese-origin at scale & \emph{tokens per step}; speculative decode \\
+    \addlinespace
+    Sparse attention (DSA) & DeepSeek V3.2, 2025-09 & Chinese-origin & $O(L^2)\!\to\!O(Lk)$: \emph{long-context compute}---the decisive lever for CPU-class prefill \\
+    \addlinespace
+    INT4 / MXFP4 QAT release formats & Kimi K2 Thinking 2025-11; K3 2026-07 & Chinese-origin at frontier scale; gpt-oss parallel & \emph{serving memory and bandwidth}; 4-bit as release format \\
+    \addlinespace
+    Hybrid linear attention at frontier scale & Kimi K3, 2026-07 & Chinese-origin & \emph{long-context memory traffic} \\
+    \addlinespace
+    Expert-parallel dispatch/communication overlap & DeepSeek V3 infra & Chinese-origin engineering & \emph{interconnect}: tolerates weaker fabric \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Read down the right-hand column, but read it carefully, because it is easy to overstate what this table shows, in both its arithmetic and its causality. The arithmetic first: it is \emph{not} true that almost none of these techniques economizes dense FLOPs---the table itself refutes it. Fine-grained MoE reduces active FLOPs directly; FP8 reduces compute cost as well as memory; critic-free RL removes an entire model's worth of post-training compute; multi-token prediction and speculative decoding change compute utilization per emitted token. The accurate reading is one of \emph{emphasis}, not exclusion: the portfolio is concentrated unusually strongly on memory capacity, memory bandwidth, interconnect efficiency, and low-precision execution---the resources that became disproportionately scarce under export control---while the compute savings it also delivers are the kind any laboratory, constrained or not, would pursue.
+
+The causality second. Efficiency is valuable to everyone; MoE, low precision, sparse attention, and communication overlap were all being advanced by unconstrained Western laboratories in the same period, and most would likely have progressed without any export controls at all. The defensible claim is therefore \emph{constraint-consistency}, not unique causation: export controls are a plausible accelerant and a selection pressure that shaped which efficiencies were prioritized and how aggressively, but not the sole origin of the techniques. Table~\ref{tab:causality} states the questions that separate strong from weak co-design evidence, and applies them.
+
+\begin{table}[htbp]
+  \centering
+  \scriptsize
+  \caption{A causality matrix for the genealogy: what would make ``co-design under sanction'' strong or weak for a given technique, with the two clearest verdicts from Table~\ref{tab:genealogy}.}
+  \label{tab:causality}
+  \begin{tabular}{p{56mm}p{42mm}p{34mm}}
+    \toprule
+    Diagnostic question & Interpretive value & Verdict on examples \\
+    \midrule
+    Did the technique predate the relevant restriction? & Weakens a sanctions-origin claim & MoE, low precision: yes---weak \\
+    \addlinespace
+    Was it independently pursued by unconstrained labs? & Shows general value, not uniquely Chinese adaptation & MoE, FP8, sparse attention: yes---weak \\
+    \addlinespace
+    Does it specifically match a domestic hardware limitation? & Strengthens co-design attribution & MLA, dispatch/comm overlap: yes---strong \\
+    \addlinespace
+    Is there an explicit domestic numeric-format, compiler, or processor target? & Direct evidence of hardware--algorithm co-design & UE8M0 FP8 ``for next-generation domestic chips'': yes---strongest \\
+    \addlinespace
+    Would it remain commercially attractive without sanctions? & Separates national adaptation from ordinary cost reduction & nearly all: yes---caps every claim above \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+On this matrix, UE8M0 FP8 with a declared domestic-silicon target is strong co-design evidence; generic MoE adoption is weak; MLA and the interconnect-tolerance engineering sit in between, matching domestic limitations specifically enough to carry weight. The genealogy's strategic conclusion, stated at the strength the matrix actually supports: the \emph{direction} of Chinese architectural emphasis is exactly the direction that makes the hardware of Chapter~\ref{ch:compute} viable, and export controls demonstrably sharpened that emphasis even where they did not originate it.
+
+\section{The ecosystem survey: eight frontiers, one commons}
+\label{sec:model-survey}
+
+Consistent with playbook step~4 (selection, not planning; move~M4), the state did not anoint DeepSeek; it flooded the sector. Table~\ref{tab:model-timeline} compresses the release cadence of the major laboratories; the notes that follow give each lab's trajectory. Two structural observations frame the table. First, the cadence itself is the weapon: the interval between a US closed-frontier release and its Chinese open-weight counterpart compressed from six--eight months in 2024 to ``a matter of weeks'' by mid-2026~\cite{aei-2026}. Second---stated in its properly qualified form---open-weight release has become the dominant international distribution strategy of the leading Chinese laboratories, \emph{although license terms range from permissive Apache/MIT grants to custom commercial licenses that preserve control over high-revenue deployment}. The table therefore carries a license column, because the license is strategic data, not legal boilerplate: Kimi K3, the largest open-weight model ever released, ships under a custom license that permits use, modification, redistribution, and derivatives but requires a separate commercial agreement from qualifying model-as-a-service businesses above a revenue threshold, with attribution conditions on very large deployments~\cite{kimiLicense}. That is this book's own industrial-organization thesis enacted in a license file: opening the weights does not abolish rent---it relocates it to large-scale commercial service, where the releasing lab retains a claim.
+
+Two terminological disciplines apply throughout. These are \emph{open-weight} releases, not open-source: with few exceptions the training code, data, and full recipes are not published, which is why R1 spawned an entire replication literature~\cite{r1-replication}. And the correct narrow claim is that leading Chinese laboratories have made open-weight release the dominant \emph{international distribution strategy} for their frontier-adjacent families---not that every Chinese frontier system is open (several are not), nor that the West releases nothing (gpt-oss, Gemma, OLMo, and NVIDIA's Nemotron line are real, if outclassed at the top end).
+
+\begin{table}[htbp]
+  \centering
+  \scriptsize
+  \caption{Chinese open-weight frontier releases, 2024--August 2026 (selected; parameters as total/active where MoE; benchmark figures are vendor-reported [P] unless noted). License classes: Apache = Apache 2.0; MIT; custom = custom commercial license (weights downloadable, high-revenue service deployment separately controlled). Current as of \datafreeze (the edition date); the most recent cycle is analyzed in Appendix~\ref{app:bulletin}.}
+  \label{tab:model-timeline}
+  \begin{tabular}{p{15mm}p{17mm}p{28mm}p{14mm}p{58mm}}
+    \toprule
+    Date & Lab & Model & License & Significance \\
+    \midrule
+    2024-05 & DeepSeek & V2 (236B/21B) & MIT-class & MLA + fine-grained MoE; triggers national LLM price war \\
+    2024-12 & DeepSeek & V3 (671B/37B) & MIT-class & native FP8 pretraining; \$5.6M marginal cost claim \\
+    2025-01 & DeepSeek & R1 (671B/37B) & MIT & o1-class reasoning; the NVIDIA crash \\
+    2025-04 & Alibaba & Qwen3 (0.6B--235B/22B) & Apache & family of eight, 36T tokens, hybrid reasoning \\
+    2025-06 & Baidu & ERNIE 4.5 (to 424B) & Apache & wholesale open-sourcing of a former closed flagship \\
+    2025-07 & Moonshot & Kimi K2 (1T/32B) & modified MIT & largest open model to date; agentic focus \\
+    2025-08 & DeepSeek & V3.1 & MIT & hybrid think/non-think; UE8M0 FP8 ``for next-generation domestic chips'' \\
+    2025-09 & DeepSeek & V3.2 (DSA) & MIT & sparse attention: $O(L\cdot k)$; API cut $>$50\% again \\
+    2025-11 & Moonshot & K2 Thinking (1T/32B) & modified MIT & native INT4 QAT; beats GPT-5 on HLE (44.9 vs 41.7) \\
+    2026-02 & Zhipu & GLM-5 (744B/40B) & MIT & SWE-bench Verified 77.8\%; trained on Ascend \\
+    2026-02 & MiniMax & M2.5 (230B/10B) & custom & \#1 Multi-SWE-Bench; \$0.15/\$1.20 per Mtok \\
+    2026-04 & DeepSeek & V4 (1.6T/49B) & MIT & 1M context; $\sim$150$\times$ cheaper than GPT-5.5 output \\
+    2026-04 & Alibaba & Qwen3.6 (27B dense; 35B-A3B) & Apache & Qwen crosses 1B cumulative downloads \\
+    2026-06 & MiniMax & M3 ($\sim$428B/23B) & custom & multimodal; 1M context; AA index 44 \\
+    2026-06 & Zhipu & GLM-5.2 ($\sim$753B/40B) & MIT & \#1 open model, Artificial Analysis index \\
+    2026-07 & Moonshot & Kimi K3 (2.8T/$\sim$104B) & custom & largest open model ever; MXFP4; global top-5 overall \\
+    2026-07 & DeepSeek & V4-Flash ($\sim$280B/13B) & MIT & weights shipped; 1M context; \$0.14/\$0.28 per Mtok; gains from post-training alone \\
+    2026-08 & Alibaba & Qwen3.8-Max (2.4T/$\sim$95B) & committed & first Max-tier open-weight commitment; 1M context; multimodal; \$2/\$6 per Mtok (\S\ref{sec:maxtier}) \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Two disciplines govern this table. \emph{First, a currency date}: every fact in the stable chapters is current as of \datafreeze---the date of this edition, printed on its title page---and nothing learned after that date is retrofitted into the analysis. Freezing the data at a date \emph{earlier} than the edition invites exactly the contradiction a reader would expect---a declared July cutoff sitting a few pages from an August release---so the rule adopted here is the only one that cannot contradict itself: \emph{the cutoff is the edition date}. Correspondingly, Appendix~\ref{app:bulletin} carries the most recent cycle in detail so that the fastest-moving material sits in one replaceable place rather than being threaded through the argument. Applying the rule, the table above runs through the 3~August announcement of Qwen3.8-Max~\cite{qwen-announcement,qwen38-max}, and DeepSeek's V4-Flash sits where its actual 31~July release date puts it~\cite{v4flash}. No analytical claim in this book depends on which model holds the crown in any given week; the three-artifact structure---stable monograph, machine-readable claim register, living appendix---exists precisely so that the argument does not chase the cadence it describes. \emph{Second, exact naming}: the open Qwen3.6 releases are the 27B dense and 35B-A3B variants under Apache 2.0~\cite{qwen36-repo}---``Qwen3.6'' is not one frontier-scale flagship, and the table says so.
+
+\subsection{The open-weight ratchet: why the commons is now an equilibrium}
+\label{sec:maxtier}
+
+The Qwen3.8-Max release deserves more than a chronology entry, because it converts this book's central claim from a description of state strategy into something considerably stronger: a description of a \emph{competitive equilibrium that no participant can profitably defect from}.
+
+Start with the fact pattern. Across the Qwen family's history the numbered open releases (7B, 72B, the Qwen3 family, the 3.6 dense and A3B variants) shipped under Apache~2.0 and drove the download statistics that make Qwen the most-adopted open family on earth---roughly a billion cumulative downloads by March 2026, 153.6 million in February alone, more than half of all global open-model downloads, and over 200,000 derivative variants~\cite{qwen-downloads}. The \emph{Max} tier, meanwhile---Qwen2.5-Max, Qwen3.5-Omni, Qwen3.6-Plus, Qwen3.7-Max---had been consistently proprietary: API and chatbot only. That was the settled pattern, and a reasonable observer in June 2026 would have predicted it continuing.
+
+It did not continue. On 27 July, Moonshot open-sourced Kimi K3's weights at 2.8 trillion parameters. Seven days later Alibaba announced Qwen3.8-Max and committed, publicly and unambiguously, on its own official account: \emph{``Next week, the open weights of Qwen3.8-Max will be released, and Qwen3.8-27B is also going open-weights''}~\cite{qwen-announcement}. The first Max-tier model in the family's history to carry an open-weight commitment carried it within a week of a rival opening at comparable scale---alongside a published blog with the full benchmark table, and a complete project trace on GitHub for the flagship autonomy demonstration~\cite{qwen38-blog}.
+
+The causal reading is hard to avoid, and it is the most important structural observation in this chapter. \emph{Once one Chinese laboratory opens at frontier scale, the others cannot stay closed.} The mechanism is not ideology and not state compulsion; it is the arithmetic of the strategy every Chinese lab is running. Their competitive position is built on adoption---downloads, derivatives, developer mindshare, standards gravity, and the deployment volume that Chapter~\ref{ch:theory}'s flywheel converts into learning and cost advantage. Against a rival whose frontier-scale weights are downloadable, a metered-only flagship forfeits precisely the currency the strategy is denominated in. Whatever premium the closed tier collects is smaller than the adoption it surrenders, because the adoption is what the whole apparatus---hardware demand, standards position, national ecosystem---was built to capture. Closing your best model, in that ecosystem, is unilateral disarmament.
+
+This is a \emph{ratchet}, and its properties matter. Each open release at a new capability level raises the floor every competitor must match; the floor never falls, because no lab gains by being the one that retreats behind an API while its rivals ship weights. Defection is individually irrational even when it would be collectively profitable---the exact inverse of the Western equilibrium, where each frontier laboratory's rivalry is over premium capability sold at metered access, and closing is individually rational for each. Two ecosystems, two stable equilibria, each internally coherent, each self-enforcing without a planner. The Chinese one produces a commons; the American one produces a rent.
+
+Three consequences follow. \emph{First}, the thesis is more robust than a policy-grounded account of openness would be. Grounding Chinese openness in the Five-Year Plan, MIIT guidance, and WAICO---the natural reading, and the common one---invites the obvious rebuttal that policy can reverse. The ratchet does not depend on Beijing's continued preference. Even if the state's enthusiasm cooled tomorrow, a Chinese lab that closed its frontier tier would hand the developer base, the derivative ecosystem, and the standards position to whichever rival stayed open. \emph{Second}, it predicts the pattern forward: the next frontier-scale Chinese release will be open, and the one after that, not because anyone decreed it but because the first defector loses. \emph{Third}, it refines rather than contradicts the rent-relocation argument of Section~\ref{sec:io}: rent still relocates---to licence terms (Kimi K3's revenue threshold), to hosted service, to hardware, to the complements of Table~\ref{tab:rent}---but it relocates \emph{out of the weights}, and the ratchet is why it cannot relocate back.
+
+The register carries the near-term test, and the prior on it is high: the weights are publicly committed, with a companion 27B dense model, on a stated timeline. What remains genuinely open is the \emph{licence}---Apache-class or Kimi-style revenue-threshold---and that is the question worth watching, because the answer discriminates between the two versions of the rent argument rather than between openness and closure.
+
+\subsection{AI-designed silicon: why the compute dependence is transitional}
+\label{sec:offshore}
+
+The same release supplies what may be the single most consequential datum in this chapter, and it bears directly on the one element of the Chinese stack that Part~II has consistently graded weakest.
+
+Alibaba's own announcement lists, among Qwen3.8-Max's headline capabilities, ``system-level autonomous planning with closed-loop adaptive learning, driving \emph{500+ turns of chip design optimization}''~\cite{qwen-announcement}, and its accompanying material claims the model has ``independently achieved the autonomous execution of the entire silicon design flow''~\cite{berman2026}. The observation that makes this strategic rather than merely impressive was put most directly by an independent Western commentator reviewing the release: \emph{one of the things China is behind on is chip design and chip manufacturing---but a model that can help design those chips means that is no longer the weakness}~\cite{berman2026}.
+
+Set that against the architecture of Part~II and the loop closes with unusual precision. China holds an open instruction set with no revocable licence (Section~\ref{sec:riscv}); domestic logic at 5\,nm-class without EUV; a memory strategy that routes around HBM (Section~\ref{sec:lpddr6}); an open interconnect and software stack; a demonstrated exascale integrated-CPU machine (Section~\ref{sec:lineshine}); and a national EDA push against the one remaining Western duopoly. The binding constraints on that stack have never been ambition or capital---they have been \emph{design throughput and tooling}: the accumulated human expertise and proprietary software that turn an architecture into a manufacturable die. That is exactly the input an autonomous silicon-design flow attacks, and it is the input least protected by export control, because a design capability that a Chinese lab trains cannot be embargoed at a border.
+
+This is the flywheel of Section~\ref{sec:flywheel} operating on the element the book had marked as slowest. AI improving the design of the chips that run the AI is the recursive loop in its most literal form, and it arrives---if the claims survive scrutiny---aimed squarely at the gap between the open-frontier position China already holds and the sovereign-compute position it does not yet. The corollary for this book's evidence base is that the current arrangement, in which Chinese labs reportedly train on NVIDIA capacity leased offshore in Singapore and Malaysia while serving domestically~\cite{qwen-offshore}, should be read as \emph{transitional rather than structural}. It is what a fast-moving ecosystem does while its own silicon matures; it is not a stable dependence, and the co-design mechanism that ends it is now visible in a shipped product rather than a roadmap. Claim CR-09---a frontier-class model trained end-to-end on a domestic stack---remains ``not yet observed,'' and this book still does not assert it. But the pathway to it has shortened, and the forecast register is revised accordingly.
+
+The most striking corroboration comes from a commentator who reaches the book's conclusion while explicitly not wanting to. Reviewing the release for a Western audience, Berman traces the adoption logic---US enterprises ``can get 95\% of the capability and pay a fraction of the price,'' and for the vast majority of use cases ``the absolute frontier just isn't necessary and in fact might be overkill,'' so they will choose the open models, which are Chinese---and then follows it one step further to the conclusion Part~II of this book is built on: \emph{``eventually what will likely happen is the model will be co-designed with the chip to be the most efficient and the most optimized for that specific chip\ldots{} with extreme co-design between model and hardware it might actually put us, as we're becoming dependent on Chinese open source, highly dependent on Chinese chips as well''}~\cite{berman2026}. That is the convergence thesis of this book, stated independently, by an observer who calls the resulting geopolitical exposure ``not my opinion---it is just a fact,'' and who is manifestly unhappy about it. When the mechanism you have spent two hundred pages describing is arrived at independently by someone who would prefer it were false, the argument has stopped being idiosyncratic.
+
+Two disciplines keep this section honest. \emph{The claims are the vendor's}: 500 turns of chip-design optimization and an autonomous silicon flow are Alibaba's descriptions of Alibaba's model, and the appropriate verification event---an independently reproduced tape-out-grade design, or third-party evaluation of the flow---has not occurred. The GitHub project trace published alongside the autonomous-coding demonstration is a genuine step toward auditability and more than most Western frontier claims carry; the chip-design claim has no equivalent artifact yet. \emph{And the counter-argument is real}: the same review notes that the leading US closed models are rumoured at roughly seven trillion parameters, against 2.4--2.8T for the Chinese frontier---roughly twice the scale, which requires the best accelerators in the world and a great many of them~\cite{berman2026}. The Chinese achievement is therefore properly read as \emph{capability parity at a third of the parameters and a fraction of the price}, which is an efficiency victory rather than a scale victory---and efficiency victories are exactly what Part~I's precedents are made of, but they are not the same thing as removing the compute constraint. Section~\ref{sec:rsi-branch} takes the strongest form of that counter-argument seriously.
+
+Kimi K3 deserves one more paragraph, because it is the cleanest single demonstration of the five-frontier framework of \S\ref{sec:scoreboard}. Its own technical report confirms 2.8T total parameters, 104B activated, a one-million-token context, native vision---and explicitly acknowledges that the model still trails the strongest proprietary systems overall~\cite{kimiK3-report}. Here is the open frontier and the absolute frontier in a single primary source: the largest, most capable open-weight artifact ever released, self-described as behind the closed leaders. Both of this book's core observations---that China leads the open frontier decisively, and that the absolute frontier has not dissolved---are stated by the releasing laboratory itself.
+
+\textbf{Alibaba (Qwen)} is the adoption champion: the most-downloaded open family on Earth, crossing one billion cumulative Hugging Face downloads in July 2026 with over 113,000 derivative models---more than Google and Meta combined, and roughly 40\% of all new LLM derivatives on the Hub~\cite{hf-spring-2026,qwen-billion}. \textbf{Moonshot (Kimi)} is the scale champion: K3's 2.8 trillion parameters (896 experts, $\sim$1.8\% activation, hybrid linear attention, native MXFP4, 1M context) make it the largest open-weight model ever released, ranking in the global top five overall---the only open model in that tier~\cite{kimi-k3}. \textbf{DeepSeek} is the efficiency champion, each generation shipping an attention or sparsity innovation the rest of the field adopts within months. \textbf{Zhipu (GLM)}---which listed in Hong Kong in January 2026 as ``the world's first publicly traded foundation-model company''---holds the open-weight quality crown on independent indices, and trained GLM-5 on Huawei Ascend silicon~\cite{glm5,ipos}. Around them: \textbf{MiniMax} (M-series, agentic coding), \textbf{StepFun} (throughput-optimized), \textbf{Xiaomi} (MiMo, which took the largest single-provider share on OpenRouter within months of entry), \textbf{ByteDance} (Doubao at 345M MAU and $>$120 trillion tokens/day; China's top-rated Arena model), and \textbf{Tencent Hunyuan}~\cite{digitalapplied,datagravity}. Zhipu and MiniMax IPO'd in Hong Kong in January 2026; Moonshot raised at a \$20B valuation~\cite{ipos}. The LLM price war is the ``531'' cull in progress: token prices at 1/7th to 1/150th of US equivalents, margins near zero, survivors selected by capability-per-yuan~\cite{token-econ}.
+
+\section{Three scoreboards, not one}
+\label{sec:scoreboard}
+
+Before the numbers, a distinction that resolves most of the argument about whether China has ``caught up.'' There are \emph{five} different frontiers, and conflating them produces both triumphalism and complacency:
+
+\begin{description}\itemsep2pt
+  \item[1. The absolute frontier] --- the highest demonstrated capability under controlled evaluation, irrespective of access or price. The United States leads this, and the lead is real.
+  \item[2. The open frontier] --- the highest capability available as downloadable weights under usable licence terms. China leads this, and not narrowly.
+  \item[3. The deployable frontier] --- the highest capability an institution can \emph{operate reliably at acceptable cost}, after quantization, serving constraints, security review, and licence compatibility. China increasingly leads this.
+  \item[4. The economic frontier] --- the system with the lowest cost per \emph{successful task} for a given workload (\S\ref{sec:cost-solved}). This is frequently neither principal's flagship: for high-volume routine work it is often an older, smaller model that nobody writes about.
+  \item[5. The scientific frontier] --- the system that produces the greatest validated scientific value per unit of national resource. This is the frontier Chapter~\ref{ch:prize} argues matters most, and the one nobody currently measures.
+\end{description}
+
+\input{figs/fig-frontiers}
+
+Many apparent contradictions dissolve under this framework (Figure~\ref{fig:frontiers}). China may trail the absolute frontier while leading the open and deployable ones. A US closed system may dominate the \emph{scientific} frontier for a particular workload despite far higher token prices, because scientific value per resource depends on capability at the hard end rather than on price at the volume end. And an eighteen-month-old open model may define the economic frontier for the majority of tokens actually generated in the world. That China may lead frontiers 2, 3, and 4 without leading 1 \emph{strengthens} this book's thesis rather than weakening it, because industrial victory in every precedent of Part~I depended on what a buyer could actually install, at what price, under what terms---not on the laboratory maximum. The rest of this section reports frontiers 1 and 2, which are measured; Chapters~\ref{ch:trust} and~\ref{ch:sizing} supply what is known about 3 and 4; frontier 5 is, at present, an open measurement problem and an invitation.
+
+Three independent measurement families bear on the adoption proposition (P1), and they must be kept apart, because they measure different things and currently disagree in one important place. \emph{Family one---capability}: index and arena measurements of model quality. \emph{Family two---distribution}: downloads, derivatives, and routed tokens. \emph{Family three---production and revenue}: enterprise deployments and paid spend. Families one and two tell one story (Table~\ref{tab:model-scoreboard}); family three lags it, and honesty requires displaying the lag.
+
+On capability: the Stanford AI Index puts the top US--China gap at 2.7\% as of March 2026, down from double digits in 2023---while also finding that the closed-over-open gap \emph{reopened} to 3.3\% (from 0.5\% in August 2024) and that six of the top ten arena models are closed~\cite{stanford-aiindex-2026}. Both facts are true at once: China reached the top competitive tier; the absolute closed frontier did not dissolve. Benchmark figures additionally carry protocol variance that vendor tables hide---Kimi's own documentation shows 65.8\% on SWE-bench Verified single-attempt becoming 71.6\% with parallel test-time compute~\cite{kimi-k2-thinking}, and reasoning-model response lengths are inflating $\sim$5$\times$ per year [V]~\cite{epoch-output}, so a model ten times cheaper per token that spends ten times the tokens per solved task has gained nothing per task. On distribution and production, Table~\ref{tab:metric-matrix} states what each metric can and cannot support.
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \caption{The adoption-metric matrix: what each measure proves.}
+  \label{tab:metric-matrix}
+  \begin{tabular}{p{38mm}p{50mm}p{54mm}}
+    \toprule
+    Metric & Measures & Principal limitation \\
+    \midrule
+    HF downloads (41\% Chinese) & Distribution, developer interest & Automation/CI inflation; no proof of production use~\cite{hf-spring-2026} \\
+    Derivatives ($>$113k Qwen) & Ecosystem reuse & Many experimental or dormant \\
+    OpenRouter tokens ($\sim$61\% mid-2026) & Usage on one neutral router & Platform-specific mix; not a census~\cite{openrouter-2026} \\
+    API revenue & Monetized hosted demand & Misses self-hosting entirely \\
+    Enterprise deployment (DeepSeek $>$26k orgs [P]) & Operational adoption & Vendor-survey selection~\cite{sos-ai} \\
+    Enterprise \emph{spend} share & Follows the money & Fell 19\%$\rightarrow$11\% in 2025---the countertrend~\cite{menlo} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+  \centering
+  \caption{The model element, mid-2026 snapshot.}
+  \label{tab:model-scoreboard}
+  \begin{tabular}{p{72mm}p{72mm}}
+    \toprule
+    Capability & Adoption \\
+    \midrule
+    US--China top-model gap: 2.7\% (Stanford AI Index 2026), from 17.5--31.6\% in 2023~\cite{stanford-aiindex-2026} &
+    Chinese models: 41\% of all Hugging Face downloads (trailing year); China passed the US in cumulative downloads~\cite{hf-spring-2026} \\
+    \addlinespace
+    Release lag behind US frontier: from 6--8 months to ``a matter of weeks''~\cite{aei-2026} &
+    OpenRouter routed tokens: Chinese models $\sim$2\% (early 2025) $\rightarrow$ $\sim$61\% (mid-2026); Meta/Llama below 1\%~\cite{openrouter-2026,datagravity} \\
+    \addlinespace
+    Top open-weight models: GLM-5.2, Kimi K3, MiniMax M3, DeepSeek V4---all Chinese; best US open entry is an NVIDIA model~\cite{openrouter-2026} &
+    a16z: of startups pitching with open-source stacks, $\sim$80\% use a Chinese model; DeepSeek counts $>$26,000 enterprise deployments~\cite{casado,sos-ai} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\input{figs/fig-model}
+
+Two further facts frame the table. On hard, contamination-resistant agentic benchmarks the closed-open gap runs larger than headline indices suggest~\cite{deepseek-v4}; and the investment asymmetry is staggering---US private AI investment ran \$286B in 2025 against China's \$12B (a figure that understates Chinese state capital, per the Index's own caveat)~\cite{stanford-aiindex-2026}: a 23:1 private-spending ratio buying a 2.7\% measured gap. Recall the solar lesson: Sharp and Q-Cells also outspent Suntech per watt of R\&D. The question is not who spends most for the peak; it is who owns the volume, the derivatives, the developers, and the price floor. Meta's Llama---the West's open standard-bearer---collapsed below 1\% of routed volume and retreated toward closed development; OpenAI's answer, gpt-oss (August 2025), was outclassed within weeks~\cite{gpt-oss}. The family-three lag---spend share falling even as usage share soared---is the strongest current evidence \emph{against} P3, and Chapter~\ref{ch:trade} treats it as such; the next section explains the mechanism by which the curves are nonetheless converging.
+
+\section{Quantization: frontier models on commodity hardware}
+\label{sec:quant}
+
+The most under-analyzed force multiplier of the open-weight strategy is quantization. Open weights alone democratize \emph{access}; quantization democratizes \emph{operation}. The claim must be stated with more care than it usually is. For selected models, quantizers, and benchmark suites, community tooling has reduced storage by 60--90\% while preserving much of benchmark performance; degradation is highly task-, layer-, context-, and calibration-dependent, and becomes material at extreme 1--2-bit precision. What is robust is narrower and still consequential: 4-bit has become a \emph{release} format rather than a lossy afterthought, and 2-bit-class dynamic quants retain enough capability to be operationally useful on hardware an order of magnitude cheaper. Any serious evaluation reports a \emph{quality vector}---mathematics, coding, multilingual reasoning, long-context retrieval, tool use, calibration, refusal behaviour, safety---alongside memory savings, throughput, and energy, rather than a single retention number.
+
+\subsection{The dynamic-quantization breakthrough}
+
+The emblematic actor is Unsloth, an eight-person company whose ``dynamic'' GGUF quantizations allocate precision non-uniformly---MoE expert layers driven to 1--2 bits, attention and dense layers held at 4--6 bits, calibrated on curated token sets against KL divergence. Days after R1's release, Unsloth's 1.58-bit dynamic quant cut the 671B model from 720\,GB to 131\,GB (an 80\% reduction) while a naive 1.58-bit quant produced gibberish; the dynamic version retained $\sim$70\% of a demanding code-generation benchmark and the 2.2-bit version 92\%~\cite{unsloth-r1}. A precision discipline applies to all such figures: retention is task-dependent, and at 1--2 bits it degrades unevenly across mathematics and code, factual recall, long-context retrieval, agentic tool reliability, multilinguality, and safety behavior---the numbers quoted here are specific quants on specific benchmarks [P], not a general law that ``90\% compression costs single digits.'' The robust claims are narrower and sufficient: 4-bit is now effectively a release format (below), and 2-bit-class dynamic quants preserve enough capability to be operationally useful on hardware an order of magnitude cheaper. The method scaled with the frontier: Kimi K2 (1T) to 245\,GB at 1.8 bits; K2 Thinking to 245\,GB at 1 bit with ``$\sim$85\% accuracy retention''; GLM-5 (744B) to 176--241\,GB; Kimi K3 (2.8T, 1.56\,TB native) to 594\,GB at $\sim$79\% retention and 861\,GB at $\sim$90\%~\cite{unsloth-models}. Unsloth alone counts $\sim$10 million monthly model downloads~\cite{unsloth-yc}; the broader quantization stack---llama.cpp/GGUF, AWQ (MLSys 2024 best paper), GPTQ, EXL3, bitsandbytes/QLoRA, vLLM's quantized serving matrix---is now standard infrastructure~\cite{awq,vllm-quant}.
+
+Crucially, the labs closed the loop by shipping \emph{natively} quantized frontier weights: DeepSeek in FP8 since V3, Kimi K2 Thinking in INT4 via quantization-aware training (2$\times$ speedup at near-FP16 quality), K3 in MXFP4, OpenAI's gpt-oss in MXFP4~\cite{kimi-k2-thinking,kimi-k3,gpt-oss}. Four-bit inference is no longer a lossy afterthought; it is the release format, co-designed with training. This matters doubly for Chapter~\ref{ch:compute}: native low-precision weights quarter the memory-capacity and bandwidth demand of serving---which is exactly the resource the LPDDR-based architecture supplies in abundance.
+
+\subsection{The commodity-hardware frontier}
+
+The consequence is that frontier-class inference now runs on hardware measured in single-digit thousands of dollars. The documented data points span three classes. \emph{CPU servers}: a \$2,000 used-EPYC build (512\,GB DDR4) runs the full 671B R1 at 3.5--4 tok/s; KTransformers (Tsinghua, SOSP 2025) reached 286 tok/s prefill and 12+ tok/s decode for R1/V3 on one RTX~4090 plus a dual-Xeon board with 1\,TB of DRAM---a few-thousand-dollar machine serving the model that crashed NVIDIA's market cap~\cite{ktransformers,epyc-rig}. \emph{Unified-memory desktops}: a single Mac Studio M3 Ultra (512\,GB unified at 819\,GB/s, $\sim$\$10k) runs R1 4-bit at 17--18 tok/s under 200\,W; two of them ran Kimi K2.5 (1T, native INT4) at 22 tok/s; four in an RDMA-over-Thunderbolt cluster ($\sim$\$40k, 1.5\,TB unified) served K2 Thinking at 25 tok/s under 450\,W~\cite{mac-frontier}. \emph{Dedicated local-AI boxes}: NVIDIA's DGX Spark (128\,GB unified, \$4,700) and AMD's Strix Halo (128\,GB, \$2,300) both run 120B-class models at 34--39 tok/s, and 30+ laptop models ship with local-AI accelerators in fall 2026~\cite{spark-halo}. llama.cpp's MoE CPU-offload flag (August 2025) made the pattern general: one consumer GPU for attention, cheap system DRAM for the experts~\cite{llamacpp-moe}.
+
+Note what this hardware list is, architecturally: \emph{capacity-rich, bandwidth-modest memory attached to modest compute}---the LPDDR6X design point of Section~\ref{sec:lpddr6}, discovered independently and bottom-up by the enthusiast market. The sparse-MoE model family and the capacity-first hardware family are co-evolving at every scale from the \$2,000 desktop to the national cluster.
+
+\subsection{The metric that matters: cost per solved task}
+\label{sec:cost-solved}
+
+Price per million tokens is the wrong denominator, and this book uses it only where nothing better exists. The economically meaningful quantity is the cost of a \emph{completed} unit of work:
+\[
+C_{\text{solved}} \;=\; \frac{C_{\text{input}} + C_{\text{output}} + C_{\text{tools}} + C_{\text{retries}}}{p_{\text{success}}},
+\]
+where parallel sampling counts every sampled token, and where wall-clock latency and maximum concurrency are reported alongside. The correction is not pedantic: reasoning-model output lengths have been inflating roughly fivefold per year~\cite{epoch-output}, so a model advertised at a tenth the price per output token that spends ten times the reasoning tokens per solved task has delivered no saving at all, and a headline ``150 times cheaper'' can survive translation into delivered task economics or vanish entirely. Wherever this book quotes a price ratio, read it as an upper bound on the true economic advantage until $C_{\text{solved}}$ is published---which, as Appendix~\ref{app:cards} records, essentially no vendor yet does.
+
+\subsection{The economics: LLMflation}
+
+Layered on falling hardware requirements is the steepest price deflation of any industrial input in history: inference cost at constant capability falls roughly 10$\times$ per year---GPT-3-level capability fell from \$60 to \$0.06 per million tokens in three years~\cite{llmflation}. Self-hosting break-evens are now measured in months for any serious deployment (roughly one month of payback at 50B tokens/month)~\cite{selfhost}. The strategic geometry is the solar module's: a Western closed-model business must recover \$100B-scale capex from a price that Chinese open weights plus community quantization reset toward marginal cost every quarter. Chapter~\ref{ch:trade} prices the consequences.
+
+\section{Openness as declared national strategy}
+
+What began as firm-level catch-up strategy is now explicit state doctrine. The Global AI Governance Action Plan (WAIC, July 2025) commits China to ``cross-border open-source communities,'' open sharing of ``basic resources,'' and lowering ``the thresholds of technological innovation''---accompanied by the World AI Cooperation Organization, headquartered in Shanghai and founded in July 2026 with 29 member states (none a major Western democracy), a UN capacity-building group co-chaired with Zambia spanning 80 countries, and BRICS AI centers~\cite{action-plan,carnegie-pivot,waico}. The State Council's ``AI+'' plan targets self-controllable base models and a thousand deployed industry cases; draft policy counts open-source contribution toward academic credit~\cite{ai-plus}. As Tsinghua's Liu Zhiyuan put it: ``Open source has become politically correct''~\cite{mittr-open}. The export product is not a model; it is a \emph{stack}---weights, tooling, quantizations, and cheap tokens---aimed at the Global South, where two-thirds of EV sales already run on Chinese LFP and the AI adoption default is being set the same way. Even Western institutions that ban the DeepSeek \emph{app} on data-sovereignty grounds turn to self-hosted Chinese weights: Microsoft evaluated a fine-tuned DeepSeek V4 for a Copilot agent in June 2026~\cite{atlantic-council}.
+
+\section{Compute constraints as forcing function}
+
+Export controls shaped this element rather than preventing it. Denied H100-class bandwidth and capacity, Chinese labs innovated in exactly the directions that reduce dependence on both: extreme MoE sparsity (K3 activates 1.8\% of weights per token; V4-Pro 3\%), attention compression (MLA, DSA, KV caches at $\sim$2\% of dense), low-precision training (FP8, INT4, MXFP4), and multi-token prediction~\cite{raschka,kimi-k3}. The 2025 episode in which DeepSeek's next flagship was delayed by failed training runs on Huawei Ascend---then reverted to NVIDIA hardware while Ascend took inference---shows the transition is real but incomplete~\cite{ascend-delay}; GLM-5's training entirely on Ascend five months later shows how fast it is completing~\cite{glm5}. The design direction is now locked in: Chinese frontier models are co-evolving with the domestic hardware of Chapter~\ref{ch:compute}---sparse, capacity-hungry, bandwidth-frugal, natively low-precision---which is precisely the profile that CPU-class and LPDDR-based systems serve best. DeepSeek's adoption of the UE8M0 FP8 scale format ``for next-generation domestic chips'' made the co-design explicit~\cite{ue8m0}.
+
+The model layer, in playbook terms, is already in the late-war stage: rent destroyed, adoption captured, standards (weights formats, sparsity recipes, RL pipelines, quantization conventions) increasingly set in Chinese repositories. What open weights cannot yet guarantee is the hardware to run and train them sovereignly. That is the work of the next two elements.

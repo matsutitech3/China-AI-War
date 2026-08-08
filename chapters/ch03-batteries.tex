@@ -1,0 +1,59 @@
+\chapter{Lithium-Ion Batteries: Vertical Depth}
+\label{ch:batteries}
+
+If solar demonstrated the cost-curve war, lithium-ion batteries demonstrated something further: the capture of an entire vertical---from mine to refinery to cathode to cell to pack---such that even a competitor who builds a gigafactory outside China still builds it, in effect, \emph{inside} the Chinese supply chain.
+
+\section{From Japan's invention to China's entry (1991--2011)}
+
+Sony commercialized the lithium-ion battery in 1991, building on Asahi Kasei's and John Goodenough's chemistry; Japan then Korea (LG Chem, Samsung SDI) led for two decades~\cite{sony-1991}. China's entry came through consumer electronics: BYD, founded in Shenzhen in 1995 with RMB 2.5 million and twenty employees, was by 2002 the world's largest nickel-cadmium battery maker with 65\% of global production, supplying Motorola and Nokia~\cite{byd-history}. CATL's lineage is similar: Robin Zeng's ATL (1999) built lithium-polymer cells for phones (and was sold to Japan's TDK); in 2011 Zeng spun the EV battery business out as CATL in Ningde~\cite{catl-history}. The pattern---enter at the low-margin consumer end, accumulate manufacturing capability, then pivot into the strategic segment when the state creates demand---recurs in Part~II.
+
+\section{The white list: protection by regulation, not tariff (2015--2019)}
+
+The decisive policy instrument was not a tariff but a certification. From 2015, NEV purchase subsidies applied only to vehicles using batteries from an MIIT-approved ``white list'' of 57 manufacturers---all domestic; LG and Samsung, which had just built Chinese plants, were excluded~\cite{white-list}. For four years, the world's largest and fastest-growing EV market was reserved, in effect, for CATL, BYD, and their domestic rivals. The list was scrapped in June 2019---precisely when the champions no longer needed it. Subsidy design was also used to steer chemistry: density-linked subsidies (2017--2019) pushed nickel-based NCM when that was deemed strategic, then cost-linked criteria (2020) resurrected LFP~\cite{lfp-story}. Regulation as industrial policy, adjusted dynamically, with foreign firms as designated losers.
+
+\section{The end state: shares and costs}
+
+\begin{table}[htbp]
+  \centering
+  \caption{Global EV battery installations, full-year 2025 (SNE Research)~\cite{sne-2025}.}
+  \label{tab:batt-shares}
+  \begin{tabular}{lS[table-format=4.1]S[table-format=2.1]}
+    \toprule
+    Maker & {GWh} & {Share (\%)} \\
+    \midrule
+    CATL (CN) & 464.7 & 39.2 \\
+    BYD (CN) & 194.8 & 16.4 \\
+    LG Energy Solution (KR) & 108.8 & 9.2 \\
+    SK On (KR) & {---} & 3.7 \\
+    Panasonic (JP) & {---} & 3.7 \\
+    Samsung SDI (KR) & {---} & 2.4 \\
+    \midrule
+    World total & 1187.0 & 100.0 \\
+    All Chinese makers & {$\sim$820} & {$\sim$69} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The 2025 scoreboard (Table~\ref{tab:batt-shares}): a 1.19\,TWh market, with CATL and BYD alone above 55\% and Chinese makers collectively at ~69\% of installations and $\sim$75\% of deployment; China holds over 80\% of the world's 4\,TWh of cell manufacturing capacity, against 6--7\% each for the EU and US~\cite{sne-2025,iea-gevo-2026}. Upstream the shares are deeper still: roughly 85\% of anode capacity, 82\% of electrolytes, 74\% of separators, 70\% of cathodes; over 90\% of graphite processing; two-thirds of lithium and cobalt refining; and, through Tsingshan and partners, control of three-quarters of Indonesia's nickel refining~\cite{eia-components,benchmark-graphite,nickel}.
+
+\input{figs/fig-battery}
+
+The cost curve replicated solar's. BNEF's pack price series fell from \$1,474/kWh (2010) to \$108/kWh (2025), a 93\% real decline; the China-specific price is \$84/kWh against \$121 in North America and \$131 in Europe---a 44--56\% Western cost penalty at the pack level~\cite{bnef-2025}.
+
+\section{The LFP counterattack: innovation where the West wasn't looking}
+
+The most strategically instructive episode is lithium iron phosphate. LFP was invented in the West (Goodenough's patent, 1997) and dismissed by Western industry as an energy-density dead end; forecasts gave it 15--40\% of the 2030 market. Chinese engineering---BYD's cell-to-pack Blade architecture, CATL's equivalent---recovered the density penalty at pack level, and LFP's cost, safety, and cycle-life advantages did the rest: LFP passed 50\% of the \emph{global} EV market in 2024 and 55\% in 2025~\cite{lfp-story,iea-gevo-2026}. The West now licenses the technology it invented back from China: Ford's Michigan plant operates under CATL license, and a CATL--Stellantis JV is building a €4.1 billion LFP plant in Spain~\cite{ford-catl}. The lesson for AI: the ``inferior'' technology branch, industrialized ruthlessly at scale, beats the premium branch on system economics---a preview of the LPDDR-versus-HBM argument of Chapter~\ref{ch:compute}.
+
+China is now ahead on the next branches too: CATL's Naxtra sodium-ion line entered mass production in December 2025 (175\,Wh/kg, 10,000 cycles, $-40^{\circ}$C operation); second-generation Shenxing LFP charges 520\,km in five minutes; BYD's platform charges at one megawatt~\cite{naxtra,shenxing,byd-1mw}. Solid state remains genuinely open, but the IEA's sober assessment is prototypes industry-wide, with BYD targeting 2027~\cite{iea-gevo-2026}.
+
+\section{From protection to gatekeeping}
+
+The arc completed in 2025: the infant industry became the gatekeeper. In July 2025 MOFCOM placed LFP/LMFP cathode process technology and lithium-extraction technology under export license; in October the controls extended to high-energy cells ($\geq$300\,Wh/kg), anode materials, and the manufacturing equipment itself~\cite{mofcom-battery-controls}. China now restricts the export of battery \emph{technology} exactly as the US restricts semiconductors---the mirror image the West did not anticipate when it assumed technology flowed only one way.
+
+\section{The Western casualty list}
+
+The counterfactual competitors did not fail for lack of capital. Northvolt---Europe's champion, \$15 billion raised from VW, BMW, Goldman---collapsed into the largest industrial bankruptcy in modern Swedish history (November 2024 Chapter~11; Swedish bankruptcy March 2025) having produced 79.8\,MWh in three quarters of 2023, roughly \emph{one five-thousandth} of CATL's annual output~\cite{northvolt}. A123 had failed the same way a decade earlier, its assets bought by Wanxiang~\cite{a123}. By mid-2025, 46\,GWh of announced US cell capacity had been cancelled; LGES posted its first quarterly loss in three years and cut capex 30\%; Panasonic cut its North American output projections~\cite{us-cancellations,lg-loss}. Grid storage, the next battlefield, is already decided: China deployed $\sim$65\% of global BESS GWh in 2025, and storage packs from Chinese LFP oversupply price at \$70/kWh~\cite{bess-2025,bnef-2025}.
+
+\section{Lessons carried forward}
+
+Batteries add three lessons to solar's four. \emph{Fifth}: regulatory market reservation (the white list) is more effective than tariffs and invisible to trade law. \emph{Sixth}: vertical integration to the mine means a foreign competitor's factory is a hostage, not a rival---its cathodes, graphite, and equipment are Chinese regardless of its flag. \emph{Seventh}: the dismissed-technology branch (LFP) is where cost-curve wars are won; watch what China industrializes, not what the West benchmarks.

@@ -1,0 +1,33 @@
+\chapter*{Methods, Sources, and Versioning}
+\addcontentsline{toc}{chapter}{Methods, Sources, and Versioning}
+
+\section*{How this book is built}
+
+The manuscript is assembled from three kinds of material, and the reader is entitled to know which is which on any given page. \emph{Public record}: benchmark submissions, government rules, company filings and earnings disclosures, national statistical releases, peer-reviewed papers, and specialist technical reporting---cited directly wherever a primary source exists, and flagged in the text when only secondary reporting was available. \emph{Companion analysis}: architectural and performance results from the author's own studies with collaborators, principally the accelerated-CPU analysis with Dongarra and Hoefler~\cite{dhm-cacm,dhm-long}, the memory-balance feasibility work~\cite{riken-study}, and the agentic-security survey~\cite{order66}. Where these are load-bearing, the text says explicitly that it is presenting an author-modeled architecture or analysis rather than a measured production system. \emph{Working documents}: unpublished discussion records, cited as such~\cite{consortium-record}, whose numerical content is discussion estimate rather than measurement.
+
+Every load-bearing claim carries an evidence grade (Section~\ref{sec:evidence}): \textbf{[V]} independently verified, \textbf{[P]} primary-source claim, \textbf{[A]} analyst estimate, \textbf{[M]} author model, \textbf{[R]} roadmap, \textbf{[S]} scenario judgment. Appendix~\ref{app:evidence} consolidates the headline claims in one graded ledger, which is the fastest way for a skeptical reader to locate the weakest link in the argument---and the first thing revised whenever the book is.
+
+\section*{Known weaknesses}
+
+Six, stated plainly. First, several mid-2026 model and market details still rest on secondary aggregators where primary vendor documentation exists but was not retrieved; these are being replaced as the underlying documents are located. Second, the LX2 attributions---designer, process node, memory supplier---are analyst inference from public teardown-adjacent reporting, not disclosure, and are graded accordingly. Third, the LPDDR6X architecture (Section~\ref{sec:lpddr6}, Appendix~\ref{app:lpddr}) remains a modeled design with a stated experimental program and no measured realization; readers should treat its numbers as a falsifiable proposal, which is how they are offered. Fourth, the flagship model cards of Appendix~\ref{app:cards} are incomplete in exactly the fields that matter most---tokens and wall-clock per completed task, measured serving throughput---because essentially no vendor publishes them. Fifth, the national sizing results of Chapter~\ref{ch:sizing} are measurement-anchored for one country only; the Singaporean and American instantiations are labelled pre-measurement scenarios whose behavioural parameters are transferred, and they should be read as the starting points those countries' own probes would revise. Sixth, the book's architectural thesis---that the CPU corner's breadth advantage compounds faster than the accelerator corner's depth advantage---is a judgement, not a measurement, and it is the judgement most likely to be shown wrong; the proof suite of Section~\ref{sec:proofsuite} exists to settle it.
+
+\section*{A note on the figures}
+
+The figures follow one convention throughout. Categorical colour is assigned in a fixed
+order from a palette validated for colour-vision deficiency (worst adjacent-pair separation $\Delta E \approx 9$ in
+deuteranopic simulation), never cycled and never used to encode rank; sequential magnitude uses a single hue;
+every chart with two or more series carries both a legend and selective direct labels, so identity is never
+carried by colour alone; grids and axes are recessive; and no chart uses two vertical scales. Every figure's
+underlying values appear either in an adjacent table or in the caption, which is also the required relief for the
+one palette slot whose contrast against the page falls below 3:1. Modelled quantities are marked [M] in the
+caption and plotted with a visibly different mark from measured ones.
+
+\section*{Versioning protocol}
+
+This is a living document. Each revision increments the version, restates its date on the title page---which is also the book's currency date, so that the cutoff can never contradict the edition---and re-grades Appendix~\ref{app:evidence}. Three artifacts travel together and are meant to be revised at different rates: the monograph, which changes slowly and carries the argument; the machine-readable claim register and falsification dashboard of Appendix~\ref{app:dashboard}, which change at every revision; and the current-cycle appendix, which is replaced wholesale rather than amended, so that the fastest-moving material never has to be threaded back through twenty chapters. Corrections are welcome and will be credited; the quickest way to change this book's conclusions is to falsify an entry in the ledger.
+
+\section*{Acknowledgements and disclosure}
+
+The argument owes a substantial debt to co-authors and interlocutors on the companion works cited above. Errors of fact, interpretation, and judgment remain the author's own.
+
+\emph{AI-assisted writing disclosure.} Large language models were used for source retrieval, drafting assistance, and language editing throughout the preparation of this manuscript. The author reviewed and approved the final text and remains solely responsible for its content, analysis, conclusions, and any errors. Given the subject matter, it seems worth stating the obvious: the tools used to write a book about the commoditization of intelligence are themselves an instance of it.

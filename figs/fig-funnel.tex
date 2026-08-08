@@ -1,0 +1,43 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  scale=0.86, transform shape,
+  every node/.style={font=\scriptsize},
+  st/.style={draw=inkMut, line width=0.6pt, rounded corners=2pt, align=center,
+             inner sep=4pt, minimum height=13mm},
+  ar/.style={-{Stealth[length=5pt]}, line width=1pt, color=inkSec},
+  eff/.style={font=\scriptsize\color{sTwo}, align=center},
+]
+\node[st, fill=sOne!12, draw=sOne, text width=26mm] (a) at (0,0) {AI capability};
+\node[st, fill=sOne!10, draw=sOne, text width=24mm, right=11mm of a] (b) {task\\acceleration};
+\node[st, fill=sThree!10, draw=sThree, text width=23mm, right=11mm of b] (c) {validated\\discovery};
+\node[st, fill=sTwo!10, draw=sTwo, text width=21mm, right=11mm of c] (d) {deployment};
+\node[st, fill=sFour!12, draw=sFour, text width=20mm, right=11mm of d] (e) {productivity};
+
+\draw[ar] (a) -- node[above, eff] {15--35\%\\addressable} node[below, font=\scriptsize\color{inkSec}] {} (b);
+\draw[ar] (b) -- node[above, eff] {1.5--5$\times$\\on that part} (c);
+\draw[ar] (c) -- node[above, eff] {20--60\%\\survives} (d);
+\draw[ar] (d) -- node[above, eff] {30--70\%\\converts} (e);
+
+\node[font=\scriptsize\color{inkSec}, align=center, text width=30mm, below=2mm of a] {measured by\\benchmarks};
+\node[font=\scriptsize\color{inkSec}, align=center, text width=26mm, below=2mm of b] {weather: $10^3$--$10^5\times$\\structure: 200M};
+\node[font=\scriptsize\color{inkSec}, align=center, text width=26mm, below=2mm of c] {materials: attrition\\documented};
+\node[font=\scriptsize\color{inkSec}, align=center, text width=24mm, below=2mm of d] {weather $<$1\,yr;\\pharma $\sim$10\,yr};
+\node[font=\scriptsize\color{inkSec}, align=center, text width=24mm, below=2mm of e] {\$3.1T base,\\\$4--13 multiplier};
+
+\node[font=\scriptsize\color{inkSec}, align=left, text width=168mm, anchor=north west] at (-2.6,-3.5)
+  {The corner-to-corner product of these ranges spans $U=a(s{-}1)vd \approx 0.45\%$ to $59\%$; the task-weighted
+   Monte Carlo of \S\ref{sec:funnelmath}, which is the operative estimate, concentrates this into a central
+   $\approx$11\% with a 10--90\% range of 8--18\% [M]. Even the pessimistic corner is a socially consequential
+   annual research-output flow ($\sim$\$28B/yr against the \$3.1T base), whose present value exceeds the cost of
+   national AI4S infrastructure by a large multiple. What the claim does not survive is the assumption that
+   acceleration equals discovery, which is why the funnel is drawn rather than asserted.};
+\end{tikzpicture}
+\caption[The AI4S value-conversion funnel]{From capability to output, with the losses shown. Each arrow carries a
+conversion efficiency well below one, and the domains where AI4S value is already visible in the statistics
+(weather) are precisely those where all four conversions are favourable---high addressability, a computational
+bottleneck, an established validation baseline, and short deployment lag. Where any one fails, as in materials
+synthesis, headline discovery counts do not become value. Ranges are author estimates [M]; the purpose is to make
+the argument falsifiable term by term rather than to claim precision.}
+\label{fig:funnel}
+\end{figure}

@@ -1,0 +1,8 @@
+class,w,a_pess,a_cen,a_opt,s_pess,s_cen,s_opt,v_pess,v_cen,v_opt,d_pess,d_cen,d_opt,l_pess,l_cen,l_opt,dU_central
+prediction_surrogates,0.20,0.35,0.50,0.60,2.0,3.0,6.0,0.50,0.70,0.85,0.45,0.70,0.85,0.45,0.70,0.90,0.0686
+search_optimization,0.20,0.25,0.40,0.55,1.8,3.5,6.0,0.20,0.40,0.60,0.35,0.60,0.75,0.35,0.60,0.80,0.0288
+experimental_planning,0.20,0.12,0.25,0.40,1.4,2.5,3.5,0.25,0.40,0.60,0.35,0.60,0.75,0.30,0.50,0.70,0.0090
+interpretation_causal,0.25,0.05,0.15,0.30,1.1,1.5,2.5,0.15,0.30,0.50,0.30,0.50,0.70,0.20,0.35,0.55,0.0010
+question_theory,0.15,0.02,0.05,0.12,1.0,1.5,2.5,0.05,0.20,0.40,0.15,0.30,0.50,0.10,0.20,0.40,0.0000
+# formula per class: dU = w * a * (s-1) * v * d * l ; U_AI4S = sum over classes
+# central total = 0.1074 ; Monte Carlo (triangular marginals, common conversion-quality factor rho=0.5 correlating v,d,l): median 0.118, P10 0.077, P90 0.175

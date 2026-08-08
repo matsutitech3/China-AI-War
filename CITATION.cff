@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+title: >-
+  How China Will Win the AI War: The Convergence Strategy — A
+  Structural Path to AI Dominance
+message: If you cite this work, please cite the edition you read.
+type: book
+authors:
+  - family-names: Matsuoka
+    given-names: Satoshi
+    affiliation: RIKEN Center for Computational Science (R-CCS)
+abstract: >-
+  A structural analysis arguing that China's position in artificial
+  intelligence should be read as the fourth run of an industrial playbook
+  that already won the solar photovoltaic, lithium-ion battery, and
+  electric-vehicle wars. The book treats the elements of AI separately —
+  the model, the compute, the semiconductor, the watt, the data, and
+  embodied AI — before recombining them, and states four load-bearing
+  propositions with explicit falsification conditions. A living document,
+  revised as the underlying industrial and technical facts evolve.
+keywords:
+  - artificial intelligence
+  - industrial strategy
+  - high-performance computing
+  - semiconductors
+  - open-weight models
+  - AI for science
+  - technology policy
+license: CC-BY-4.0
+version: '0.14'
+date-released: '2026-08-04'

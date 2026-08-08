@@ -1,0 +1,76 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[bookbar, height=4.3cm, width=0.66\linewidth, bar width=15pt,
+  ylabel={Share (\%)},
+  title={The master's asymmetry},
+  symbolic x coords={{tokens generated},{token-service GPUs}},
+  xtick=data, ymin=0, ymax=115,
+  xticklabel style={font=\scriptsize\color{inkSec}},
+  nodes near coords, nodes near coords style={font=\scriptsize\color{inkSec}},
+  legend style={at={(0.5,-0.30)}, anchor=north, legend columns=2},
+]
+\addplot[fill=sOne] coordinates {({tokens generated},10) ({token-service GPUs},88.7)};
+\addlegendentry{master (1M-token context)}
+\addplot[fill=sThree] coordinates {({tokens generated},90) ({token-service GPUs},11.3)};
+\addlegendentry{sub-agents (128K context)}
+\end{axis}
+\end{tikzpicture}
+
+\vspace{3mm}
+
+\begin{tikzpicture}
+\begin{axis}[bookaxis, height=5.4cm,
+  ymode=log,
+  ylabel={Capacity (BGPU, log scale)},
+  title={The universal-reach ladder: committed against required},
+  symbolic x coords={Singapore,Japan,{United States}},
+  xtick=data, ymin=300, ymax=3e6,
+  ytick={1000,10000,100000,1000000},
+  yticklabels={$10^3$,$10^4$,$10^5$,$10^6$},
+  xticklabel style={font=\small\color{inkSec}},
+  ybar, bar width=7pt, xmajorgrids=false, enlarge x limits=0.36,
+  every axis plot/.append style={draw=none},
+  legend style={at={(0.5,-0.22)}, anchor=north, legend columns=2},
+]
+\addplot[fill=sOne] coordinates {(Singapore,1000) (Japan,39000) ({United States},112000)};
+\addlegendentry{committed fleet}
+\addplot[fill=sThree] coordinates {(Singapore,3200) (Japan,28300) ({United States},62300)};
+\addlegendentry{rung 1: uniform baseline service}
+\addplot[fill=sTwo] coordinates {(Singapore,8300) (Japan,72700) ({United States},160000)};
+\addlegendentry{rung 2: full-population tiered service}
+\addplot[fill=sFour] coordinates {(Singapore,57000) (Japan,503000) ({United States},1130000)};
+\addlegendentry{modeled national requirement}
+\end{axis}
+\end{tikzpicture}
+
+\vspace{2mm}
+
+\begin{tikzpicture}
+\begin{axis}[bookbar, height=4.2cm, width=0.72\linewidth, bar width=15pt,
+  ylabel={BGPU per open-tier researcher},
+  title={Provisioning against requirement, per researcher},
+  symbolic x coords={Singapore,Japan,{United States},{requirement}},
+  xtick=data, ymin=0, ymax=1.15,
+  xticklabel style={font=\scriptsize\color{inkSec}},
+  nodes near coords, nodes near coords style={font=\scriptsize\color{inkSec}},
+  every node near coord/.append style={/pgf/number format/fixed,
+     /pgf/number format/precision=2, /pgf/number format/fixed zerofill},
+]
+\addplot[fill=sOne] coordinates
+  {(Singapore,0.02) (Japan,0.08) ({United States},0.10) ({requirement},1.00)};
+\end{axis}
+\end{tikzpicture}
+\caption[The AI4S sizing results]{Three readings of the same framework~\cite{ai4s-framework}. \emph{Top}: ten
+percent of tokens, generated at million-token context, consume nearly ninety percent of the token-service
+capacity---the configuration's central structural fact, invariant across countries, and the reason master context
+length is the layer's primary scenario axis. \emph{Middle}: committed national fleets against two priced service
+rungs and the full modeled requirement, log scale. Japan's and the United States' commitments already exceed the
+uniform-baseline rung but reach only $\sim$54\% and $\sim$70\% of the tiered rung; Singapore's clears neither.
+\emph{Bottom}: the same result per researcher---announced infrastructures provision 0.02--0.10 BGPU against a
+modeled requirement near 1.0, an underprovision of roughly one order of magnitude for Japan and the US and
+closer to fifty-fold for Singapore. Japan is measurement-anchored [M/V]; Singapore and the US are
+pre-measurement scenarios [T] whose behavioral parameters are transferred from the Japanese probe and are
+labeled as such.}
+\label{fig:ai4s-plots}
+\end{figure}

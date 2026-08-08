@@ -1,0 +1,61 @@
+\chapter{Where the Analogy Breaks}
+\label{ch:analogy}
+
+A playbook argued from three victories owes the reader its defeats. The same state, spending comparable money under the same five-year-plan machinery---roughly \$248B per year of industrial policy, 1.7\% of GDP, more than any comparison country in absolute or relative terms [A]~\cite{red-ink}---has run campaigns for two decades in sectors where dominance has \emph{not} arrived. This chapter surveys them, extracts the variables that separate success from failure, and then applies the resulting model to AI honestly: some of AI sits squarely in the playbook's kill zone, and some of it carries exactly the properties that have defeated the playbook elsewhere.
+
+\section{The unfinished campaigns}
+
+\subsection{Commercial aircraft and jet engines}
+
+COMAC's C919 is the anti-BYD. Nineteen years after program launch, deliveries ran $\sim$13 aircraft in 2025 against an original plan of 75---roughly two per month---while over 40\% of core content, including the LEAP-1C engine ($\sim$30\% of aircraft cost), remains Western [V]~\cite{comac}. The 2025 episode in which Washington suspended and then restored LEAP export licenses demonstrated live chokepoint leverage of exactly the kind that failed in solar~\cite{comac}. The domestic CJ-1000A engine, in flight test since 2025 with certification targets that independent analysts call years optimistic [P/A], and EASA's stated three-to-six-year horizon for European certification, bound the escape [P]~\cite{cj1000a,easa-c919}. Domestic market share: $\sim$7\% against a Made-in-China-2025 target of 10\%~\cite{self-sufficiency}.
+
+\subsection{Lithography, and the deep tool chain}
+
+Chapter~\ref{ch:semi} treated lithography as the hard floor; here it serves as the control case. Against etch at 30--35\% localization and cleaning above 50\%, lithography stands below 5\%; SMEE ships at 90\,nm; the one domestic immersion-DUV tool in fab testing resembles ASML's 2008-generation machine; and a claimed 28\,nm breakthrough was publicly retracted by SMEE's own shareholder [A/P]~\cite{litho-localization,litho}. Beneath the scanners, the pattern repeats fractally: ArF photoresist below 10\% domestic, precision vacuum valves below 10\% against VAT's 60--70\% global share, electron microscopes over 90\% imported~\cite{litho-localization,instruments}. Twenty years and three Big Funds have not cracked it.
+
+\subsection{Machine tools, reducers, and the precision economy}
+
+High-end five-axis CNC machine tools: $\sim$8\% domestic against an 80\% target, with Japan and Germany holding the balance [V]~\cite{machine-tools}. Robot harmonic reducers: Harmonic Drive Systems held $\sim$85\% of the world market as late as 2023, Nabtesco $\sim$60\% of RV reducers---though here the siege is visibly progressing (Leaderdrive at 15\% global; Chinese reducers now inside Tesla's and Unitree's humanoids), and domestic industrial-robot share crossed 50\% in 2024 from 18\% in 2015~\cite{harmonic,machine-tools}. Precision scientific instruments: high-end domestic share barely 17\%, with $\sim$\$17B of annual imports~\cite{instruments}.
+
+\subsection{Operating systems and software ecosystems}
+
+The purest network-effects sector shows the playbook's slowest grind---and its most interesting partial win. Two decades of state Linux (Kylin and descendants) never dented Windows. Yet HarmonyOS, forced into existence by US sanctions exactly as this book's mechanism predicts, reached 17\% of mainland smartphone OS share in 2026---ahead of iOS for six consecutive quarters---with the Android-compatibility bridge burned (HarmonyOS NEXT) and eight million registered developers [V/P]~\cite{harmonyos}. WPS reached $\sim$600M monthly active users~\cite{harmonyos}. The lesson cuts both ways: ecosystems yield eventually, but on decade timescales, only under existential forcing, and so far only inside the protected home market.
+
+\subsection{Biotech: the surprise late bloomer}
+
+Pharmaceuticals show what the lagging sectors look like the year they stop lagging. Chinese biopharma out-licensing to Western majors hit \$137.7B across 186 deals in 2025---ten times 2021---with Chinese assets roughly a third of global in-licensing spend; first-in-class pipeline share reached $\sim$24\%, second only to the US [V/A]~\cite{biotech}. The residual gap is trust and regulation, not invention: the FDA's 14--1 rejection of China-only trial data for sintilimab marks the certification barrier in its purest form~\cite{biotech}. Biotech in 2025 looks like batteries in 2015---which is precisely why the trust chapter (Chapter~\ref{ch:trust}) matters for AI.
+
+\section{The success--failure model}
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \caption{What separates playbook victories from twenty-year grinds.}
+  \label{tab:analogy-model}
+  \begin{tabular}{p{40mm}p{48mm}p{54mm}}
+    \toprule
+    Variable & Favors the playbook & Defeats or delays it \\
+    \midrule
+    Product architecture & Modular, decomposable (cells, modules, packs) & Integral, tightly coupled (engines, scanners) \\
+    Clock speed & Fast iteration; learning curve lives on the factory floor & Slow cycles; the frontier barely moves (litho optics) or moves via decade-long certification \\
+    Knowledge type & Codified process engineering, scale learning & Tacit craft accumulated in one supply chain (Zeiss, hot-section metallurgy, five-axis) \\
+    Regulatory gate & Home market can self-certify (EVs, panels) & Foreign safety/efficacy certification controls access (EASA/FAA, FDA) \\
+    Demand lever & State can create/reserve demand at scale & Install base and network effects lock incumbents (OS, Office, engines' fleets) \\
+    Trust requirement & Commodity performance is verifiable at purchase & Buyer must trust decades of provenance (avionics, drugs, \emph{models?}) \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The synthesis across the scholarly assessments---the USCC's Made-in-China-2025 scorecard, CSIS's EV-versus-aviation comparison, Chan's clock-speed argument [A]~\cite{self-sufficiency,csis-aviation,kyle-chan}---is compact: \emph{the playbook wins where products are modular, iteration is fast, learning is manufacturable, the home market can certify, and trust is embodied in the artifact; it grinds where knowledge is tacit, certification is foreign, and value lives in an installed ecosystem.}
+
+\section{Scoring AI against the model}
+
+Now apply Table~\ref{tab:analogy-model} to the three elements, without thumb on scale.
+
+\emph{Favoring the playbook}: AI models are the most modular, fastest-clock-speed artifact in industrial history---weights are digital goods with zero reproduction cost, the frontier turns over in months, capability is substantially verifiable at the benchmark (with caveats), and the learning curve (data, recipes, kernels) is largely codified and, in China's case, deliberately published. Sparse-MoE training is closer to batteries than to jet engines. The compute layer is intermediate: accelerators and CPUs are modular chiplet products on fast cycles---LX2 demonstrates exactly that---while the tool chain beneath them (Chapter~\ref{ch:semi}) inherits lithography's tacit-knowledge resistance, which is why this book's architecture argument routes around the tool chain rather than through it.
+
+\emph{Resisting the playbook}: three properties of AI sit in the right-hand column, and they are the strongest structural arguments against this book's title. First, \emph{the moving frontier}: unlike solar's fixed physics, the capability target relocates several times a year; a fast follower is never finished, and a discontinuity (recursive AI-for-AI R\&D) could reopen the gap faster than any factory closes it. Second, \emph{ecosystem lock}: the enterprise deployment layer---distribution, workflow integration, habits, procurement---is Office, not modules; Chapter~\ref{ch:trade} takes this seriously as the closed labs' real moat. Third, \emph{trust and certification}: an AI model deployed in government, finance, or defense is closer to an avionics component or a drug than to a battery---provenance, auditability, and alignment with the buyer's values are part of the product. The sintilimab precedent---capability accepted, certification denied---is directly available to Western regulators as an AI playbook, and censorship and security findings (Chapter~\ref{ch:trust}) give it factual ammunition.
+
+Two further asymmetries deserve the record. Digital goods cut both ways: zero reproduction cost is what lets Chinese weights conquer adoption instantly---and what would let a single superior Western open release reconquer it just as fast; there is no factory-shaped moat around P1. And the talent flow, the deepest input, currently splits the difference: researchers of Chinese origin constitute roughly half of top-tier AI authorship, the US still hosts the majority of the established cohort (87 of 100 tracked 2019-cohort researchers remained in 2025), but the inflow of new Chinese talent to the US is visibly thinning under visa friction while Beijing's K-visa recruits in the opposite direction [V/A]~\cite{talent}. Talent is the one input where the two systems still share a supply chain.
+
+The honest conclusion: the model and compute elements sit mostly in the playbook's kill zone; the tool chain sits in its resistance zone (and is being bypassed rather than assaulted); and the \emph{deployment} layer---trust, certification, ecosystems---is genuinely contested ground where the precedents predict a long grind, not a collapse. That is exactly where the next three chapters, and the strategy chapter, will place their weight.

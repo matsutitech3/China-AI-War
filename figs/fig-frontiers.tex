@@ -1,0 +1,45 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  every node/.style={font=\scriptsize},
+  fr/.style={draw=inkMut, line width=0.6pt, rounded corners=2pt, align=left,
+             inner sep=4pt, text width=42mm, minimum height=10mm},
+  pcell/.style={align=center, font=\scriptsize, text width=22mm, inner sep=2.5pt,
+              rounded corners=2pt, minimum height=6mm},
+]
+\node[font=\scriptsize\bfseries\color{inkPri}] at (4.35,0.75) {leader today};
+\node[font=\scriptsize\bfseries\color{inkPri}] at (7.05,0.75) {decides what};
+
+\node[fr, fill=sOne!12, draw=sOne] (f1) at (0,0) {\textbf{1. Absolute}\\ best under controlled evaluation};
+\node[pcell, fill=sOne!22] at (4.35,0) {United States};
+\node[pcell, fill=surf] at (7.05,0) {prestige, hardest tasks};
+
+\node[fr, fill=sThree!12, draw=sThree, below=3.5mm of f1] (f2) {\textbf{2. Open}\\ best downloadable under usable licence};
+\node[pcell, fill=sThree!22] at (4.35,-1.4) {China};
+\node[pcell, fill=surf] at (7.05,-1.4) {developer default};
+
+\node[fr, fill=sThree!12, draw=sThree, below=3.5mm of f2] (f3) {\textbf{3. Deployable}\\ best operable reliably at acceptable cost};
+\node[pcell, fill=sThree!22] at (4.35,-2.8) {China (rising)};
+\node[pcell, fill=surf] at (7.05,-2.8) {industrial outcomes};
+
+\node[fr, fill=sTwo!12, draw=sTwo, below=3.5mm of f3] (f4) {\textbf{4. Economic}\\ lowest cost per \emph{successful task}};
+\node[pcell, fill=surf] at (4.35,-4.2) {often neither: an older, smaller model};
+\node[pcell, fill=surf] at (7.05,-4.2) {the majority of tokens};
+
+\node[fr, fill=sFour!12, draw=sFour, below=3.5mm of f4] (f5) {\textbf{5. Scientific}\\ validated scientific value per unit of national resource};
+\node[pcell, fill=surf] at (4.35,-5.7) {unmeasured};
+\node[pcell, fill=sFour!22] at (7.05,-5.7) {long-run national power};
+
+\node[font=\scriptsize\color{inkSec}, align=left, text width=146mm, anchor=north west] at (-2.3,-6.6)
+  {Apparent contradictions dissolve here. China can trail frontier~1 while leading 2 and 3. A US closed system can
+   dominate frontier~5 for a given workload despite far higher token prices, because scientific value per resource
+   depends on capability at the hard end rather than price at the volume end. And frontier~4 is frequently defined
+   by a model nobody writes about.};
+\end{tikzpicture}
+\caption[The five frontiers]{Five frontiers, won separately. Only the first two are systematically measured; the
+third and fourth are measurable but rarely reported (\S\ref{sec:cost-solved}); the fifth---the one
+Chapter~\ref{ch:prize} argues matters most for national outcomes---has no accepted metric at all, which is both a
+gap in the literature and an invitation to whoever builds the first credible one. Positions are this book's
+assessment as of the version stamp [S].}
+\label{fig:frontiers}
+\end{figure}

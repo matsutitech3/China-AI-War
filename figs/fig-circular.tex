@@ -1,0 +1,29 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  node distance=13mm and 20mm,
+  box/.style={draw=inkMut, line width=0.6pt, rounded corners=2pt, fill=surf,
+              align=center, font=\footnotesize, inner sep=4pt, minimum width=26mm},
+  flow/.style={-{Stealth[length=4pt]}, line width=0.9pt, font=\scriptsize\color{inkSec}},
+]
+\node[box, fill=sOne!12, draw=sOne] (nv) {\textbf{Chip vendor}\\NVIDIA};
+\node[box, right=32mm of nv, fill=sTwo!12, draw=sTwo] (lab) {\textbf{Frontier lab}\\OpenAI};
+\node[box, below=16mm of lab, fill=sFour!12, draw=sFour] (cloud) {\textbf{Cloud / neocloud}\\Oracle, CoreWeave};
+\node[box, below=16mm of nv, fill=surf] (credit) {\textbf{Private credit}\\ \& bond markets};
+
+\draw[flow] (nv) -- node[above, align=center] {equity \$30B;\\backstop talks to \$250B} (lab);
+\draw[flow] (lab) -- node[right, align=left] {\$300B+\\compute\\commitments} (cloud);
+\draw[flow] (cloud) -- node[below, align=center] {GPU purchases} (nv);
+\draw[flow] (credit) -- node[left, align=right] {debt secured\\on chip\\collateral} (cloud);
+\draw[flow] (nv.south) -- node[above, sloped, align=center] {} (credit.north);
+
+\node[font=\scriptsize\color{inkSec}, align=center, below=7mm of credit]
+  {$\sim$\$750B of identified interlocking vendor-financing arrangements;\\
+   \$489B of AI-linked debt issuance in seven months of 2026};
+\end{tikzpicture}
+\caption[The circular financing structure]{The circularity. The seller finances the buyer, who commits the money to
+an intermediary, who spends it back with the seller, financed by debt secured on the seller's product. Each arrow is
+individually defensible; the loop is what amplifies both directions of the cycle. Figures [V/P] as cited in
+Section~\ref{sec:exposure}; the diagram is schematic, not an exhaustive map of counterparties.}
+\label{fig:circular}
+\end{figure}

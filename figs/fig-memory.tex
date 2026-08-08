@@ -1,0 +1,62 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[bookaxis, height=5.8cm,
+  xmode=log, ymode=log,
+  xlabel={Memory capacity per socket (GB, log)},
+  ylabel={Memory bandwidth (TB/s, log)},
+  title={The design space: capacity against bandwidth},
+  xmin=20, xmax=9000, ymin=0.7, ymax=40,
+  xtick={32,128,512,2048}, xticklabels={32,128,512,2048},
+  ytick={1,2,4,8,16}, yticklabels={1,2,4,8,16},
+  legend style={at={(0.02,0.03)}, anchor=south west},
+]
+\addplot[only marks, mark=*, mark size=2.6pt, color=sOne] coordinates {(192,8) (288,14.5)};
+\addlegendentry{HBM-class accelerator}
+\addplot[only marks, mark=square*, mark size=2.6pt, color=sTwo] coordinates {(2300,7) (1500,1.2)};
+\addlegendentry{LPDDR-class socket}
+\addplot[only marks, mark=triangle*, mark size=3.2pt, color=sFour] coordinates {(32,4)};
+\addlegendentry{LX2 (accelerated CPU)}
+\node[font=\scriptsize\color{inkSec}, anchor=east] at (axis cs:170,8) {B200};
+\node[font=\scriptsize\color{inkSec}, anchor=west] at (axis cs:340,14.5) {HBM4 ceiling (288\,GB)};
+\node[font=\scriptsize\color{inkSec}, anchor=south] at (axis cs:2300,7.8) {LPDDR6X proposal [M]};
+\node[font=\scriptsize\color{inkSec}, anchor=south] at (axis cs:1500,1.35) {Vera (shipped)};
+\node[font=\scriptsize\color{inkSec}, anchor=west] at (axis cs:36,3.6) {LX2};
+\draw[dashed, color=inkMut, line width=0.6pt] (axis cs:306,0.7) -- (axis cs:306,20);
+\node[font=\scriptsize\color{inkSec}, anchor=south east, align=right]
+  at (axis cs:290,21) {model state per accelerator,\\128-node run ($\sim$306\,GB)};
+\end{axis}
+\end{tikzpicture}
+
+\vspace{1mm}
+
+\begin{tikzpicture}
+\begin{axis}[bookaxis, height=4.6cm,
+  xlabel={Provisioned memory bandwidth (TB/s)},
+  ylabel={MFU ceiling (\%)},
+  title={The capacity-for-bandwidth trade},
+  xmin=1, xmax=16, ymin=0,
+  xtick={2,5,7,10,14},
+  legend style={at={(0.98,0.06)}, anchor=south east},
+  ymax=112,
+]
+\addplot[color=sOne, mark=none, smooth] coordinates {
+  (1,14) (2,28) (3,41) (4,53) (5,63) (6,66) (7,67) (9,72) (11,80) (14,89) (16,89)};
+\addlegendentry{achievable MFU under aggressive fusion [M]}
+\addplot[only marks, mark=*, mark size=2.6pt, color=sTwo] coordinates {(7,67)};
+\addplot[only marks, mark=*, mark size=2.6pt, color=sFour] coordinates {(14,89)};
+\node[font=\scriptsize\color{inkSec}, anchor=north west] at (axis cs:7.2,64) {LPDDR6X: 67\%};
+\node[font=\scriptsize\color{inkSec}, anchor=north east] at (axis cs:13.8,86) {HBM4: 89\%};
+\draw[dashed, color=inkMut, line width=0.5pt] (axis cs:5,0) -- (axis cs:5,63);
+\node[font=\scriptsize\color{inkSec}, anchor=south west] at (axis cs:5.15,66) {knee $\approx$5\,TB/s};
+\end{axis}
+\end{tikzpicture}
+\caption[Memory design space and the MFU trade]{Why capacity is the arbitrage. \emph{Above}: capacity against
+bandwidth for shipped parts [V] and for the modeled LPDDR6X socket [M]. The dashed line is the per-accelerator
+model state for the reference 2.8T-parameter sparse-MoE run at 128 nodes ($\sim$306\,GB): everything to its left
+cannot hold the model at all, which is the sense in which the HBM path has a cluster-size floor. \emph{Below}:
+the trade the substitution buys---22 points of MFU ceiling surrendered for an eightfold capacity gain and an
+order-of-magnitude better cost per bit. Curve shape is modeled, not measured; Appendix~\ref{app:lpddr} states the
+experiments that would confirm or refute it.}
+\label{fig:memory}
+\end{figure}

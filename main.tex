@@ -1,0 +1,164 @@
+\documentclass[11pt,a4paper,oneside]{book}
+
+\usepackage[margin=25mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{siunitx}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.16}
+\usetikzlibrary{positioning,arrows.meta,fit,backgrounds,calc}
+
+% --- Figure palette: validated categorical set (CVD deltaE 9.2 pass, light mode).
+% Contrast relief for slot 3 is provided by direct labels and adjacent tables,
+% which every figure in this book carries.
+\definecolor{sOne}{HTML}{2A78D6}   % blue
+\definecolor{sTwo}{HTML}{EB6834}   % orange
+\definecolor{sThree}{HTML}{1BAF7A} % aqua
+\definecolor{sFour}{HTML}{4A3AA7}  % violet
+\definecolor{inkPri}{HTML}{0B0B0B}
+\definecolor{inkSec}{HTML}{52514E}
+\definecolor{inkMut}{HTML}{8A8880}
+\definecolor{gridLn}{HTML}{D8D7D2}
+\definecolor{surf}{HTML}{F4F5F7}
+
+\pgfplotsset{
+  bookaxis/.style={
+    width=0.86\linewidth, height=5.6cm,
+    axis lines=left,
+    every axis plot/.append style={line width=1pt},
+    tick align=outside, tick style={color=inkMut, line width=0.5pt},
+    label style={font=\small\color{inkSec}},
+    tick label style={font=\footnotesize\color{inkSec}},
+    title style={font=\small\bfseries\color{inkPri}},
+    legend style={font=\footnotesize, draw=gridLn, fill=white,
+                  cells={anchor=west}, legend cell align=left},
+    grid=major, grid style={color=gridLn, line width=0.4pt},
+    axis line style={color=inkMut, line width=0.6pt},
+  },
+  bookbar/.style={
+    bookaxis,
+    ybar, bar width=11pt, grid=major, ymajorgrids=true, xmajorgrids=false,
+    enlarge x limits=0.20,
+    every axis plot/.append style={draw=none},
+  },
+}
+\usepackage{longtable}
+\usepackage[hidelinks,breaklinks]{hyperref}
+\usepackage{xurl}
+\usepackage{xcolor}
+
+% Boxed case-study environment (single-page, framed)
+\newsavebox{\csbox}
+\newenvironment{casestudy}[1]{%
+  \par\medskip\noindent
+  \begin{lrbox}{\csbox}%
+  \begin{minipage}{0.90\linewidth}\footnotesize
+  {\normalsize\bfseries\color{sOne}Case study: #1\par}\smallskip
+}{%
+  \end{minipage}\end{lrbox}%
+  \begin{center}\setlength{\fboxsep}{4mm}\fcolorbox{gridLn}{surf}{\usebox{\csbox}}\end{center}\medskip
+}
+
+\sisetup{group-separator={,}, group-minimum-digits=4}
+\urlstyle{same}
+\Urlmuskip=0mu plus 2mu
+
+% Living-book version stamp
+\newcommand{\bookversion}{v0.14 --- 4 August 2026}
+\newcommand{\datafreeze}{4 August 2026}
+
+\title{\textbf{\Huge How China Will Win the AI War}\\[6mm]
+\Large The Convergence Strategy: A Structural Path to AI Dominance\\[4mm]
+\normalsize A Living Book\thanks{This is a living document, revised as the underlying industrial and technical facts evolve. Version \bookversion. Corrections and additions are welcome.}}
+\author{Satoshi Matsuoka}
+\date{\bookversion}
+
+\begin{document}
+
+\frontmatter
+\maketitle
+
+\chapter*{Preface}
+\addcontentsline{toc}{chapter}{Preface}
+
+The title of this book is deliberately provocative, but it is not a prediction of inevitability---it is a structural analysis. ``Winning'' here does not mean producing the single best frontier model in any given quarter. It means what winning meant in solar photovoltaics, in lithium-ion batteries, and in electric vehicles: capturing the overwhelming majority of global production, setting the cost curve, controlling the supply chain, defining the de facto standards, and reducing erstwhile leaders to protected niches sustained by tariffs and subsidies. By that definition China has already won three consecutive technology wars in which the West, at the outset, held every advantage---the science, the patents, the firms, and the markets.
+
+The central claim of this book is that artificial intelligence is now following the same trajectory, and that the mechanism is visible in three separable elements: \emph{the model} (open-weight frontier models released at marginal prices), \emph{the compute} (an open, standardized hardware ecosystem built on RISC-V, domestic accelerators, and a memory-capacity arbitrage that substitutes abundant commodity DRAM for scarce HBM), and \emph{the semiconductor} (the fabs, logic, and DRAM base that removes the last physical chokepoints). Each element is driven by the same national strategy of \emph{openness as a weapon}: open weights, open instruction sets, open interconnect specifications, and open software stacks, deployed to commoditize precisely the layers where Western incumbents collect their rents.
+
+Chapter~\ref{ch:theory} supplies the theoretical machinery---the production economics of intelligence, AI as a general-purpose technology, and the industrial-organization account of what openness does to rents---for readers who want the argument's engine before its evidence. Part~I then surveys the three precedent industries---how the war was actually fought and won in each---and then, in a chapter of equal weight, the campaigns where the same playbook has \emph{not} worked. Part~II analyses the elements of AI separately: the model, the compute, the semiconductor, the watt, the data, and---closing the loop back into Part~I's terrain---embodied AI and physical production. Part~III turns to consequences---trust and agentic security, governance, the financial exposure of the incumbents, national strategies, how much compute a nation's science actually needs, and the international institution that the analysis keeps arriving at---before the final chapter assembles the convergence argument. Throughout, I have tried to keep the analysis anchored in numbers with sources, and to flag clearly where evidence is contested or preliminary. As a living book, chapters will be revised and extended as events develop; readers should treat quantitative claims as dated to the version stamp above.
+
+The book carries an apparatus that a reader should be able to hold it to. Selected headline claims are tagged inline with an evidence class (Section~1.5); the complete graded ledger---which is the authoritative record, and the fastest route to this book's weakest link---appears as Appendix~\ref{app:evidence}, with a machine-readable claim register and a quarterly falsification dashboard in Appendix~\ref{app:dashboard}. Author-modeled results are disclosed as such wherever they are load-bearing, and the four core propositions are stated, coupled, and falsified separately in Section~\ref{sec:propositions}. The book also carries an explicit \emph{currency date}, and that date is defined to be the date of the edition itself---\datafreeze, the date on the title page. Every factual claim in the stable chapters is current as of that date; anything the author learned after it belongs to the next edition, not to this one. Defining the cutoff as the edition date is the only convention that cannot contradict itself: a book whose declared freeze precedes its own completion will sooner or later discuss an event it has ruled out of scope. Appendix~\ref{app:bulletin} carries the most recent development cycle in detail, because fast-moving material benefits from being quarantined in one place where it can be replaced wholesale; but it is inside the currency date, not outside it.
+
+\section*{A note on the author's position, and on motive}
+\addcontentsline{toc}{section}{A note on the author's position, and on motive}
+
+Scholarly convention asks an author writing on a contested subject to state where he stands in relation to it. Here the convention matters more than usual, because the position is unusually entangled with the subject---and because, on the face of it, the position argues against the conclusion.
+
+I direct the RIKEN Center for Computational Science, the institution that built and operates Fugaku, the machine that swept all four major supercomputing benchmark lists in 2020 and 2021; and I direct the FugakuNEXT program that will succeed it toward the end of this decade. I hold a professorship at the Institute of Science Tokyo. For some three decades my professional life has been spent inside high-performance computing---designing machines and the processors in them, running procurements, arguing about architecture in public and in committee, and building the software and scientific applications that have to justify the expenditure afterwards.
+
+That career has been conducted, almost entirely, in partnership with Western technology and Western institutions. FugakuNEXT is being built by Fujitsu around the MONAKA-X processor tightly coupled to NVIDIA accelerators over NVLink Fusion---a design decision that places Japan's flagship national program on the American accelerator platform for the coming decade, and one I defended and continue to defend on its engineering merits~\cite{fugakunext}. My center's relationships with NVIDIA, AMD, Intel, Arm, and the American and European system vendors are longstanding, active, and cordial; a substantial part of my working life consists of technical argument with their architects, which is among the more enjoyable things about the job. In January 2026 RIKEN, Fujitsu, and NVIDIA entered a joint partnership with Argonne National Laboratory on AI for science and next-generation computing~\cite{anl-riken}. In June 2026 Japan became the \emph{first international partner} in the United States' Genesis Mission---a one-billion-dollar, five-year commitment, half from each nation, binding twelve DOE national laboratories to twelve Japanese research institutions across quantum information, fusion, biotechnology, advanced materials, particle physics, and autonomous laboratories, with RIKEN among the central Japanese participants~\cite{genesis-japan}. Within Japan I have been one of the principal advocates for AI for Science as a national priority, through RIKEN's TRIP and TRIP-AGIS platforms and through the compute-sizing framework that Chapter~\ref{ch:sizing} of this book is built on.
+
+The reader should weigh all of that as a declaration of interest, and should notice which way it points. My institution buys Western technology and will go on buying it. My flagship program runs on an American accelerator architecture. My laboratory's deepest international partnerships are with American and European institutions, and I value them. Several of this book's load-bearing technical arguments rest on work I coauthored or wrote---the accelerated-CPU analysis with Jack Dongarra and Torsten Hoefler~\cite{dhm-cacm,dhm-long}, the national AI-for-science sizing framework~\cite{ai4s-framework}, the agentic-backdoor survey behind Chapter~\ref{ch:order66}~\cite{order66}, and the international-consortium discussion record developed with Thomas Schulthess~\cite{consortium-record}---and the economic-impact study discussed in Chapter~\ref{ch:prize} was commissioned by my own institution, a fact disclosed again at the point of use. \emph{If these interests bias this book, they bias it against its thesis.} Nothing in my professional position gives me an incentive to argue that the Chinese stack is winning. A great deal of it gives me an incentive to argue the opposite, and it would have been considerably more comfortable to do so.
+
+Why write it, then. Not for lack of commentary: there is a great deal of analysis of Chinese AI progress and of the competition between China and the United States and its allies. The problem is that almost all of it is \emph{fragmentary}. The model community sees benchmarks and licences. The semiconductor community sees export controls and fab capacity. The financial community sees valuations and capital expenditure. The security community sees supply-chain risk. The policy community sees five-year plans and ministerial documents. Each of these communities sees its own layer with real expertise and the adjacent layers dimly, if at all---and the strategy this book describes is \emph{invisible at any single layer}. It becomes visible only when the model, the compute, the semiconductor, the watt, the data, and physical production are laid side by side, because it is a systems strategy, and a systems strategy is precisely the thing that fragmentary analysis cannot resolve. An open instruction set is unremarkable on its own; so is a memory-capacity trade, so is an open-weight release, so is a provincial electricity tariff. Assembled, they are a machine for changing where cost and rent sit in an entire industry---which is exactly what the solar, battery, and electric-vehicle campaigns turned out to be, and exactly what was missed at the time, layer by layer, by people who each understood their own layer perfectly well.
+
+I should also report an experience rather than only an argument. I did not begin this project expecting to arrive where it has arrived. Each time I have gone looking for the layer at which the Chinese position falls apart---the software stack, the memory wall, the packaging, the energy, the training economics, the scientific applications---I have more often found additional evidence of coherence than the decisive gap I expected, and the gaps I did find have tended to be narrower and to be closing faster than the public discussion assumes. That has been an unwelcome finding, professionally and personally, and I have tried throughout to hold it to a standard of proof appropriate to how much I would prefer it to be wrong. Where the evidence does not support the strong claim---and there are several such places, marked as such---the book says so.
+
+Which produces the obligation. The vantage point here is not better than anyone else's; it is merely unusual. Very few people are positioned to look at processor architecture, semiconductor supply chains, national computing programs, model economics, and international scientific collaboration at the same time, with direct professional access to most of them, and with an obligation to no vendor and no government's messaging. Having had that view, I do not think it is defensible to leave what it shows in conference corridors, closed briefings, and program-committee conversations. Documenting it is the ordinary duty of a researcher who has done the analysis, and so is committing to maintain it: this is a living document, with graded evidence, stated probabilities, explicit falsification criteria, and a standing willingness to correct the manuscript against its own thesis wherever the record demands it. I intend to keep updating it as an academic and not as an advocate, which means reporting the evidence as it arrives regardless of which side it favours, and being publicly wrong when the record says so.
+
+A note on perspective: this book is written not to celebrate the outcome it describes, nor to counsel despair, but because strategy made without a correct model of the adversary's strategy fails. The West's repeated pattern across solar, batteries, and EVs was not a failure of invention---it invented nearly everything---but a failure to take Chinese industrial strategy seriously until the cost curve had already been captured. The purpose of writing down the mechanism is to make that mistake harder to repeat.
+
+\tableofcontents
+
+\input{chapters/glossary}
+
+\mainmatter
+
+\input{chapters/ch01-thesis}
+\input{chapters/ch01b-theory}
+
+\part{The Precedents: Three Wars Already Won}
+\label{part:precedents}
+
+\input{chapters/ch02-solar}
+\input{chapters/ch03-batteries}
+\input{chapters/ch04-ev}
+\input{chapters/ch05-playbook}
+\input{chapters/ch05b-analogy}
+
+\part{The Elements of AI}
+\label{part:ai}
+
+\input{chapters/ch06-model}
+\input{chapters/ch07-compute}
+\input{chapters/ch08-semiconductor}
+\input{chapters/ch08b-energy}
+\input{chapters/ch08c-data}
+\input{chapters/ch08d-embodied}
+
+\part{Convergence and Consequences}
+\label{part:convergence}
+
+\input{chapters/ch09b-trust}
+\input{chapters/ch12-order66}
+\input{chapters/ch13-governance}
+\input{chapters/ch09-trade}
+\input{chapters/ch13b-nonaligned}
+\input{chapters/ch11-strategies}
+\input{chapters/ch14a-ai4s-prize}
+\input{chapters/ch14-sizing}
+\input{chapters/ch15-consortium}
+\input{chapters/ch10-synthesis}
+
+\input{chapters/appendix}
+
+\backmatter
+\input{chapters/methods}
+\input{chapters/bibliography}
+
+\end{document}

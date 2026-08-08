@@ -1,0 +1,56 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  every node/.style={font=\footnotesize},
+  layer/.style={draw=inkMut, line width=0.7pt, rounded corners=3pt, align=left,
+                inner sep=5pt, text width=104mm},
+  cell/.style={draw=inkMut, line width=0.5pt, rounded corners=2pt, fill=white,
+               align=center, font=\scriptsize, inner sep=3pt, text width=44mm},
+  arr/.style={-{Stealth[length=5pt]}, line width=1pt, color=inkSec},
+]
+% --- token layer
+\node[layer, fill=sOne!8, draw=sOne] (tokhdr) at (0,0)
+  {\textbf{Token-service layer}\hfill $G_{\mathrm{tok}} = T_{\mathrm{nat}}\cdot k$\\[1pt]
+   \scriptsize interactive serving, SLO-provisioned};
+\node[cell, fill=sOne!5, below left=3mm and 0mm of tokhdr.south, anchor=north east, xshift=-2mm] (master)
+  {\textbf{master}: 1T-class MLA MoE\\ $L_m = 2^{20}$ ctx, $\Theta_m = 115$ tok/s\\
+   \textbf{10\% of tokens, 88.7\% of cost}};
+\node[cell, fill=sOne!5, below right=3mm and 0mm of tokhdr.south, anchor=north west, xshift=2mm] (sub)
+  {\textbf{sub-agents}: 120B SWA\\ 128K ctx, $\Theta_s = 8{,}161$ tok/s\\
+   90\% of tokens, 11.3\% of cost};
+
+% --- execution layer
+\node[layer, fill=sTwo!8, draw=sTwo, below=36mm of tokhdr] (scihdr)
+  {\textbf{Scientific-execution layer}\hfill
+   $G_{\mathrm{sci}} = G^{\mathrm{AI}}_{\mathrm{sim}} + G_{\mathrm{tra}} + G_{\mathrm{dat}}$\\[1pt]
+   \scriptsize batch partition and resident pipelines};
+\node[cell, fill=sTwo!5, below left=3mm and 0mm of scihdr.south, anchor=north east, xshift=-2mm] (sim)
+  {simulation: MD, DFT, CFD,\\ plus persistent surrogate programs};
+\node[cell, fill=sTwo!5, below right=3mm and 0mm of scihdr.south, anchor=north west, xshift=2mm] (tra)
+  {training \& fine-tuning\\ (GPU-substrate-pinned)};
+\node[cell, fill=sTwo!5, below=3mm of scihdr.south, anchor=north, yshift=-14mm, text width=94mm] (dat)
+  {facility pipelines: resident streaming inference at detector rate,
+   $G_{\mathrm{dat}} = F_{\mathrm{eq}}\,g_{\mathrm{fac}}$};
+
+% --- coupling arrows, drawn in the clear vertical gap
+\draw[arr] ($(master.south)+(-14mm,-3mm)$) -- ++(0,-13mm)
+  node[midway, left, font=\scriptsize\color{inkSec}, align=right, xshift=-1mm]
+  {agent-launched\\batch jobs};
+\draw[arr] ($(sub.south)+(14mm,-16mm)$) -- ++(0,13mm)
+  node[midway, right, font=\scriptsize\color{inkSec}, align=left, xshift=1mm]
+  {results return\\to context};
+
+\node[font=\scriptsize\color{inkSec}, align=center, below=4mm of dat, text width=104mm]
+  {$G_{\mathrm{nat}}(Y)=G_{\mathrm{tok}}(Y)+G_{\mathrm{sci}}(Y)$ --- both layers must be provisioned
+   \emph{concurrently} for the agentic loop to close};
+\end{tikzpicture}
+\caption[The two-layer national AI4S demand model]{The demand model. A nation's agentic AI-for-Science
+requirement is the concurrent sum of a token-service layer, priced through a canonical master/sub-agent serving
+configuration, and a scientific-execution layer decomposed by function into simulation, training, and data
+processing---with training pinned to GPU-class substrate and simulation the only cross-substrate routable
+term. Note the master asymmetry carried in the top row: a tenth of the tokens, generated at million-token
+context, consume nearly nine-tenths of the token-service capacity. After the sizing
+framework~\cite{ai4s-framework}; the serving configuration is a versioned reference object [U]-r/[P], not a
+physical constant.}
+\label{fig:ai4s-model}
+\end{figure}

@@ -1,0 +1,31 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[bookaxis, height=5.4cm,
+  xlabel={Price premium $\rho$ of purchased frontier tokens over self-operated open service},
+  ylabel={Share of total expenditure (\%)},
+  title={A minority workload becomes the majority of the budget},
+  xmin=1, xmax=60, ymin=0, ymax=100,
+  xtick={1,10,20,30,40,50,60},
+  legend style={at={(0.98,0.32)}, anchor=east},
+]
+\addplot[color=sOne, mark=none, samples=80, domain=1:60] {100*0.14*x/(0.86+0.14*x)};
+\addlegendentry{$f=14\%$ (measured workload share)}
+\addplot[color=sThree, mark=none, samples=80, domain=1:60, densely dashed] {100*0.05*x/(0.95+0.05*x)};
+\addlegendentry{$f=5\%$}
+\addplot[color=sFour, mark=none, samples=80, domain=1:60, densely dotted] {100*0.25*x/(0.75+0.25*x)};
+\addlegendentry{$f=25\%$}
+\addplot[only marks, mark=*, mark size=2.4pt, color=sTwo] coordinates {(20,76.5) (60,90.7)};
+\node[font=\scriptsize\color{inkSec}, anchor=south east] at (axis cs:20,78) {76.5\%};
+\node[font=\scriptsize\color{inkSec}, anchor=south east] at (axis cs:59,92) {90.7\%};
+\end{axis}
+\end{tikzpicture}
+\caption[The AI4S expenditure asymmetry]{Why the token price is the science budget. With a fraction $f$ of
+physical work served by purchased frontier tokens at relative unit price $\rho$, the share of total expenditure that
+work consumes is $\Sigma_{\mathrm{front}}=f_{\mathrm{front}}\rho/((1-f_{\mathrm{front}})+f_{\mathrm{front}}\rho)$. At the measured $f_{\mathrm{front}}\approx14\%$ and the estimated 20--60$\times$ premium, a
+one-seventh workload share becomes 76.5--90.7\% of the budget [A/M]~\cite{consortium-record}. The curve's shape,
+not its exact position, is the policy argument: at $r$ near unity---which cheap open weights on owned hardware
+deliver---the problem dissolves, and the institution that solved it that way has acquired a dependency it never
+negotiated.}
+\label{fig:ai4s-cost}
+\end{figure}

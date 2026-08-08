@@ -1,0 +1,72 @@
+\chapter{Trust: The Contested Layer of the Open Commons}
+\label{ch:trust}
+
+Everything in Part~II treated openness as an adoption weapon. This chapter treats its exposed flank. Open weights eliminate API dependency; they do not establish trust---and trust, Chapter~\ref{ch:analogy} argued, is precisely the property that has stalled Chinese campaigns in aircraft, drugs, and avionics-grade markets. If the AI war's deployment layer behaves like a certification regime rather than a commodity market, the commons can win every download metric and still lose the workloads that pay. This chapter surveys the evidence on all three trust dimensions---supply-chain security, behavioral integrity, and provenance/IP---then states the sovereign trust stack that third countries would need to adopt the commons safely, because whether that stack gets built, and by whom, is itself now a theater of the war.
+
+\section{The supply chain is an attack surface}
+
+The model-distribution infrastructure underlying the entire open ecosystem has been demonstrated attackable, repeatedly [V]. The serialization layer first: roughly 100 malicious models were found on Hugging Face in early 2024, including reverse-shell pickle payloads; the ``nullifAI'' technique (February 2025) used deliberately broken pickle streams that execute before the scanner errors out; and the scanner itself, Picklescan, yielded five CVEs in 2025~\cite{pickle}. The namespace layer: Unit~42 showed that re-registering deleted author names lets attackers serve malicious models under trusted identities \emph{automatically pulled} by Google's and Microsoft's own model catalogs~\cite{namespace}. The platform layer: Hugging Face itself disclosed a July 2026 breach---attackers exploited dataset-processing code paths, harvested credentials, and moved laterally through internal systems over a weekend; no public artifacts were found tampered with, but the demonstration stands, and HF noted the campaign was run by an \emph{agentic} attacker framework~\cite{hf-incident}. The training layer is worse: Anthropic and the UK AI Security Institute showed that $\sim$250 poisoned documents suffice to backdoor a model regardless of scale---a near-constant, not a percentage---and the sleeper-agent literature shows such backdoors surviving fine-tuning and RLHF~\cite{poison,sleeper}. The defensive response---HF/VirusTotal continuous scanning of 2.2M+ repositories, safetensors-by-default, JFrog partnerships---is real and improving~\cite{virustotal}, but the honest summary is that the open commons currently runs on the security posture of early-2000s package managers, at national-infrastructure stakes. Chapter~\ref{ch:order66} takes this dimension to its full depth, because the combination this book forecasts---a small number of model families, thousands of derivatives, and agents holding real authority---changes it from a hygiene problem into a systemic one.
+
+\section{Behavioral integrity: the censorship record}
+
+For Chinese open weights specifically, the peer-reviewed record now documents what buyers of sovereignty must price in [V]. An audit of 646 politically sensitive prompts found \emph{semantic-level suppression} in DeepSeek models---sensitive content present in the chain-of-thought but filtered from final outputs, systematic omission of transparency and accountability framings, and occasional amplification of state-aligned language~\cite{deepseek-censor}. The R1dacted study found the censorship distinct from ordinary safety refusal, topic- and language-dependent---and, critically, \emph{transferring to distilled models}: the politics ride along with the capability into every derivative~\cite{r1dacted}. These findings do not make Chinese weights unusable; local fine-tuning and abliteration communities work on exactly this. But they convert ``just self-host it'' into a three-layer problem: a locally hosted Chinese model delivers \emph{operational} sovereignty (no API, no data egress) while leaving \emph{epistemic} sovereignty (whose worldview is baked in?) and \emph{supply-chain} sovereignty (who built the artifact you downloaded?) unresolved. The book's Global South adoption argument must carry this asterisk---and so must the Western enterprise-adoption argument, in mirror image, since the same three-layer test applies to closed US models, which fail the operational layer by construction.
+
+\section{Provenance and the distillation war}
+
+The commons' cost advantage has a contested genealogy. Anthropic's February 2026 report alleges industrial-scale distillation campaigns---over 16 million exchanges harvested through roughly 24,000 fraudulent accounts, attributed to MiniMax ($>$13M), Moonshot ($>$3.4M), and DeepSeek ($>$150K)---following OpenAI's earlier, vaguer claims about R1 [P; vendor allegations, not adjudicated]~\cite{anthropic-distill}. Three implications belong in the strategic ledger regardless of adjudication. If true at scale, part of the fast-follower speed of Chapter~\ref{ch:model} is subsidized by the frontier it chases, which caps the strategy at frontier-minus-$\epsilon$ unless domestic capability generation compounds independently (the evidence that it does---the algorithmic innovations of \S\ref{sec:model-survey}---is substantial). Second, it hands Western policy a legal instrument---terms-of-service enforcement, KYC on API access, and IP litigation---that operates on exactly the trust-certification axis of Chapter~\ref{ch:analogy}. Third, it cuts against the clean ``openness versus rent'' morality tale: the commons is partly built from enclosed material, and the enclosers know it. The book records the dispute rather than resolving it; the indicator to watch is whether any jurisdiction converts these allegations into an enforceable certification barrier for open-weight deployment.
+
+\section{The sovereign trust stack}
+
+For a third country, the rational response to all of the above is neither refusal nor naive adoption; it is infrastructure. The stack, concretely: signed model and dataset manifests with cryptographic hashes; reproducible build-and-quantization pipelines (the conversion step is itself an attack surface); non-executable packaging (safetensors-class) by default with remote code disabled; model bills-of-materials and dependency inventories; behavioral evaluation batteries covering backdoors, censorship, and geopolitical bias, run nationally rather than taken on faith; sandboxed loaders; attested serving firmware; and national artifact mirrors so that availability cannot be revoked or substituted upstream. None of this is exotic---it is what software supply-chain security did after SolarWinds, applied to weights.
+
+\subsection{Five layers of trust}
+\label{sec:trustlayers}
+
+``Trust'' in this chapter has been used for five distinct properties, and separating them is what makes the stack operational rather than rhetorical:
+
+\begin{description}\itemsep2pt
+  \item[Identity] --- who produced, converted, and distributed this exact artifact? The derivative chain of Section~\ref{sec:quant} means the answer is usually a list, not a name.
+  \item[Integrity] --- do the weights, runtime, configuration, and firmware match what was certified? This is a cryptographic question and the only one with a clean answer.
+  \item[Behaviour] --- does the system exhibit acceptable performance, bias, security, and failure behaviour \emph{in the integration it will actually run in}?
+  \item[Governance] --- who can update, revoke, audit, or constrain it after deployment, and through what process?
+  \item[Liability] --- who bears legal and financial responsibility when it causes harm? For an open-weight derivative chain this is currently, in most jurisdictions, nobody in particular.
+\end{description}
+
+The five layers behave differently under the two stacks, which is why single-axis comparisons mislead. A locally hosted open-weight model scores well on governance (you control updates) and badly on identity and liability; a hosted closed API scores well on identity and liability (there is a counterparty with insurance) and badly on governance (the model can change under you) and on operational sovereignty. Table~\ref{tab:trustmatrix} crosses the five layers with the certification levels below, which is the form in which a procurement office can actually use them.
+
+\begin{table}[htbp]
+  \centering
+  \scriptsize
+  \caption{The trust matrix: what each certification level establishes, per layer. ``---'' means the level says nothing about that layer.}
+  \label{tab:trustmatrix}
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabular}{p{16mm}p{23mm}p{23mm}p{26mm}p{23mm}p{23mm}}
+    \toprule
+    Level & Identity & Integrity & Behaviour & Governance & Liability \\
+    \midrule
+    0 Identified & hash names the bytes & --- & --- & --- & --- \\
+    1 Non-executable & --- & no code on load & --- & --- & --- \\
+    2 Provenanced & full chain named & reproducible build \& conversion & --- & upstream known & attributable \\
+    3 Evaluated & --- & --- & backdoor, censorship, bias, injection---on the integration & --- & evidence exists \\
+    4 Contained & --- & attested runtime & failure bounded by broker & immutable policy; append-only audit & operator-side clear \\
+    5 Assured & --- & continuous & independent red team, continuous monitoring & revocation obligations & contractual, insurable \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{A graded certification ladder}
+
+A list of controls is not a policy instrument; a \emph{graded scheme} is, because it lets a buyer state a requirement and a supplier claim a level. The six levels below are the natural staging of the stack above, and they are the form in which the certification authority of Chapter~\ref{ch:governance} would actually operate:
+
+\begin{description}\itemsep2pt
+  \item[Level 0 --- Identified.] Hash-identified artifact; you know exactly which bytes you are running.
+  \item[Level 1 --- Non-executable.] Tensor-only format, malware-scanned, no remote code on load.
+  \item[Level 2 --- Provenanced.] Reproducible quantization and conversion, signed manifests, model bill of materials, verifiable lineage from a named upstream.
+  \item[Level 3 --- Behaviourally evaluated.] Published results on backdoor, censorship, geopolitical-bias, and prompt-injection batteries, run on the \emph{integration} rather than the bare model.
+  \item[Level 4 --- Operationally contained.] Attested runtime, deterministic tool broker, immutable policy, append-only external audit log.
+  \item[Level 5 --- Critical-infrastructure assured.] All of the above plus independent red-teaming, continuous monitoring, and incident-response obligations with revocation.
+\end{description}
+
+Most of the open commons today ships at Level~0--1. Most regulated deployment will eventually require Level~3--4. \emph{That gap is the deployment bottleneck of the entire commoditization thesis}, and closing it is a service someone will sell or a public good someone will provide---Chapter~\ref{ch:consortium} argues for the latter.
+
+The strategic observation that closes the chapter: \emph{the trust stack is the next standards war}. Whoever operates the evaluation batteries, signs the manifests, and runs the mirrors becomes the certification authority of the open commons---the FAA of models. China's WAICO and its capacity-building network are bidding for exactly that role from one side~\cite{waico}; no Western or neutral institution has yet claimed it from the other. For Japan and similarly positioned states, Chapter~\ref{ch:strategies} argues this vacancy is the highest-leverage square on the board, and Chapter~\ref{ch:consortium} proposes the institution that could occupy it: the commons is Chinese-led, but its certification layer is still unowned.
