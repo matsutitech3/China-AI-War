@@ -302,7 +302,7 @@ The ten fields: (1) total and active parameters; (2) native precision and quanti
 
 Two disciplines travel with the table. \emph{Protocol disclosure}: the Kimi row shows why---the same model, the same benchmark, and a 5.8-point spread between single-attempt and parallel test-time-compute settings, which is larger than most inter-model gaps reported in the press~\cite{kimi-k2-thinking}. \emph{Task-normalized cost}: with reasoning-model output lengths inflating roughly fivefold per year~\cite{epoch-output}, price-per-token comparisons decay in meaning within a single release cycle, and only cost-per-completed-task is stable enough to plan a budget against---which is precisely the quantity Chapter~\ref{ch:consortium}'s expenditure model needs and Section~\ref{sec:ai4s-econ} had to estimate.
 
-\chapter{Current Cycle: The Eighteen-Day Barrage}
+\chapter{Current Cycle: The Barrage Goes Bipolar}
 \chaptermark{Current Cycle}
 \label{app:bulletin}
 
@@ -333,8 +333,8 @@ The sequencing carries the analytical content, and it is not the sequencing the 
     Attention & possibly gated-linear (Gated DeltaNet-class) & speculation; unpublished \\
     Training tokens, precision & --- & not disclosed \\
     Training hardware & --- & not disclosed; family reportedly trained on leased offshore NVIDIA~\cite{qwen-offshore} \\
-    \textbf{Weights} & \textbf{publicly committed by Alibaba: ``next week, the open weights of Qwen3.8-Max will be released, and Qwen3.8-27B is also going open-weights''} & \textbf{[V] as a commitment}; repository pending at the bulletin date~\cite{qwen-announcement} \\
-    Licence & --- & \emph{unstated}---the live question (Apache-class vs revenue-threshold) \\
+    \textbf{Weights} & \textbf{publicly committed by Alibaba: ``next week, the open weights of Qwen3.8-Max will be released, and Qwen3.8-27B is also going open-weights''} & \textbf{[V] as a commitment}; the committed week lapsed without a release; window re-framed to the week of 10 August; no repository at this edition's date~\cite{qwen-announcement,qwen-slip} \\
+    Licence & --- & \emph{unstated}; Reuters-sourced reporting now points to revenue-sharing terms for large resellers~\cite{qwen-revshare} \\
     Documentation & release blog with full benchmark table; GitHub project trace for the autonomous-coding run & [V]; no formal model card or architecture report \\
     Price & \$2.00 / \$6.00 per Mtok, \$0.25 implicit cache, flat across the full 1M window & vendor [V]~\cite{qwen-announcement} \\
     \bottomrule
@@ -346,6 +346,20 @@ On benchmarks the discipline of Section~\ref{sec:scoreboard} applies: \emph{the 
 The autonomy claims deserve separate treatment because their auditability differs. The autonomous-coding demonstration---``10+ days of self-evolving development, from empty folder to production without hand-holding''---ships with \emph{a complete project trace on GitHub}~\cite{qwen-announcement}, which is more verification apparatus than most Western frontier autonomy claims carry and should be credited as such; the standing question of how many human interventions occurred is answerable from the trace rather than merely rhetorical~\cite{infoworld-qwen}. The chip-design claim (500-plus turns of optimization; autonomous execution of the silicon design flow) has no comparable artifact, which is why Section~\ref{sec:offshore} treats it as strategically decisive \emph{if} verified and flags the verification event explicitly.
 
 The independent record is thin and worth stating precisely. Crowdsourced Arena voting places the model \#5 overall in text (highest-ranked Chinese model, behind Claude variants), \#2 in vision, and \#4 on frontend code at 1,668 Elo---eight points behind Kimi K3 and roughly 37 behind the top Claude configuration~\cite{arena-qwen38}. Artificial Analysis had not scored it. One small third-party head-to-head put it at 80 against Kimi K3's 83. Set against the vendor table, the honest summary is that Qwen3.8-Max is a genuinely frontier-competitive model whose exact placement is unsettled---which is the same thing that is true of every closed Western flagship, none of which discloses its parameter count at all.
+
+\section{The second week: 4--11 August}
+
+The cycle did not close; it widened, and the widening changed its character from an intra-Chinese barrage to a two-bloc contest for the commons.
+
+\emph{Meta returns to open weights (10 August).} Muse Glimmer---30B dense, multimodal, $\sim$128K context, distilled from the closed Muse Spark flagship---shipped with downloadable weights under Apache~2.0, Meta's first open release in sixteen months and its first ever under an OSI-permissive licence at this scale; Zuckerberg announced it personally on X alongside a 6{,}500-word letter recommitting Meta to ``American open source,'' and an open-weight version of Muse Spark 1.2 was promised ``in the coming weeks,'' licence unspecified~\cite{muse-glimmer,zuck-letter}. Independent measurement places Glimmer at 35 on the Artificial Analysis index---between Gemma~4 31B (30) and Qwen3.6 27B Reasoning (38), with a measured hallucination rate of 82\% against the comparable Qwen's 49\%~\cite{muse-aa}. Section~\ref{sec:muse} carries the full analysis; the structural point is that the ratchet mechanism now operates on both sides of the Pacific, while the ownership of the commons it enlarges remains contested.
+
+\emph{Qwen3.8-Max weights slip (status at 11 August).} The 3 August commitment---``next week''---was not met in that week; the window has been publicly re-framed to the week of 10 August, and no repository exists at this edition's date~\cite{qwen-slip}. In the same days, Reuters-sourced reporting described Alibaba preparing revenue-sharing licence terms for large commercial resellers of its next open release~\cite{qwen-revshare}, and Alibaba opened its Qianwen platform to third-party agent developers with SF Express, Ziroom, and Midea as launch partners~\cite{qianwen-platform}---monetization moving to the platform layer while the weights wait. The forecast register holds the 90\% shipping forecast open with the slippage documented; the licence forecast is revised in place, with the revision dated and reasoned.
+
+\emph{Openness acquires borders.} MiniMax's H3 video model tops the open-weight video arena while its licence excludes local deployment in the US, EU, UK, and South Korea---the clearest geofenced ``open'' release to date, and a datapoint the trust chapter's certification argument must now carry~\cite{minimax-geofence}.
+
+\emph{The trade war resumes around the stack.} On 5--6 August Beijing imposed case-by-case export review on drones and key components, sanctioned six US entities, and opened a national-security probe into imported printers---the broadest countermeasure package since the October truce, replicating Washington's own playbook of chokepoint administration~\cite{mofcom-retaliation}. The same week, NIST joined the Genesis Mission with a program whose explicit goal is a tenfold scaling of US drone production within two years~\cite{nist-genesis}---the two governments now running mirror-image industrial policies on the same component class.
+
+\emph{Two smaller entries.} The White House finalized a voluntary frontier-model evaluation framework in a closed-door session with the major US laboratories and declined to publish the document---voluntary and opaque where the Chinese regime is mandatory and registered, a contrast Chapter~\ref{ch:governance} predicts and records~\cite{wh-framework}. And CoreWeave entered its Q2 print in visible distress---15\% short interest, debt above \$25B against \$30--35B of annual capex guidance, two downgrades---the neocloud vintage argument of Chapter~\ref{ch:trade} approaching its first earnings-season test~\cite{coreweave-q2}.
 
 \section{The Pareto observation}
 
@@ -389,7 +403,7 @@ One further pricing development belongs in the ledger because it runs \emph{agai
     \addlinespace
     \textbf{2026 H1} & Zhipu and MiniMax list in Hong Kong (Jan.). SiFive integrates NVLink Fusion (Jan.). GLM-5 trained on Ascend (Feb.); Anthropic alleges distillation campaigns (Feb.). Stanford AI Index puts the US--China gap at 2.7\% (Mar.). NVIDIA Vera CPU announced at 1.2\,TB/s LPDDR5X (Mar.). DeepSeek V4 (Apr.); OpenAI raises at \$852B (Mar.); Anthropic at \$965B (May). Semiconductor selloff sheds \$1.3T (Jun.). \textbf{LineShine takes No.~1 on HPL and HPCG with no GPUs} (Jun. 24). \\
     \addlinespace
-    \textbf{2026 Jul--Aug} & Kimi K3 opens at 2.8T parameters (Jul. 27). CXMT lists at +466\% (Jul. 27), prospectus disclosing no commercial HBM. CXMT LPDDR6 clears verification at 12.8\,Gb/s (Aug.). OpenAI--Hugging Face cross-boundary agent intrusion disclosed (Jul.); Anthropic discloses three evaluation-boundary incidents (Jul. 30). Memory-led chip rout; Nasdaq-100 enters correction (Jul.). WAICO formalized in Shanghai with 29 states (Jul.). \\
+    \textbf{2026 Jul--Aug} & Kimi K3 opens at 2.8T parameters (Jul. 27). CXMT lists at +466\% (Jul. 27), prospectus disclosing no commercial HBM. CXMT LPDDR6 clears verification at 12.8\,Gb/s (Aug.). Meta returns to open weights with Muse Glimmer under Apache 2.0 (Aug. 10). Beijing curbs drone exports; printer probe (Aug. 5). OpenAI--Hugging Face cross-boundary agent intrusion disclosed (Jul.); Anthropic discloses three evaluation-boundary incidents (Jul. 30). Memory-led chip rout; Nasdaq-100 enters correction (Jul.). WAICO formalized in Shanghai with 29 states (Jul.). \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -472,11 +486,13 @@ The register states grades; this table states \emph{bets}. Each load-bearing pro
     \addlinespace
     Open-weight VLA models commoditize the embodied task-policy layer as LLMs did text & 45\% & 3--6 yrs & open VLA releases matching closed policies on standardized manipulation suites & closed embodied stacks hold a durable capability gap into the 2030s \\
     \addlinespace
-    Qwen3.8-Max weights ship as publicly committed & 90\% & 1 quarter & Hugging Face / ModelScope repository & no weights by Nov 2026 (would break the ratchet argument of \S\ref{sec:maxtier}) \\
+    Qwen3.8-Max weights ship as publicly committed & 90\% \emph{(held open: the committed week lapsed; window re-framed to 10 Aug~\cite{qwen-slip})} & 1 quarter & Hugging Face / ModelScope repository & no weights by Nov 2026 (would break the ratchet argument of \S\ref{sec:maxtier}) \\
     \addlinespace
-    \dots{} under a permissive (Apache/MIT-class) rather than revenue-threshold licence & 55\% & 1 quarter & the licence file & a Kimi-style threshold, which confirms rent relocation \emph{within} openness rather than against it \\
+    \dots{} under a permissive (Apache/MIT-class) rather than revenue-threshold licence & 55\% $\to$ 30\% \emph{(revised 11 Aug on the revenue-share reporting~\cite{qwen-revshare})} & 1 quarter & the licence file & a Kimi-style threshold, which confirms rent relocation \emph{within} openness rather than against it \\
     \addlinespace
     The next frontier-scale Chinese release ($\geq$1T) also ships open weights---the ratchet holding & 85\% & 1--2 yrs & release announcements & any major Chinese lab closing its frontier tier while rivals stay open \\
+    \addlinespace
+    Meta ships the promised open-weight Muse Spark 1.2 within a quarter, at flagship-representative quality, under derivative-permissive terms (all three conditions of \S\ref{sec:muse}) & 40\% & 1 quarter & repository, licence file, independent evaluation & the Max-tier template repeating: small model open, flagship deferred or restricted \\
     \addlinespace
     A Chinese frontier-class model is trained end-to-end on domestically sited compute, offshore leasing excluded & 60\% & 2--4 yrs & lab technical report disclosing training site and silicon & continued reliance on leased offshore accelerators past 2029 \\
     \addlinespace
