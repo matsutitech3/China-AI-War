@@ -302,7 +302,7 @@ The ten fields: (1) total and active parameters; (2) native precision and quanti
 
 Two disciplines travel with the table. \emph{Protocol disclosure}: the Kimi row shows why---the same model, the same benchmark, and a 5.8-point spread between single-attempt and parallel test-time-compute settings, which is larger than most inter-model gaps reported in the press~\cite{kimi-k2-thinking}. \emph{Task-normalized cost}: with reasoning-model output lengths inflating roughly fivefold per year~\cite{epoch-output}, price-per-token comparisons decay in meaning within a single release cycle, and only cost-per-completed-task is stable enough to plan a budget against---which is precisely the quantity Chapter~\ref{ch:consortium}'s expenditure model needs and Section~\ref{sec:ai4s-econ} had to estimate.
 
-\chapter{Current Cycle: The Barrage Goes Bipolar}
+\chapter{Current Cycle: From Models to Harnesses}
 \chaptermark{Current Cycle}
 \label{app:bulletin}
 
@@ -360,6 +360,18 @@ The cycle did not close; it widened, and the widening changed its character from
 \emph{The trade war resumes around the stack.} On 5--6 August Beijing imposed case-by-case export review on drones and key components, sanctioned six US entities, and opened a national-security probe into imported printers---the broadest countermeasure package since the October truce, replicating Washington's own playbook of chokepoint administration~\cite{mofcom-retaliation}. The same week, NIST joined the Genesis Mission with a program whose explicit goal is a tenfold scaling of US drone production within two years~\cite{nist-genesis}---the two governments now running mirror-image industrial policies on the same component class.
 
 \emph{Two smaller entries.} The White House finalized a voluntary frontier-model evaluation framework in a closed-door session with the major US laboratories and declined to publish the document---voluntary and opaque where the Chinese regime is mandatory and registered, a contrast Chapter~\ref{ch:governance} predicts and records~\cite{wh-framework}. And CoreWeave entered its Q2 print in visible distress---15\% short interest, debt above \$25B against \$30--35B of annual capex guidance, two downgrades---the neocloud vintage argument of Chapter~\ref{ch:trade} approaching its first earnings-season test~\cite{coreweave-q2}.
+
+\section{The third week: 11--15 August}
+
+Four days that moved three separate arguments in this book, and one that moved the ground under all of them.
+
+\emph{The Qwen commitment resolves, and splits.} Alibaba shipped the 2.4T flagship's weights to Hugging Face as \texttt{Qwen3.8-2.4T-A95B} on or about 13 August, with \texttt{Qwen3.8-27B} following on 15 August~\cite{qwen38-weights,qwen38-scmp}. The registered shipping forecast resolves YES; the registered permissive-licence forecast resolves NO for the flagship, which carries a US\$50M-revenue-threshold commercial licence, and YES for the 27B, which is Apache~2.0. Section~\ref{sec:maxtier} carries the analysis. Two press errors are corrected there and repeated here because they propagated widely: the flagship is \emph{not} Apache-licensed, and it is \emph{not} multimodal.
+
+\emph{The harness arrives as a competitive layer.} On 13 August DeepSeek released an MIT-licensed, plugin-native agent harness that passed 100{,}000 GitHub stars within about forty-eight hours, accompanied by an eighty-eight-page programming-languages paper from Peking University and DeepSeek, and shipped on the same day the company \emph{raised} its API prices~\cite{dsh-repo,cordis-paper,dsh-venturebeat}. Chapter~\ref{ch:harness} is new in this edition and exists because of it.
+
+\emph{Model releases, four in five days.} Grok 4.6 (12 August, closed, 500K context, \$2/\$6 per Mtok) reached 61 on the Artificial Analysis index---tying GPT-5.6 Sol, two points below Claude Opus 5, and one point above the best Chinese open model---restoring xAI, now styled SpaceXAI, to the front rank; the gains come from post-training on the same 1.5T Grok 4.5 base rather than a new pretrain~\cite{grok46}. Google shipped Gemini 3.7 Flash (13 August) at \$0.75 per Mtok input~\cite{gemini37}. DeepSeek took V4-Pro to general availability (13 August) while raising prices and introducing peak/off-peak tariffs---and is reported to be hiring chip-design engineers to build its own accelerator, reducing reliance on NVIDIA \emph{and} Huawei, which belongs to Chapter~\ref{ch:semi}'s ledger rather than this one~\cite{deepseek-v4pro}. Zhipu announced GLM-5.3 (14 August) claiming the strongest open-weights coding model; the weights are \emph{not} released, expected in roughly two weeks pending security review, every benchmark is vendor-reported, and on the two headline agentic-coding suites it \emph{trails} GPT-5.6 Sol~\cite{glm53}. This edition therefore records the claim and withholds the grade.
+
+\emph{NVIDIA and the open commons: a report, not an announcement.} \emph{The Information} reported on 12 August that NVIDIA is in the final training phase of a trillion-parameter ``Nemotron 4'' intended to compete with the world's most powerful \emph{open} models, with possible availability in late autumn~\cite{nemotron4}. NVIDIA's own position, as quoted, is that final training is not complete; no licence has been announced; and the company's best shipped open model today scores 38 on the independent index against Kimi K3's 60. The event, correctly stated, is that the largest beneficiary of the closed-frontier trade is reported to be preparing an open frontier-scale release---which, if it ships, is a second American entry into the commons after Meta's and a further datapoint for the ratchet of Section~\ref{sec:maxtier}. It has not shipped.
 
 \section{The Pareto observation}
 
@@ -486,13 +498,19 @@ The register states grades; this table states \emph{bets}. Each load-bearing pro
     \addlinespace
     Open-weight VLA models commoditize the embodied task-policy layer as LLMs did text & 45\% & 3--6 yrs & open VLA releases matching closed policies on standardized manipulation suites & closed embodied stacks hold a durable capability gap into the 2030s \\
     \addlinespace
-    Qwen3.8-Max weights ship as publicly committed & 90\% \emph{(held open: the committed week lapsed; window re-framed to 10 Aug~\cite{qwen-slip})} & 1 quarter & Hugging Face / ModelScope repository & no weights by Nov 2026 (would break the ratchet argument of \S\ref{sec:maxtier}) \\
+    Qwen3.8-Max weights ship as publicly committed & \textbf{RESOLVED YES} (13 Aug 2026) & --- & shipped as \texttt{Qwen3.8-2.4T-A95B}~\cite{qwen38-weights} & --- \\
     \addlinespace
-    \dots{} under a permissive (Apache/MIT-class) rather than revenue-threshold licence & 55\% $\to$ 30\% \emph{(revised 11 Aug on the revenue-share reporting~\cite{qwen-revshare})} & 1 quarter & the licence file & a Kimi-style threshold, which confirms rent relocation \emph{within} openness rather than against it \\
+    \dots{} under a permissive (Apache/MIT-class) rather than revenue-threshold licence & \textbf{RESOLVED NO} for the flagship; YES for the 27B & --- & custom licence, US\$50M revenue gate~\cite{qwen38-weights} & --- \\
     \addlinespace
     The next frontier-scale Chinese release ($\geq$1T) also ships open weights---the ratchet holding & 85\% & 1--2 yrs & release announcements & any major Chinese lab closing its frontier tier while rivals stay open \\
     \addlinespace
     Meta ships the promised open-weight Muse Spark 1.2 within a quarter, at flagship-representative quality, under derivative-permissive terms (all three conditions of \S\ref{sec:muse}) & 40\% & 1 quarter & repository, licence file, independent evaluation & the Max-tier template repeating: small model open, flagship deferred or restricted \\
+    \addlinespace
+    A Chinese-origin agent harness or agent runtime reaches top-three position by production deployment in at least one major non-Chinese market (\S\ref{ch:harness}) & 35\% & 2--4 yrs & enterprise deployment surveys; package-registry download share, not stars & Western harnesses holding $>$90\% of regulated-sector production deployments through 2029 \\
+    \addlinespace
+    Harness migration in regulated sectors is measurably costlier than in unregulated ones---the certification mechanism of Chapter~\ref{ch:harness} & 60\% & 2--3 yrs & published migration accounts with elapsed calendar time and assessor cost & migrations completing at comparable cost in both, which would collapse the switching-cost argument to configuration only \\
+    \addlinespace
+    NVIDIA ships a frontier-scale open-weight model (the reported Nemotron 4 or successor) under a licence permitting derivatives & 55\% & 2--3 quarters & repository and licence file & the model shipping closed, or not shipping, through 2027 \\
     \addlinespace
     A Chinese frontier-class model is trained end-to-end on domestically sited compute, offshore leasing excluded & 60\% & 2--4 yrs & lab technical report disclosing training site and silicon & continued reliance on leased offshore accelerators past 2029 \\
     \addlinespace
