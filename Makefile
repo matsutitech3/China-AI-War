@@ -1,7 +1,7 @@
 LATEX   := pdflatex
 FLAGS   := -interaction=nonstopmode -halt-on-error
 MAIN    := main
-VERSION := v0.17.1
+VERSION := v0.17.2
 OUT     := How-China-Will-Win-the-AI-War-$(VERSION).pdf
 
 SRC := $(MAIN).tex $(wildcard chapters/*.tex) $(wildcard figs/*.tex)
