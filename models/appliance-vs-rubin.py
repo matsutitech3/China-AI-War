@@ -83,7 +83,17 @@ def annuity(r, n):              # annual payment per $1 of capital over n years 
     return r/(1-(1+r)**-n) if r>0 else 1.0/n
 
 # ---------------- Rubin VR200 NVL72 central serving ------------------------------------------
-RACK_PRICE   = 7.8e6            # Morgan Stanley BoM estimate (May 2026)
+# Rack price. NOTE ON WHAT THIS IS: Morgan Stanley's May-2026 "bill of materials" for the
+# VR200 NVL72 is a costed component list at the prices a cloud provider PAYS -- GPUs at ~$55k
+# each, i.e. NVIDIA's ASP with its ~75% gross margin already inside -- not NVIDIA's cost of
+# goods (PC Gamer's report of the note says so explicitly). It is therefore an end-user
+# transaction price for a volume buyer, symmetric with the appliance's retail price (BOM plus
+# a 25-40% OEM margin). Trade reporting (Tom's Hardware, Mar 2026) puts ODM quotes at
+# $5-7M without warranty and "as much as $8.8M"; an enterprise or neocloud buying through an
+# OEM with warranty and support pays more, and GB300 NVL72 retail has been put as high as
+# ~$10M. Both cases are run.
+RACK_PRICE       = 7.8e6        # hyperscaler / volume transaction price (Morgan Stanley, May 2026)
+RACK_PRICE_RETAIL= 10.0e6       # enterprise / neocloud retail through an OEM, warranty and support
 RACK_KW      = 210              # ~1.8-2.3 kW/GPU
 PUE          = 1.2
 TARIFF_HYPER = 0.075
@@ -98,11 +108,11 @@ FAC_LIFE     = 15               # years: Epoch uses 14; REIT lives 5-39; MEP 10-
 FAC_OPEX_KW  = 300.0            # $/kW-IT/yr non-energy opex: staff, maintenance, security, insurance,
                                 # property tax, water (Epoch $0.3B/GW-yr; KPMG $237-353/kW-yr; ITK ~$320)
 
-def central_cost_per_M(mode, amort=4, util=UTIL, fac='P50', wacc=WACC):
+def central_cost_per_M(mode, amort=4, util=UTIL, fac='P50', wacc=WACC, rack_price=RACK_PRICE):
     """Fully loaded operator cost per M output tokens for one VR200 NVL72 rack."""
     tps = TPS_PER_GPU[mode]*72
     tokens_yr = tps*util*365*86400
-    silicon   = RACK_PRICE*annuity(wacc, amort)
+    silicon   = rack_price*annuity(wacc, amort)
     facility  = FAC_CAPEX_W[fac]*RACK_KW*1e3*annuity(wacc, FAC_LIFE)
     fac_opex  = FAC_OPEX_KW*RACK_KW
     power     = RACK_KW*PUE*8760*TARIFF_HYPER
@@ -179,6 +189,15 @@ if __name__=='__main__':
         c,_,_,_ = central_cost_per_M('interactive parity (~50 tok/s/user)', 6, util=u)
         print(f"util {u:.0%}: ${c:.2f}/M ", end='')
     print()
+    print("\n--- Rack at enterprise retail ($10M through an OEM, warranty and support) ---")
+    for am in (4,6):
+        for u in (0.60,0.40,0.30):
+            c,cy,ty,parts = central_cost_per_M('interactive parity (~50 tok/s/user)', am, util=u, rack_price=RACK_PRICE_RETAIL)
+            print(f" parity {am}-yr util {u:.0%}: ${c:.2f}/M ", end='')
+        print()
+    c,cy,ty,parts = central_cost_per_M('throughput (~25 tok/s/user)', 4, rack_price=RACK_PRICE_RETAIL)
+    c6,_,_,_ = central_cost_per_M('throughput (~25 tok/s/user)', 6, rack_price=RACK_PRICE_RETAIL)
+    print(f" throughput 4-yr ${c:.2f}/M, 6-yr ${c6:.2f}/M; per rack-year at 4-yr ${cy/1e6:.2f}M")
     print("\n--- Reconciliation with wholesale colocation rent (NoVA 10 MW+, $155-185/kW/mo ex-power, CBRE H2 2025) ---")
     c,cy,ty,parts = central_cost_per_M('interactive parity (~50 tok/s/user)', 4)
     bottom_up = (parts['facility']+parts['fac_opex'])/(RACK_KW*12)
