@@ -4,7 +4,7 @@
 
 **Satoshi Matsuoka** — Director, RIKEN Center for Computational Science (R-CCS); Professor, Institute of Science Tokyo
 
-**Current edition: v0.17.2 — 16 August 2026** · [Download the PDF](How-China-Will-Win-the-AI-War-v0.17.2.pdf) · 261 pages
+**Current edition: v0.18 — 16 August 2026** · [Download the PDF](How-China-Will-Win-the-AI-War-v0.18.pdf) · 265 pages
 
 ---
 
@@ -36,6 +36,8 @@ The book is deliberately falsifiable. Four load-bearing propositions are stated 
 
 ## Data
 
+[`models/appliance-vs-rubin.py`](models/appliance-vs-rubin.py) is the cost model behind §10.9's head-to-head of a capacity-first local appliance (2 TB HBF + 256 GB LPDDR6X) against a Vera Rubin NVL72 rack and the August 2026 API price list, on Kimi K3. Every number in the table derives from stated inputs; change an input and re-run.
+
 [`funnel-model.csv`](funnel-model.csv) contains the pessimistic/central/optimistic parameter triples for the AI-for-Science value-conversion funnel, by task class. The book's headline figures — a task-weighted central estimate near 11%, a 10th–90th percentile range of roughly 8–18% — are reproducible from this file. Recompute or re-weight it and the model's conclusions move with you; that is the point of publishing it.
 
 ## Building from source
@@ -62,7 +64,7 @@ Every push to `main` rebuilds the PDF via GitHub Actions, so the committed sourc
   author    = {Matsuoka, Satoshi},
   title     = {How China Will Win the AI War: The Convergence Strategy---A Structural Path to AI Dominance},
   year      = {2026},
-  note      = {Living book, v0.17.2, 16 August 2026},
+  note      = {Living book, v0.18, 16 August 2026},
   url       = {https://github.com/matsutitech3/China-AI-War}
 }
 ```
