@@ -72,21 +72,43 @@ P_IDLE       = 45.0             # HBF non-volatile: no refresh; LPDDR self-refre
 TARIFF_COMM  = 0.135            # $/kWh US commercial (EIA May 2026)
 AMORT_YRS    = 4
 MAINT_FRAC   = 0.03             # per year of price
+# "Server in the closet": what the SME actually adds to an existing server room.
+CLOSET_PUE   = 1.3              # small-room air conditioning, worse than hyperscale 1.2 (assumption)
+CLOSET_CAPEX = 500.0            # a UPS and a shelf; no new circuit, no new room, no new cooling plant
+CLOSET_LIFE  = 10               # years
+CLOSET_OPS   = 0.0              # $/yr operations labour: the agent stack manages itself (stated assumption)
+WACC         = 0.08             # cost of capital applied to BOTH sides (Meta Hyperion 6.6%, CoreWeave 9-9.75%)
+
+def annuity(r, n):              # annual payment per $1 of capital over n years at rate r
+    return r/(1-(1+r)**-n) if r>0 else 1.0/n
 
 # ---------------- Rubin VR200 NVL72 central serving ------------------------------------------
 RACK_PRICE   = 7.8e6            # Morgan Stanley BoM estimate (May 2026)
 RACK_KW      = 210              # ~1.8-2.3 kW/GPU
 PUE          = 1.2
 TARIFF_HYPER = 0.075
-OPEX_OTHER   = 450e3            # facility, network, staff, per rack-year
 UTIL         = 0.60
 TPS_PER_GPU  = {'throughput (~25 tok/s/user)': 3000, 'interactive parity (~50 tok/s/user)': 1800}
+# The building the rack has to live in. Facility capex is per watt of IT load, excluding land
+# and the IT itself: Matsuoka (Aug 2026) architecture A "resilient inference/cloud", Tier-III-
+# capable, P50 $11.9/W (P10 $8.5, P90 $17.7); Epoch AI (May 2026) $12/W of a $38/W all-in 1 GW
+# campus; JLL 2026 shell-and-core $11.3M/MW; Turner & Townsend Silicon Valley $13.3/W (narrower scope).
+FAC_CAPEX_W  = {'P10': 8.5, 'P50': 12.0, 'P90': 17.7}
+FAC_LIFE     = 15               # years: Epoch uses 14; REIT lives 5-39; MEP 10-25
+FAC_OPEX_KW  = 300.0            # $/kW-IT/yr non-energy opex: staff, maintenance, security, insurance,
+                                # property tax, water (Epoch $0.3B/GW-yr; KPMG $237-353/kW-yr; ITK ~$320)
 
-def central_cost_per_M(mode, amort=4):
+def central_cost_per_M(mode, amort=4, util=UTIL, fac='P50', wacc=WACC):
+    """Fully loaded operator cost per M output tokens for one VR200 NVL72 rack."""
     tps = TPS_PER_GPU[mode]*72
-    tokens_yr = tps*UTIL*365*86400
-    cost_yr = RACK_PRICE/amort + RACK_KW*PUE*8760*TARIFF_HYPER + OPEX_OTHER
-    return cost_yr/(tokens_yr/1e6), cost_yr, tokens_yr
+    tokens_yr = tps*util*365*86400
+    silicon   = RACK_PRICE*annuity(wacc, amort)
+    facility  = FAC_CAPEX_W[fac]*RACK_KW*1e3*annuity(wacc, FAC_LIFE)
+    fac_opex  = FAC_OPEX_KW*RACK_KW
+    power     = RACK_KW*PUE*8760*TARIFF_HYPER
+    cost_yr   = silicon + facility + fac_opex + power
+    parts     = dict(silicon=silicon, facility=facility, fac_opex=fac_opex, power=power)
+    return cost_yr/(tokens_yr/1e6), cost_yr, tokens_yr, parts
 
 # ---------------- API prices, $/M output tokens (Aug 2026) --------------------------------------
 api = {'Claude Opus 5 (AA 63)':25, 'GPT-5.6 Sol (AA 61)':30, 'Grok 4.6 (AA 61)':6,
@@ -108,21 +130,59 @@ if __name__=='__main__':
     print("\n--- BOM and price ---")
     for k,c in cases.items():
         bom,p = price(c); print(f" {k:13s} BOM ${bom:,.0f}  price ${p:,.0f}")
-    print("\n--- Appliance cost per M output tokens (base price) ---")
-    _,pbase = price(cases['base'])
-    for label, mo_tokens in [('50M/mo',50e6),('100M/mo',100e6),('300M/mo',300e6),('capacity',agg*30*86400)]:
+
+    def appliance_cost_mo(p, mo_tokens, wacc=WACC, closet=True):
+        """All-in monthly cost of the appliance in an SME closet."""
         E_kwh = (mo_tokens*P_FULL/agg + P_IDLE*(720*3600 - mo_tokens/agg))/3.6e6
-        cost_mo = pbase/(AMORT_YRS*12) + pbase*MAINT_FRAC/12 + E_kwh*TARIFF_COMM
-        print(f" {label:9s}: {mo_tokens/1e6:6.0f} M tok  power {E_kwh:5.0f} kWh  cost ${cost_mo:6.0f}/mo  = ${cost_mo/(mo_tokens/1e6):5.2f}/M")
+        pue = CLOSET_PUE if closet else 1.0
+        cap = p*annuity(wacc, AMORT_YRS)/12 + (CLOSET_CAPEX*annuity(wacc, CLOSET_LIFE)/12 if closet else 0)
+        return cap + p*MAINT_FRAC/12 + CLOSET_OPS/12 + E_kwh*pue*TARIFF_COMM, E_kwh*pue
+
+    print("\n--- Appliance cost per M output tokens (base price; fully loaded: 8% WACC, closet PUE 1.3, $500 UPS) ---")
+    _,pbase = price(cases['base'])
+    loads = [('50M/mo',50e6),('100M/mo',100e6),('300M/mo',300e6),('capacity',agg*30*86400)]
+    for label, mo_tokens in loads:
+        cost_mo, kwh = appliance_cost_mo(pbase, mo_tokens)
+        print(f" {label:9s}: {mo_tokens/1e6:6.0f} M tok  power {kwh:5.0f} kWh  cost ${cost_mo:6.0f}/mo  = ${cost_mo/(mo_tokens/1e6):5.2f}/M")
     for k in ['optimistic','conservative']:
         _,p=price(cases[k]); mo=100e6
-        E_kwh=(mo*P_FULL/agg + P_IDLE*(720*3600-mo/agg))/3.6e6
-        cost_mo=p/(AMORT_YRS*12)+p*MAINT_FRAC/12+E_kwh*TARIFF_COMM
+        cost_mo,_ = appliance_cost_mo(p, mo)
         print(f" {k:13s} @100M/mo: ${cost_mo:.0f}/mo = ${cost_mo/100:.2f}/M")
-    print("\n--- Rubin VR200 NVL72 central marginal cost ---")
+    print(" (straight-line, no closet loading, for reference:)")
+    for label, mo_tokens in loads:
+        cost_mo,_ = appliance_cost_mo(pbase, mo_tokens, wacc=0.0, closet=False)
+        print(f"   {label:9s}: ${cost_mo/(mo_tokens/1e6):5.2f}/M")
+
+    print("\n--- Rubin VR200 NVL72: fully loaded operator cost, per rack-year and per M tokens ---")
     for mode in TPS_PER_GPU:
         for am in (4,6):
-            c,cy,ty = central_cost_per_M(mode, am)
-            print(f" {mode:38s} {am}-yr: ${cy/1e6:.2f}M/yr, {ty/1e12:.2f}T tok/yr -> ${c:.2f}/M")
+            c,cy,ty,parts = central_cost_per_M(mode, am)
+            print(f" {mode:38s} {am}-yr @8%: ${cy/1e6:.2f}M/yr [silicon {parts['silicon']/1e6:.2f} facility {parts['facility']/1e6:.2f} fac-opex {parts['fac_opex']/1e6:.2f} power {parts['power']/1e6:.2f}], {ty/1e12:.2f}T tok/yr -> ${c:.2f}/M")
+    print(" facility share of fully loaded rack cost (4-yr):", end=' ')
+    c,cy,ty,parts = central_cost_per_M('interactive parity (~50 tok/s/user)', 4)
+    print(f"{100*(parts['facility']+parts['fac_opex'])/cy:.0f}%  (silicon {100*parts['silicon']/cy:.0f}%, power {100*parts['power']/cy:.0f}%)")
+    print(" everything-but-silicon add-on per rack: capex ${:,.0f} once; ${:,.0f}/yr opex+power".format(FAC_CAPEX_W['P50']*RACK_KW*1e3, parts['fac_opex']+parts['power']))
+    print(" straight-line, no WACC (the earlier convention):", end=' ')
+    for am in (4,6):
+        c,cy,ty,parts = central_cost_per_M('interactive parity (~50 tok/s/user)', am, wacc=0.0)
+        print(f"{am}-yr ${c:.2f}/M ", end='')
+    print()
+    print("\n--- Rack sensitivity: facility P10/P50/P90 and utilization (interactive parity, 4-yr @8%) ---")
+    for fac in ('P10','P50','P90'):
+        row = []
+        for u in (0.60, 0.40, 0.30):
+            c,cy,ty,parts = central_cost_per_M('interactive parity (~50 tok/s/user)', 4, util=u, fac=fac)
+            row.append(f"util {u:.0%}: ${c:.2f}/M")
+        print(f" facility {fac} (${FAC_CAPEX_W[fac]}/W): " + "  ".join(row))
+    print(" the same at 6-yr silicon life:", end=' ')
+    for u in (0.60, 0.40, 0.30):
+        c,_,_,_ = central_cost_per_M('interactive parity (~50 tok/s/user)', 6, util=u)
+        print(f"util {u:.0%}: ${c:.2f}/M ", end='')
+    print()
+    print("\n--- Reconciliation with wholesale colocation rent (NoVA 10 MW+, $155-185/kW/mo ex-power, CBRE H2 2025) ---")
+    c,cy,ty,parts = central_cost_per_M('interactive parity (~50 tok/s/user)', 4)
+    bottom_up = (parts['facility']+parts['fac_opex'])/(RACK_KW*12)
+    print(f" bottom-up facility annuity + opex = ${bottom_up:.0f}/kW-mo before landlord margin; colo asking rent $155-185/kW-mo")
+
     print("\n--- API list prices, $/M output ---")
     for k,v in api.items(): print(f" {k:32s} {v}")
