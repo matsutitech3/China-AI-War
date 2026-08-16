@@ -37,10 +37,26 @@ def per_user_tps(B):
     return HBF_BW/ (step_bytes_gb(B)*GB)
 
 # ---------------- BOM (pre-surge memory basis) -------------------------------------------------
+# Every component is anchored to a finished, shipping, pre-surge (mid-2025) system,
+# not to a bare-component guess:
+#   - DGX Spark (GB10, "up to 1 PFLOP FP4" sparse, 128GB LPDDR5X): ASUS Ascent GX10
+#     partner box $2,999 at launch; NVIDIA Founders Edition $3,999 before the Feb-2026 rise.
+#   - Framework Desktop (AMD Ryzen AI Max+ 395, 128GB LPDDR5X): $1,999 at announcement;
+#     GMKtec EVO-X2 on the same silicon $1,799.99 early-bird.
+#   - 1TB NVMe retail, pre-surge: roughly $65-100 in Q1 2025, $45-90 in late 2025
+#     (storagediskprices.com, tech-insider.org) -- a *finished* product carrying a
+#     controller ASIC, PCB, connector, enclosure and full retail margin, none of which
+#     a bare HBF stack carries (no controller, no PCIe: read directly over UCIe).
+#   - HBF, 512GB gen-1 stack: "a couple hundred dollars at most" is the stated floor,
+#     consistent with the die-cost arithmetic already in the text (mid-2025 TLC NAND
+#     spot ~$0.042/GB => ~$21 of raw die for 512GB, plus TSV stacking, logic die and
+#     test) and consistent with undercutting a finished 1TB NVMe retail unit despite
+#     the added packaging step, because it skips the controller/PCB/enclosure/margin
+#     stack a retail SSD carries.
 cases = {
- 'optimistic': dict(hbf_stack=250, lpddr_gb=3.3,  soc=700,  pkg=600, rest=400, margin=0.25),
- 'base':       dict(hbf_stack=400, lpddr_gb=4.3,  soc=900,  pkg=700, rest=500, margin=0.30),
- 'conservative':dict(hbf_stack=600, lpddr_gb=5.9, soc=1200, pkg=800, rest=700, margin=0.40),
+ 'optimistic': dict(hbf_stack=150, lpddr_gb=3.3,  soc=500,  pkg=600, rest=300, margin=0.25),
+ 'base':       dict(hbf_stack=200, lpddr_gb=3.8,  soc=650,  pkg=700, rest=400, margin=0.30),
+ 'conservative':dict(hbf_stack=250, lpddr_gb=4.5, soc=850,  pkg=800, rest=550, margin=0.40),
 }
 def price(c):
     bom = HBF_STACKS*c['hbf_stack'] + LPDDR_GB*c['lpddr_gb'] + c['soc'] + c['pkg'] + c['rest']

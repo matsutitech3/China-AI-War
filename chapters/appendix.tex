@@ -477,15 +477,24 @@ Each claim in the maintained register carries: \texttt{claim\_id}; \texttt{text}
 
 The register states grades; this table states \emph{bets}. Each load-bearing proposition carries a probability, a horizon, a next verification event, and an explicit falsifier. The purpose is not false precision---the probabilities are subjective judgements [S]---but to prevent confidence in one part of the thesis from leaking into another, and to let a reader in 2029 mechanically score the book.
 
-\begin{table}[htbp]
-  \centering
-  \scriptsize
+\begin{small}
+\begin{longtable}{p{42mm}p{16mm}p{13mm}p{31mm}p{31mm}}
   \caption{Load-bearing propositions as dated forecasts [S]. Probabilities are the author's; where the strongest skeptical case the author can construct yields a different figure, it is given in brackets.}
-  \label{tab:forecasts}
-  \begin{tabular}{p{42mm}p{16mm}p{13mm}p{31mm}p{31mm}}
-    \toprule
-    Proposition & Probability & Horizon & Next verification event & Explicit falsifier \\
-    \midrule
+  \label{tab:forecasts} \\
+  \toprule
+  Proposition & Probability & Horizon & Next verification event & Explicit falsifier \\
+  \midrule
+  \endfirsthead
+  \multicolumn{5}{l}{\footnotesize\emph{Forecasts, continued}} \\
+  \toprule
+  Proposition & Probability & Horizon & Next verification event & Explicit falsifier \\
+  \midrule
+  \endhead
+  \midrule
+  \multicolumn{5}{r}{\footnotesize\emph{continues}} \\
+  \endfoot
+  \bottomrule
+  \endlastfoot
     Chinese models dominate the global open-weight ecosystem & 80\% [70\%] & 1--2 yrs & derivative-model share, neutral-router token share, production-deployment surveys & sustained routed-token share below 45\% for four quarters \\
     \addlinespace
     Frontier-adjacent model trained end-to-end on a domestic Chinese stack & 65\% [50\%] & 2--4 yrs & independently documented run: domestic accelerator, memory, toolchain & continued reversion to foreign silicon for flagship pretraining past 2028 \\
@@ -538,30 +547,38 @@ The register states grades; this table states \emph{bets}. Each load-bearing pro
     \addlinespace
     HBF-class silicon ships in volume at its specified capacity and bandwidth ($\geq$512\,GB per stack, $\geq$1.6\,TB/s) with a published endurance figure adequate for a weights tier (\S\ref{sec:memoryunlock}) & 45\% & 2--4 yrs & vendor datasheets; independent measurement; OCP conformance scheme & no volume product by 2029, or shipped bandwidth below $\sim$0.8\,TB/s per stack, which would leave a 2.8T-parameter model below reading speed for a single user \\
     \addlinespace
-    A capacity-first appliance runs a $\geq$2T-parameter open model for four concurrent users at $\geq$40 tokens/s each inside a 1\,kW envelope, at a system price below \$12k (\S\ref{sec:appliance-cost}) & 35\% & 3--5 yrs & published measurements on shipping hardware & the configuration remaining above \$30k, or below 20 tok/s per user at four users, through 2030 \\
+    A capacity-first appliance runs a $\geq$2T-parameter open model for four concurrent users at $\geq$40 tokens/s each inside a 1\,kW envelope, at a system price below \$8k (\S\ref{sec:appliance-cost}) & 35\% & 3--5 yrs & published measurements on shipping hardware & the configuration remaining above \$15k, or below 20 tok/s per user at four users, through 2030 \\
     \addlinespace
     Enterprise open-weight workload share reverses its decline and passes 20\% & 40\% & 2--4 yrs & enterprise adoption surveys & continued decline, which would establish that licensing, governance and support---not memory---are the binding constraints \\
     \addlinespace
     A Chinese frontier-class model is trained end-to-end on domestically sited compute, offshore leasing excluded & 60\% & 2--4 yrs & lab technical report disclosing training site and silicon & continued reliance on leased offshore accelerators past 2029 \\
     \addlinespace
     An AI-assisted design flow produces an independently verified, manufacturable Chinese AI accelerator & 45\% & 3--5 yrs & tape-out disclosure with third-party design-flow audit & domestic accelerator roadmaps continuing to slip despite AI-design claims \\
-    \bottomrule
-  \end{tabular}
-\end{table}
+\end{longtable}
+\end{small}
 
 \section{Quarterly falsification dashboard}
 
 Ten indicators, each with the value at the time of writing, the threshold that would move the argument, and where to look. A reader who checks these quarterly does not need to re-read the book to know whether it is aging well.
 
-\begin{table}[htbp]
-  \centering
-  \scriptsize
+\begin{small}
+\begin{longtable}{p{40mm}p{24mm}p{34mm}p{40mm}}
   \caption{The dashboard. ``Direction'' states which way a move cuts for this book's thesis.}
-  \label{tab:dashboard}
-  \begin{tabular}{p{40mm}p{24mm}p{34mm}p{40mm}}
-    \toprule
-    Indicator & Current (Aug 2026) & Threshold that matters & Source / cadence \\
-    \midrule
+  \label{tab:dashboard} \\
+  \toprule
+  Indicator & Current (Aug 2026) & Threshold that matters & Source / cadence \\
+  \midrule
+  \endfirsthead
+  \multicolumn{4}{l}{\footnotesize\emph{Dashboard, continued}} \\
+  \toprule
+  Indicator & Current (Aug 2026) & Threshold that matters & Source / cadence \\
+  \midrule
+  \endhead
+  \midrule
+  \multicolumn{4}{r}{\footnotesize\emph{continues}} \\
+  \endfoot
+  \bottomrule
+  \endlastfoot
     Chinese share of routed tokens & $\sim$61\% & sustained fall below 45\% weakens P1 & neutral routers, monthly \\
     \addlinespace
     Closed-over-open capability gap & 3.3\% & $>$10\% sustained two years favours bifurcation & AI Index / arenas, annual \\
@@ -587,6 +604,5 @@ Ten indicators, each with the value at the time of writing, the threshold that w
     Recursive-loop disclosures: frontier-model contribution to successor training (US) vs AI-assisted design flow output (China) & both claimed, neither audited & first audited instance either side is the field's most important datapoint (\S\ref{sec:rsi-branch}) & lab disclosures, tape-out records \\
     \addlinespace
     Offshore compute leasing by Chinese labs & permitted; reportedly in use & closure by rule would be the highest-impact tightening available to export policy & BIS/Commerce rulemaking \\
-    \bottomrule
-  \end{tabular}
-\end{table}
+\end{longtable}
+\end{small}
