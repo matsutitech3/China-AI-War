@@ -133,6 +133,8 @@ A publishable architecture specification, as opposed to a capacity argument, mus
 
 The architecture graduates from [M] to [V] through seven measurable milestones, each cheap relative to what it de-risks: (1) memory-controller and package co-simulation at the 68-channel design point (signal integrity, power, area); (2) a multi-controller FPGA/chiplet emulation of the memory system; (3) measured sustained bandwidth under fused transformer training kernels---the 5\,TB/s knee is the claim to kill first; (4) measured energy per byte and per training token against an HBM baseline; (5) an 8--16-node expert-parallel prototype exercising the all-to-all at the modeled traffic; (6) a 128-node pretraining demonstration on a mid-scale sparse model with checkpoint/failure-recovery at full state size; (7) an audit of achieved MFU and cost against this book's model, published either way. A national program that funds milestones 1--4 buys, for single-digit millions, the answer to whether the trillion-dollar HBM assumption is load-bearing.
 
+\input{chapters/appendix-hbf}
+
 \chapter{Evidence Ledger}
 \label{app:evidence}
 
