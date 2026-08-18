@@ -29,25 +29,26 @@ jobs:
             texlive-fonts-recommended texlive-fonts-extra texlive-pictures \
             texlive-science make
 
-      - name: Compile (three passes)
+      - name: Compile both editions (three passes each)
         run: make
 
       - name: Verify cross-references resolve
-        run: make check
+        run: make check check-condensed
 
-      - name: Report page count
+      - name: Report page counts
         run: |
           sudo apt-get install -y poppler-utils
-          pdfinfo main.pdf | grep Pages
+          echo "full:";      pdfinfo main.pdf | grep Pages
+          echo "condensed:"; pdfinfo condensed/main.pdf | grep Pages
 
       - name: Upload the built PDF
         uses: actions/upload-artifact@v4
         with:
-          name: book-pdf
+          name: book-pdfs
           path: How-China-Will-Win-the-AI-War-*.pdf
           if-no-files-found: error
 
-      # On a tagged release, attach the PDF so every version is downloadable.
+      # On a tagged release, attach both PDFs so every version is downloadable.
       - name: Attach to release
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2

@@ -1,0 +1,42 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[bookbar, height=5.0cm, bar width=13pt,
+  ylabel={Generating capacity added (GW)},
+  title={Annual additions to generating capacity},
+  symbolic x coords={2023,2024,2025},
+  xtick=data, ymin=0, ymax=620,
+  nodes near coords, nodes near coords style={font=\scriptsize\color{inkSec}},
+  legend style={at={(0.02,0.98)}, anchor=north west},
+]
+\addplot[fill=sOne] coordinates {(2023,300) (2024,429) (2025,540)};
+\addlegendentry{China}
+\addplot[fill=sTwo] coordinates {(2023,32) (2024,45) (2025,53)};
+\addlegendentry{United States}
+\end{axis}
+\end{tikzpicture}
+
+\vspace{1mm}
+
+\begin{tikzpicture}
+\begin{axis}[bookbar, height=4.2cm, width=0.72\linewidth, bar width=16pt,
+  ylabel={GW},
+  title={The queue and the ask, for scale},
+  symbolic x coords={{US 2025 built},{OpenAI's annual ask},{US interconnection queue}},
+  xtick=data, ymin=0, ymax=2400,
+  xticklabel style={font=\scriptsize\color{inkSec}, align=center},
+  nodes near coords, nodes near coords style={font=\scriptsize\color{inkSec}},
+]
+\addplot[fill=sFour] coordinates
+  {({US 2025 built},53) ({OpenAI's annual ask},100) ({US interconnection queue},2060)};
+\end{axis}
+\end{tikzpicture}
+\caption[The energy asymmetry]{The fourth element. \emph{Above}: annual additions to generating capacity, China
+against the United States---China added roughly ten times as much in 2025, into falling utilization hours, while
+the US record year was 53\,GW [V]. \emph{Below}: the American constraint stated
+three ways---what was built in the best year on record, the 100\,GW/year one AI laboratory told the White House
+the country needs, and the $\sim$2,060\,GW sitting in the interconnection queue at median waits over three years
+[V/P]. One side's binding constraint is capital; the other's is physics and
+permitting, and permitting is the harder one to finance away.}
+\label{fig:energy}
+\end{figure}

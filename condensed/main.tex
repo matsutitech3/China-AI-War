@@ -1,0 +1,117 @@
+\documentclass[11pt,a4paper,oneside]{book}
+
+% ------------------------------------------------------------------
+%  How China Will Win the AI War --- Condensed Edition
+%  A short-form companion to the full living book. Same argument,
+%  same numbers, same version stamp; roughly one sixth the length.
+%  Build: pdflatex main.tex (three passes), from this directory.
+% ------------------------------------------------------------------
+
+\usepackage[margin=25mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{siunitx}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.16}
+\usetikzlibrary{positioning,arrows.meta,fit,backgrounds,calc}
+\usepackage{longtable}
+\usepackage[hidelinks,breaklinks]{hyperref}
+\usepackage{xurl}
+\usepackage{xcolor}
+
+% Same figure palette as the full edition.
+\definecolor{sOne}{HTML}{2A78D6}
+\definecolor{sTwo}{HTML}{EB6834}
+\definecolor{sThree}{HTML}{1BAF7A}
+\definecolor{sFour}{HTML}{4A3AA7}
+\definecolor{inkPri}{HTML}{0B0B0B}
+\definecolor{inkSec}{HTML}{52514E}
+\definecolor{inkMut}{HTML}{8A8880}
+\definecolor{gridLn}{HTML}{D8D7D2}
+\definecolor{surf}{HTML}{F4F5F7}
+
+\pgfplotsset{
+  bookaxis/.style={
+    width=0.86\linewidth, height=5.6cm,
+    axis lines=left,
+    every axis plot/.append style={line width=1pt},
+    tick align=outside, tick style={color=inkMut, line width=0.5pt},
+    label style={font=\small\color{inkSec}},
+    tick label style={font=\footnotesize\color{inkSec}},
+    title style={font=\small\bfseries\color{inkPri}},
+    legend style={font=\footnotesize, draw=gridLn, fill=white,
+                  cells={anchor=west}, legend cell align=left},
+    grid=major, grid style={color=gridLn, line width=0.4pt},
+    axis line style={color=inkMut, line width=0.6pt},
+  },
+  bookbar/.style={
+    bookaxis,
+    ybar, bar width=11pt, grid=major, ymajorgrids=true, xmajorgrids=false,
+    enlarge x limits=0.20,
+    every axis plot/.append style={draw=none},
+  },
+}
+
+\sisetup{group-separator={,}, group-minimum-digits=4}
+\urlstyle{same}
+\Urlmuskip=0mu plus 2mu
+
+% Version stamp: kept identical to the full edition it condenses.
+\newcommand{\bookversion}{v0.20 --- 18 August 2026}
+\newcommand{\datafreeze}{18 August 2026}
+
+% Pointer to the full edition, by chapter number of the same version.
+\newcommand{\full}[1]{{\small\color{inkSec}[full edition, Ch.~#1]}}
+\newcommand{\fullapp}[1]{{\small\color{inkSec}[full edition, App.~#1]}}
+
+% Compact "at a glance" box used at the head of each chapter.
+\newsavebox{\glbox}
+\newenvironment{glance}{%
+  \par\medskip\noindent
+  \begin{lrbox}{\glbox}%
+  \begin{minipage}{0.92\linewidth}\small
+  {\normalsize\bfseries\color{sOne}In one paragraph\par}\smallskip
+}{%
+  \end{minipage}\end{lrbox}%
+  \begin{center}\setlength{\fboxsep}{4mm}\fcolorbox{gridLn}{surf}{\usebox{\glbox}}\end{center}\medskip
+}
+
+\title{\textbf{\Huge How China Will Win the AI War}\\[6mm]
+\Large The Convergence Strategy: A Structural Path to AI Dominance\\[4mm]
+\Large\textsc{Condensed Edition}\\[4mm]
+\normalsize A short-form companion to the living book\thanks{This condensed edition abridges the full living book of the same version and date. Every number in it is taken from the full edition, which carries the sources, evidence grades, and derivations. Version \bookversion.}}
+\author{Satoshi Matsuoka}
+\date{\bookversion}
+
+\begin{document}
+
+\frontmatter
+\maketitle
+
+\input{chapters/preface}
+
+\tableofcontents
+
+\mainmatter
+
+\input{chapters/c01-thesis}
+\input{chapters/c02-precedents}
+\input{chapters/c03-elements}
+\input{chapters/c04-trust}
+\input{chapters/c05-trade}
+\input{chapters/c06-world}
+\input{chapters/c07-science}
+\input{chapters/c08-convergence}
+
+\appendix
+\input{chapters/c09-register}
+
+\backmatter
+\input{chapters/sources}
+
+\end{document}

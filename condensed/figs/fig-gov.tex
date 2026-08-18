@@ -1,0 +1,55 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  every node/.style={font=\scriptsize},
+  arena/.style={draw=inkMut, line width=0.6pt, rounded corners=2pt, fill=surf,
+                align=center, inner sep=4pt, text width=26mm, minimum height=9mm},
+  actor/.style={align=center, font=\scriptsize\color{inkSec}, text width=25mm},
+  lead/.style={draw=none, fill=sOne!18, rounded corners=2pt, align=center,
+               inner sep=3pt, text width=25mm, minimum height=8mm},
+  weak/.style={draw=none, fill=surf, rounded corners=2pt, align=center,
+               inner sep=3pt, text width=25mm, minimum height=8mm},
+  none/.style={draw=gridLn, line width=0.5pt, densely dashed, fill=white,
+               rounded corners=2pt, align=center, inner sep=3pt, text width=25mm, minimum height=8mm},
+]
+\node[actor] at (0,1.1) {};
+\node[actor] at (3.0,1.1) {\textbf{United States}};
+\node[actor] at (6.0,1.1) {\textbf{European Union}};
+\node[actor] at (9.0,1.1) {\textbf{China}};
+\node[actor] at (12.0,1.1) {\textbf{Neutral / unowned}};
+
+\node[arena] at (0,0.3) {\textbf{Model \& content}};
+\node[weak] at (3.0,0.3) {sectoral, EO churn};
+\node[lead] at (6.0,0.3) {AI Act: GPAI duties};
+\node[weak] at (9.0,0.3) {algorithm \& genAI filings};
+\node[none] at (12.0,0.3) {---};
+
+\node[arena] at (0,-1.0) {\textbf{Compute \& export}};
+\node[lead] at (3.0,-1.0) {BIS controls, entity lists};
+\node[weak] at (6.0,-1.0) {follows US, partially};
+\node[weak] at (9.0,-1.0) {counter-controls: minerals, battery tech};
+\node[none] at (12.0,-1.0) {---};
+
+\node[arena] at (0,-2.3) {\textbf{Standards}};
+\node[weak] at (3.0,-2.3) {firm-led, consortium};
+\node[weak] at (6.0,-2.3) {process-led};
+\node[lead] at (9.0,-2.3) {ISA, interconnect, GB standards, WAICO};
+\node[none] at (12.0,-2.3) {---};
+
+\node[arena] at (0,-3.6) {\textbf{Trust \& certification}};
+\node[weak] at (3.0,-3.6) {voluntary, lab-led};
+\node[weak] at (6.0,-3.6) {conformity assessment (paper)};
+\node[weak] at (9.0,-3.6) {domestic filing regime};
+\node[lead, fill=sTwo!22] at (12.0,-3.6) {\textbf{vacant}};
+
+\node[font=\scriptsize\color{inkSec}, align=left, anchor=north west, text width=132mm]
+  at (-1.35,-4.4) {Shaded cells mark where an actor currently sets the operative rules. Each governs the arena it is
+  strongest in---the US by denial, the EU by regulation, China by standards and institution-building---and no
+  actor governs the arena that the argument of the trust and security chapters shows matters most.};
+\end{tikzpicture}
+\caption[The governance arena map]{Four arenas, three philosophies, one vacancy. Governance of AI is not a single
+contest but four, and the actors are not competing in the same one: each has occupied the arena its institutional
+strengths suit. The trust-and-certification arena---provenance, artifact lineage, integration-level evaluation---is
+the one whose absence the security chapter shows to be systemically consequential, and it is unowned.}
+\label{fig:gov}
+\end{figure}

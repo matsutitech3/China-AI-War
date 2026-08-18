@@ -4,7 +4,7 @@
 
 **Satoshi Matsuoka** — Director, RIKEN Center for Computational Science (R-CCS); Professor, Institute of Science Tokyo
 
-**Current edition: v0.19.1 — 16 August 2026** · [Download the PDF](How-China-Will-Win-the-AI-War-v0.19.1.pdf) · 290 pages
+**Current edition: v0.20 — 18 August 2026** · [Full edition (PDF)](How-China-Will-Win-the-AI-War-v0.20.pdf) · 290 pages · [Condensed edition (PDF)](How-China-Will-Win-the-AI-War-Condensed-v0.20.pdf) · 48 pages
 
 ---
 
@@ -15,6 +15,12 @@ This is a **living book**. It argues that China's position in artificial intelli
 "Winning" here does not mean producing the single best frontier model in any given quarter. It means what winning meant in those three industries: capturing the overwhelming majority of global production, setting the cost curve, controlling the supply chain, defining the de facto standards, and reducing erstwhile leaders to protected niches sustained by tariffs and subsidies.
 
 The book is deliberately falsifiable. Four load-bearing propositions are stated separately, coupled, and given their own falsification conditions. Every headline claim carries an evidence grade. A machine-readable claim register and a quarterly falsification dashboard are printed as appendices, and the fastest route to the argument's weakest link is to read the graded ledger first.
+
+## Two editions
+
+The **full edition** is the authoritative record: every claim cited to its source, graded, and carried in the evidence ledger, claim register, and quarterly dashboard.
+
+The **condensed edition** (`condensed/`, under fifty pages) is for readers who want the shape of the argument rather than the layers: what is being claimed, why, what would prove it wrong, and what it means for a government, laboratory, or company that is neither in Washington nor in Beijing. Part I's precedent campaigns are summarized in a single chapter; the weight is shifted toward the overall strategy and its international consequences. Nothing in it is new — every number, grade, and forecast is drawn from the full edition of the same version and date, and pointers into the full edition are marked *[full edition, Ch. n]* throughout.
 
 ## Structure
 
@@ -46,17 +52,21 @@ The book is deliberately falsifiable. Four load-bearing propositions are stated 
 The manuscript builds with a standard TeX Live installation and `pdflatex` (no `bibtex` — the bibliography is a manual `thebibliography` environment):
 
 ```bash
-make            # three passes, resolves all cross-references
+make            # both editions, three passes each
+make full       # full edition only  -> How-China-Will-Win-the-AI-War-<version>.pdf
+make condensed  # condensed edition  -> How-China-Will-Win-the-AI-War-Condensed-<version>.pdf
+make check check-condensed   # fail on unresolved references
 make clean      # remove build artifacts
 ```
 
 Or directly:
 
 ```bash
-pdflatex main.tex && pdflatex main.tex && pdflatex main.tex
+pdflatex main.tex && pdflatex main.tex && pdflatex main.tex          # full edition
+cd condensed && pdflatex main.tex && pdflatex main.tex && pdflatex main.tex   # condensed edition
 ```
 
-Every push to `main` rebuilds the PDF via GitHub Actions, so the committed source and the published PDF never drift apart.
+Every push to `main` rebuilds both PDFs via GitHub Actions, so the committed source and the published PDF never drift apart.
 
 ## Citing
 
@@ -65,7 +75,7 @@ Every push to `main` rebuilds the PDF via GitHub Actions, so the committed sourc
   author    = {Matsuoka, Satoshi},
   title     = {How China Will Win the AI War: The Convergence Strategy---A Structural Path to AI Dominance},
   year      = {2026},
-  note      = {Living book, v0.19.1, 16 August 2026},
+  note      = {Living book, v0.20, 18 August 2026},
   url       = {https://github.com/matsutitech3/China-AI-War}
 }
 ```

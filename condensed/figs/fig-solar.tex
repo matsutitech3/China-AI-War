@@ -1,0 +1,51 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[bookaxis,
+  xmode=log, ymode=log,
+  xlabel={Cumulative installed capacity (MW, log scale)},
+  ylabel={Module price (\$/W, log)},
+  title={Solar modules: five decades on a $\sim$20\% learning curve},
+  xmin=0.4, xmax=6e6, ymin=0.06, ymax=200,
+  ytick={0.1,1,10,100}, yticklabels={0.1,1,10,100},
+  xtick={1,100,10000,1000000}, xticklabels={1,$10^2$,$10^4$,$10^6$},
+  legend style={at={(0.03,0.06)}, anchor=south west},
+]
+\addplot[color=sOne, mark=*, mark size=1.6pt] coordinates {
+  (0.5,106) (2,80) (10,40) (60,20) (500,10) (3000,5) (16000,3.5)
+  (40000,2.0) (100000,1.0) (300000,0.60) (700000,0.30) (1200000,0.20)
+  (2200000,0.13) (4500000,0.09)
+};
+\addlegendentry{module price}
+\node[font=\scriptsize\color{inkSec}, anchor=west] at (axis cs:1.2,120) {1976: \$106/W};
+\node[font=\scriptsize\color{inkSec}, anchor=north east] at (axis cs:3.0e6,0.30) {2026: \$0.09--0.10/W};
+\draw[dashed, color=inkMut, line width=0.5pt] (axis cs:100000,0.06) -- (axis cs:100000,22);
+\node[font=\scriptsize\color{inkSec}, anchor=south, align=center] at (axis cs:100000,26)
+  {China becomes\\dominant producer};
+\end{axis}
+\end{tikzpicture}
+
+\vspace{2mm}
+
+\begin{tikzpicture}
+\begin{axis}[bookbar,
+  height=4.4cm,
+  ylabel={China share (\%)},
+  title={Chinese share by supply-chain stage, 2023},
+  symbolic x coords={Polysilicon,Wafers,Cells,Modules},
+  xtick=data, ymin=0, ymax=118,
+  nodes near coords, nodes near coords style={font=\scriptsize\color{inkSec}},
+  every node near coord/.append style={/pgf/number format/precision=1,
+     /pgf/number format/fixed, /pgf/number format/fixed zerofill},
+]
+\addplot[fill=sOne] coordinates {(Polysilicon,92) (Wafers,98.1) (Cells,92) (Modules,84.6)};
+\end{axis}
+\end{tikzpicture}
+\caption[Solar learning curve and stage shares]{The template war. \emph{Above}: module price against cumulative
+installed capacity, both log scales---a Wright's-law decline of roughly 20\% per doubling, from \$106/W in 1976 to
+\$0.09--0.10/W in 2026. Whoever manufactures the doublings owns the
+learning; from about 2010 essentially all doublings were Chinese. \emph{Below}: 2023 production shares by
+stage. Values [V]; the price series mixes contemporaneous reporting with index
+reconstruction and is directional at any single point.}
+\label{fig:solar}
+\end{figure}

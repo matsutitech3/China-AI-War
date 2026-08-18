@@ -1,0 +1,46 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  scale=0.86, transform shape,
+  every node/.style={font=\scriptsize},
+  st/.style={draw=inkMut, line width=0.5pt, rounded corners=2pt, align=center,
+             inner sep=3pt, text width=21mm, minimum height=8mm},
+  ar/.style={-{Stealth[length=4pt]}, line width=0.8pt, color=inkSec},
+  steal/.style={-{Stealth[length=5pt]}, line width=1.1pt, color=sTwo, densely dashed},
+]
+% ---- US flywheel (left)
+\node[font=\small\bfseries\color{sOne}] at (-4.8,3.6) {US frontier-capital flywheel};
+\node[st, fill=sOne!10, draw=sOne] (u1) at (-4.8,2.6) {frontier capability};
+\node[st, fill=sOne!10, draw=sOne] (u2) at (-2.3,1.3) {premium pricing};
+\node[st, fill=sOne!10, draw=sOne] (u3) at (-3.3,-0.7) {capital formation};
+\node[st, fill=sOne!10, draw=sOne] (u4) at (-6.3,-0.7) {larger clusters};
+\node[st, fill=sOne!10, draw=sOne] (u5) at (-7.3,1.3) {distribution \&\\application revenue};
+\foreach \a/\b in {u1/u2, u2/u3, u3/u4, u4/u5, u5/u1} {\draw[ar] (\a) -- (\b);}
+
+% ---- China flywheel (right)
+\node[font=\small\bfseries\color{sThree}] at (4.8,3.6) {Chinese volume-commoditization flywheel};
+\node[st, fill=sThree!10, draw=sThree] (c1) at (4.8,2.6) {open deployment};
+\node[st, fill=sThree!10, draw=sThree] (c2) at (7.3,1.3) {volume};
+\node[st, fill=sThree!10, draw=sThree] (c3) at (6.3,-0.7) {learning \&\\optimization};
+\node[st, fill=sThree!10, draw=sThree] (c4) at (3.3,-0.7) {lower cost};
+\node[st, fill=sThree!10, draw=sThree] (c5) at (2.3,1.3) {standards \&\\hardware demand};
+\foreach \a/\b in {c1/c2, c2/c3, c3/c4, c4/c5, c5/c1} {\draw[ar] (\a) -- (\b);}
+
+% ---- the two thefts
+\draw[steal] (c1.north) to[out=110,in=70] node[above, font=\scriptsize\color{sTwo}, align=center]
+  {open weights absorb \emph{volume} that\\would fund the next frontier run} (u1.north);
+\draw[steal] (u2.south) to[out=-70,in=-110] node[below, font=\scriptsize\color{sTwo}, align=center, yshift=-4mm]
+  {closed agents absorb the highest-\emph{value}\\workflows, leaving low-margin tonnage} (c4.south);
+
+\node[font=\scriptsize\color{inkSec}, align=center, text width=168mm] at (0,-4.5)
+  {Each wheel is internally coherent and both can turn at once; the contest is which one appropriates the
+   other's critical input first.};
+\end{tikzpicture}
+\caption[The dual industrial flywheels]{Two coherent strategies, two thefts. The American wheel converts
+capability into price into capital into more capability; the Chinese wheel converts openness into volume into
+learning into lower cost into more adoption. Neither is irrational and neither requires the other to fail. The
+strategic contest is the pair of dashed arrows: whether open weights absorb enough application volume to starve
+the capital-formation step, or whether closed agents capture enough of the high-value workflows to leave the open
+stack with tonnage and no margin. Both are observable in the indicators of the finance chapter.}
+\label{fig:flywheel}
+\end{figure}

@@ -1,0 +1,41 @@
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  every node/.style={font=\scriptsize},
+  prop/.style={draw=inkMut, line width=0.7pt, rounded corners=3pt, align=left,
+               inner sep=5pt, text width=30mm, minimum height=17mm},
+  cpl/.style={-{Stealth[length=4pt]}, line width=1pt, color=inkSec},
+  ev/.style={font=\scriptsize\color{inkSec}, align=center, text width=30mm},
+]
+\node[prop, fill=sOne!10, draw=sOne] (p1) at (0,0)
+  {\textbf{P1 Adoption}\\open-weight distribution and usage\\[2pt]\textbf{[V]} supported};
+\node[prop, fill=sThree!10, draw=sThree, right=6mm of p1] (p2)
+  {\textbf{P2 Sovereign compute}\\domestically sufficient stack\\[2pt]\textbf{[P/A/M]} trending};
+\node[prop, fill=sTwo!10, draw=sTwo, right=6mm of p2] (p3)
+  {\textbf{P3 Rent destruction}\\closed-frontier margins compress\\[2pt]\textbf{[V/S]} operating};
+\node[prop, fill=sFour!10, draw=sFour, right=6mm of p3] (p4)
+  {\textbf{P4 Repricing}\\the capital structure breaks\\[2pt]\textbf{[S]} scenario};
+
+\draw[cpl] (p1) -- (p2);
+\draw[cpl] (p2) -- (p3);
+\draw[cpl] (p3) -- (p4);
+\draw[cpl, dashed] (p1.north) to[out=40,in=140] node[above, font=\scriptsize\color{inkSec}] {price floor} (p3.north);
+
+\node[ev, below=3mm of p1] {evidence: downloads, derivatives, routed tokens; \emph{not} enterprise spend};
+\node[ev, below=3mm of p2] {evidence: LineShine, Ascend/CXMT ramps; \emph{not} a domestic frontier training run};
+\node[ev, below=3mm of p3] {evidence: token deflation, migrations; \emph{contra}: service-layer rents, elasticity};
+\node[ev, below=3mm of p4] {evidence: leverage, concentration; \emph{contra}: real revenue growth};
+
+\node[font=\scriptsize\color{inkSec}, align=left, text width=146mm, below=25mm of p2.south, xshift=13mm]
+  {\textbf{None of these arrows is entailment.} P1 can hold while P2 fails (dominance on stockpiled foreign
+   silicon); P3 can hold while P4 fails (margins compress while volume growth fills the data centres, the
+   elasticity case); and P4 could arrive from macro causes with none of P1--P3 mattering.
+   The convergence argument of this book is that the \emph{coupling} P1$\times$P2---open weights meeting sovereign,
+   capacity-first hardware---is what forces P3, with P4 as its priced-in consequence.};
+\end{tikzpicture}
+\caption[The four propositions and their couplings]{The argument, disaggregated. Each proposition carries its own
+evidence grade, its own confirming metrics, and its own contrary evidence; the book's thesis is a claim about the
+coupling between them rather than a single chain of entailment. Grades as of the version stamp; the full edition's evidence ledger
+carries the full ledger and its dashboard the quarterly indicators that move them.}
+\label{fig:props}
+\end{figure}
