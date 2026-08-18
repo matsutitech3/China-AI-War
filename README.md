@@ -4,7 +4,7 @@
 
 **Satoshi Matsuoka** — Director, RIKEN Center for Computational Science (R-CCS); Professor, Institute of Science Tokyo
 
-**Current edition: v0.20 — 18 August 2026** · [Full edition (PDF)](How-China-Will-Win-the-AI-War-v0.20.pdf) · 290 pages · [Condensed edition (PDF)](How-China-Will-Win-the-AI-War-Condensed-v0.20.pdf) · 48 pages
+**Current edition: v0.20.1 — 18 August 2026** · [Full edition (PDF)](How-China-Will-Win-the-AI-War-v0.20.1.pdf) · 295 pages · [Condensed edition (PDF)](How-China-Will-Win-the-AI-War-Condensed-v0.20.1.pdf) · 49 pages
 
 ---
 
@@ -20,7 +20,7 @@ The book is deliberately falsifiable. Four load-bearing propositions are stated 
 
 The **full edition** is the authoritative record: every claim cited to its source, graded, and carried in the evidence ledger, claim register, and quarterly dashboard.
 
-The **condensed edition** (`condensed/`, under fifty pages) is for readers who want the shape of the argument rather than the layers: what is being claimed, why, what would prove it wrong, and what it means for a government, laboratory, or company that is neither in Washington nor in Beijing. Part I's precedent campaigns are summarized in a single chapter; the weight is shifted toward the overall strategy and its international consequences. Nothing in it is new — every number, grade, and forecast is drawn from the full edition of the same version and date, and pointers into the full edition are marked *[full edition, Ch. n]* throughout.
+The **condensed edition** (`condensed/`, under fifty pages) is for readers who want the shape of the argument rather than the layers: what is being claimed, why, what would prove it wrong, and what it means for a government, laboratory, or company that is neither in Washington nor in Beijing. Part I's precedent campaigns are summarized in a single chapter; the weight is shifted toward the overall strategy and its international consequences. Nothing in it is new — every number, grade, and forecast is drawn from the full edition of the same version and date; it carries a selective reference list (entries copied from the full bibliography, hyperlinked), a short glossary, and pointers into the full edition marked *[full edition, Ch. n]* throughout.
 
 ## Structure
 
@@ -28,7 +28,7 @@ The **condensed edition** (`condensed/`, under fifty pages) is for readers who w
 
 **Part II — The Elements of AI.** The model, the compute, the semiconductor, the watt, the data, and embodied AI, each analysed separately before being recombined.
 
-**Part III — The Consequences.** Trust and agentic security, governance, the financial exposure of the incumbents, national strategies, how much compute a nation's science actually needs, and the international institution the analysis keeps arriving at.
+**Part III — The Consequences.** Opens with a chapter that assembles the elements into the strategy they serve and scores the campaign against the playbook, then trust and agentic security, governance, the financial exposure of the incumbents, national strategies, how much compute a nation's science actually needs, and the international institution the analysis keeps arriving at.
 
 ## Reading apparatus
 
@@ -75,7 +75,7 @@ Every push to `main` rebuilds both PDFs via GitHub Actions, so the committed sou
   author    = {Matsuoka, Satoshi},
   title     = {How China Will Win the AI War: The Convergence Strategy---A Structural Path to AI Dominance},
   year      = {2026},
-  note      = {Living book, v0.20, 18 August 2026},
+  note      = {Living book, v0.20.1, 18 August 2026},
   url       = {https://github.com/matsutitech3/China-AI-War}
 }
 ```

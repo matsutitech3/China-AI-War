@@ -20,6 +20,19 @@
 \pgfplotsset{compat=1.16}
 \usetikzlibrary{positioning,arrows.meta,fit,backgrounds,calc}
 \usepackage{longtable}
+\usepackage{multicol}
+% Compact chapter heads: this edition is short, and the book class's default
+% chapter opening spends a third of a page on white space.
+\usepackage{titlesec}
+\usepackage{needspace}
+\titleformat{\chapter}[hang]{\huge\bfseries}{\thechapter\quad}{0pt}{\huge\bfseries}
+\titleformat{name=\chapter,numberless}[hang]{\huge\bfseries}{}{0pt}{\huge\bfseries}
+\titlespacing*{\chapter}{0pt}{-10pt}{18pt}
+% Chapters run on (no forced page break) in this short edition; a rule marks the join.
+\titleclass{\chapter}{straight}
+\titlespacing*{\chapter}{0pt}{22pt plus 6pt minus 4pt}{14pt}
+\titleformat{\chapter}[hang]{\Needspace*{12\baselineskip}\vspace{2pt}\hrule\vspace{10pt}\huge\bfseries}{\thechapter\quad}{0pt}{\huge\bfseries}
+\titleformat{name=\chapter,numberless}[hang]{\Needspace*{12\baselineskip}\vspace{2pt}\hrule\vspace{10pt}\huge\bfseries}{}{0pt}{\huge\bfseries}
 \usepackage[hidelinks,breaklinks]{hyperref}
 \usepackage{xurl}
 \usepackage{xcolor}
@@ -62,7 +75,7 @@
 \Urlmuskip=0mu plus 2mu
 
 % Version stamp: kept identical to the full edition it condenses.
-\newcommand{\bookversion}{v0.20 --- 18 August 2026}
+\newcommand{\bookversion}{v0.20.1 --- 18 August 2026}
 \newcommand{\datafreeze}{18 August 2026}
 
 % Pointer to the full edition, by chapter number of the same version.
@@ -95,23 +108,29 @@
 
 \input{chapters/preface}
 
+\clearpage
 \tableofcontents
+\input{chapters/terms}
 
 \mainmatter
-
+\clearpage
 \input{chapters/c01-thesis}
 \input{chapters/c02-precedents}
 \input{chapters/c03-elements}
+\input{chapters/c035-assembled}
 \input{chapters/c04-trust}
 \input{chapters/c05-trade}
 \input{chapters/c06-world}
+\input{chapters/c065-strategies}
 \input{chapters/c07-science}
 \input{chapters/c08-convergence}
 
+\clearpage
 \appendix
 \input{chapters/c09-register}
 
+\clearpage
 \backmatter
-\input{chapters/sources}
+\input{chapters/bibliography}
 
 \end{document}

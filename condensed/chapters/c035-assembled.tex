@@ -1,0 +1,56 @@
+\chapter{The Strategy Assembled}
+\label{c:assembled}
+
+\begin{glance}
+The Chinese AI strategy is the playbook of Chapter~\ref{c:precedents} run on a fourth industry, with one adaptation that makes it faster: the rent layer under attack is digital, so the commoditizing move---openness---costs nothing to reproduce and propagates at the speed of a download. Read element by element, each of Chapter~\ref{c:elements}'s findings has a rebuttal; placed on the playbook, every one of the nine moves is occupied at a recognizable stage. One of the six steps is complete, one is complete at home and contested abroad, three are trending, and the endgame has barely begun. The three properties on which the playbook has failed before---the moving frontier, ecosystem lock, and trust---are exactly the ones the elements cannot settle from inside, which is why the consequences that follow begin with trust, security, and rules before turning to money and to the rest of the world. \full{15}
+\end{glance}
+
+\section{Where each element sits}
+
+\emph{Target selection} chose the discontinuity where the incumbent's accumulated advantage is about to be stranded: HBM-centric superclusters, closed frontier weights, a licensed instruction set. \emph{Demand before supply} was arranged by mandate rather than by feed-in tariff---state-funded data centers restricted to domestic silicon, western hub electricity discounted only for approved domestic chips~\cite{cac-ban,datacenter-mandate}. \emph{Overcapacity as strategy} is under way in DRAM and compute halls---state-subsidized compute running at 20--30\% utilization against a 60\% target, rental prices collapsed---with the losses landing where they landed in solar; but the accelerator layer is still supply-bound by HBM, and the model-layer price war is running without a visible rent-recapture plan attached, which Chapter~\ref{c:strategies} calls the strategy's soft underbelly. \emph{Selection, not planning} is visible in a model layer where ten laboratories release at frontier scale, and in a chip layer whose dozen-vendor fragmentation the state is removing by mandate and open specification rather than by cull. \emph{Commoditizing the adversary's rent layer} is the move the elements documented: open weights, an open harness, an open ISA, open interconnect and framework specifications, at marginal or zero price, aimed precisely at CUDA, NVLink, x86/Arm licensing, and the metered API~\cite{action-plan,riscv-policy}. And the \emph{endgame} has begun on the consolidation side---the anti-involution campaign---and not yet on the gatekeeping side, where batteries and rare earths supply the template~\cite{mofcom-battery-controls}. Table~\ref{tab:assembled} places each element.
+
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{The elements placed on the playbook, with status as of \datafreeze\ (done, trending, contested, pending; grades are the source chapters').}
+\label{tab:assembled}
+\begin{tabular}{@{}p{24mm}p{44mm}p{58mm}p{20mm}@{}}
+\toprule
+\textbf{Element} & \textbf{Move(s) it executes} & \textbf{What the element chapter found} & \textbf{Status} \\
+\midrule
+The model & M1 designation; M6 commoditize the rent layer; M4; M7 sparse MoE; M8 & Open weights at marginal price; a self-enforcing open-weight ratchet; majority of routed tokens; a 2.7\% gap; enterprise spend share falling while usage rose; rent relocated to commercial-scale licence terms & Done (distribution); trending (spend, rent) \\
+The harness & M6 one layer up; de-facto default sought outside the standards bodies (M8 not achieved) & MIT-licensed model-agnostic runtime adopted in days; Western agent standards bodies with no Chinese member & Trending [S] \\
+The compute & M1 (RISC-V guidance); M7 ``inferior'' branch; M8; M5 & Open ISA as national infrastructure; GPU-free No.~1 on both HPL and HPCG; capacity-first arbitrage modeled, not realized [M]; appliance undercuts the fully loaded rack above $\sim$300M tokens/month [M/S] & Trending; existence proof done \\
+The semiconductor & M5 supply-chain capture; M3 & 5\,nm-class logic without EUV; CXMT the fourth DRAM producer; HBM three to four years behind, the binding constraint & Trending; HBM lagging 3--4 years \\
+The watt & M2 home demand (subsidized power, domestic-chip tariff); the weld & Leads on every row of the ledger; hub tariffs cut only for domestic-chip facilities [P]; open question is whether the tariff outlives the surplus & Done (headroom); trending (durability) \\
+The data & Where rent migrates once M6 succeeds & Deployment-generated data is the scarcity openness cannot replicate; evaluation data unowned & Contested \\
+Embodied AI & M5 before the category exists & $\sim$85\% of humanoid shipments, $\sim$70\% of the Optimus supply chain; useful work per robot-hour published by nobody & Trending \\
+Endgame & M9 leverage after victory & Consolidation begun; gatekeeping not yet exercised on AI & Pending \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Three interlocks are the strategy. The model and the compute are the coupling P1$\times$P2---adoption meeting sovereign, capacity-first hardware: open weights are a commons only for those with the memory to hold them, and a capacity-first hardware class is what turns a download into a deployment. The watt is the weld: a tariff instrument that pays only for domestic silicon converts an energy surplus into hardware volume and hardware volume into tokens priced below the Western marginal cost. And the semiconductor is the floor, incomplete at exactly one layer---HBM---which is why the memory arbitrage exists at all: the architecture was chosen so that the one input the chokepoint strategy still holds is the one the architecture needs least.
+
+
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{The summer-2026 sequence that the element chapters draw on, in one place.}
+\label{tab:chron}
+\begin{tabular}{@{}p{22mm}p{128mm}@{}}
+\toprule
+\textbf{Date} & \textbf{Event} \\
+\midrule
+27 July & Moonshot opens Kimi K3 (2.8T parameters, largest open-weight model); CXMT lists in Shanghai at +466\%, prospectus disclosing no commercial HBM \\
+Late July & Two frontier laboratories disclose evaluation-boundary escapes; DeepSeek V4-Flash ships and OpenAI cuts its mainline price 80\% (31 July) \\
+3 August & Alibaba commits to open Qwen3.8-Max within a week; OCP publishes the first High Bandwidth Flash specification \\
+10 August & Meta returns to open weights (Muse Glimmer, Apache 2.0); NVIDIA signs memoranda for ``over \$500 billion'' of third-party infrastructure capital \\
+12 August & Alibaba's inference supernode in Inner Mongolia enters commercial service, serving Kimi K3 and Qwen3.8-Max worldwide \\
+13 August & DeepSeek releases its MIT-licensed harness (100,000 stars in about 48 hours) and raises API prices the same day; Qwen3.8-Max weights ship \\
+14 August & Xiaohongshu releases dots3-note (280B/16B, omni-modal, Apache 2.0), trained for ten-hour agent runs \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{What the assembly licenses}
+
+It licenses the claim that the AI campaign is a coherent execution of the strategy that won three technology wars, that it is further along than a layer-by-layer reading suggests, and that its remaining gaps are being engineered around rather than closed on the West's terms. It forbids the claim that the outcome is settled: step~5---rent destruction---has run furthest and is the one whose completion is contested (one 80\% closed-frontier price cut~\cite{openai-cut} is not a trend, its maker attributes it to efficiency and Chapter~\ref{c:convergence} shows the same datum supports the recursive-improvement counter-argument, service rents commoditize slowly, elasticity may rescue the buildout); the single integration test that would move sovereign compute from ``trending'' to ``done''---a frontier model trained end to end on domestic silicon, packaging, and memory---has not been passed; and Chapter~\ref{c:precedents}'s three resisting properties are the three the deployment layer is made of. The precedent chapters record what happened when the West read each earlier campaign one layer at a time and found each layer unthreatening. The chapters that follow say what follows if the assembly is right---trust and rules first, then money, then the rest of the world---and what would show that it is not.

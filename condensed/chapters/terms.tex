@@ -1,0 +1,33 @@
+\chapter*{Terms Used in This Edition}
+\phantomsection\addcontentsline{toc}{chapter}{Terms Used in This Edition}
+
+\noindent{\small The full edition carries a complete notation glossary; the following are the terms a reader of this edition meets without introduction.}
+
+\begin{multicols}{2}\small\raggedright
+\setlength{\parindent}{0pt}\setlength{\parskip}{3pt}
+\textbf{Open weights.} A model whose trained parameters are published for download, so that anyone can run, fine-tune, or redistribute it, as opposed to a \emph{closed} model reachable only through a metered API.\par
+\textbf{Token; \$/M tokens.} The unit of text a model reads or writes; prices are quoted per million tokens.\par
+\textbf{MoE (mixture of experts); sparse model.} A model in which only a fraction of the parameters (the ``active'' set) is used per token, so a very large model can run at the cost of a much smaller one; ``280B/16B'' means 280 billion total, 16 billion active.\par
+\textbf{Frontier; frontier-adjacent.} The best models available at a given date; models within a few points of them on independent indices.\par
+\textbf{Harness.} The runtime an agent runs in---tool schemas, permissions, memory, sandbox, session store, orchestration---as distinct from the model it calls.\par
+\textbf{Agent.} A model given the authority to act (run tools, read and write files, make network calls) in pursuit of a goal over many steps.\par
+\textbf{Quantization.} Storing weights at lower precision (e.g.\ four bits) to shrink memory and cost, at some loss of quality; ``FP8'' is an eight-bit floating-point format used in training and inference.\par
+\textbf{KV-cache.} The working memory of context a model must hold while generating; it grows with context length and is a major consumer of accelerator memory.\par
+\textbf{HBM (high-bandwidth memory).} Stacked DRAM mounted on the accelerator package: very fast, scarce, expensive, and under the tightest export controls.\par
+\textbf{LPDDR; DRAM.} Commodity memory of the kind in phones and laptops (LPDDR) and PCs (DDR); abundant and cheap, with far lower bandwidth than HBM. ``SOCAMM2'' is a compact LPDDR module format.\par
+\textbf{HBF (high-bandwidth flash).} A proposed stacked-NAND memory tier in an HBM-class package: non-volatile, up to 512\,GB per stack, for holding model weights.\par
+\textbf{Capacity-first architecture; memory arbitrage.} A design that trades scarce bandwidth for abundant capacity, using LPDDR or HBF where the incumbent uses HBM.\par
+\textbf{MFU (model FLOP utilization).} The fraction of an accelerator's peak arithmetic actually delivered during training; the ``bandwidth knee'' is the memory bandwidth below which MFU falls off.\par
+\textbf{ISA; RISC-V.} The instruction-set architecture is the contract between software and processor---the layer at which Arm and x86 collect licence rents; RISC-V is an open ISA with no licence to revoke.\par
+\textbf{CUDA; NVLink.} NVIDIA's proprietary programming stack and chip-to-chip interconnect; the software and interconnect moats of the accelerator incumbent.\par
+\textbf{Ascend, Cambricon, Kunlun.} Chinese domestic AI accelerator lines (Huawei, Cambricon, Baidu).\par
+\textbf{SMIC; CXMT.} China's leading logic foundry and its leading DRAM maker.\par
+\textbf{EUV; DUV.} Extreme- and deep-ultraviolet lithography; EUV is the tool China cannot buy.\par
+\textbf{TOP500; HPL; HPCG.} The semiannual supercomputer ranking and its two benchmarks; ``MLPerf'' is the industry's AI training and inference benchmark suite.\par
+\textbf{PUE.} Power usage effectiveness: total facility power divided by IT power.\par
+\textbf{BGPU (baseline GPU).} The full edition's vendor-neutral unit of AI compute demand, defined by serving throughput at 8\,TB/s of memory bandwidth.\par
+\textbf{VLA model.} A vision-language-action model: the policy layer of an embodied (robotic) system.\par
+\textbf{P1--P4.} The book's four propositions: adoption, sovereign compute, rent destruction, financial repricing (Chapter~\ref{c:thesis}).\par
+\textbf{Evidence grades.} [V] verified, [P] primary-source claim, [A] analyst estimate, [M] author-modeled, [R] roadmap, [S] scenario judgment.\par
+\textbf{The ratchet.} The competitive equilibrium in which, once one Chinese laboratory opens at frontier scale, the others cannot profitably stay closed.\par
+\end{multicols}
