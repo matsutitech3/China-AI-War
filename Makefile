@@ -1,7 +1,7 @@
 LATEX   := pdflatex
 FLAGS   := -interaction=nonstopmode -halt-on-error
 MAIN    := main
-VERSION := v0.20.1
+VERSION := v0.20.2
 OUT     := How-China-Will-Win-the-AI-War-$(VERSION).pdf
 COND    := How-China-Will-Win-the-AI-War-Condensed-$(VERSION).pdf
 
