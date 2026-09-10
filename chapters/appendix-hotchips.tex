@@ -1,0 +1,134 @@
+\chapter{The Hot Chips 2026 Ledger}
+\chaptermark{The Hot Chips 2026 Ledger}
+\label{app:hotchips}
+
+Hot Chips is the meeting at which processor architects present the parts they have built to an audience of other processor architects; its 2026 edition ran at Stanford from 23 to 25~August, with 31 technical presentations across the memory, server-CPU, GPU and accelerator, networking and tutorial tracks~\cite{hc2026}. This appendix is the book's compact evidence base for that record, current as of \datafreeze, so that Chapters~\ref{ch:compute} and~\ref{ch:semi} can point at a table instead of carrying the detail. Deck numbers follow the conference's own numbering. Figures appearing only in a deck are vendor-presented and unaudited, and are marked as such; where a vendor withheld a figure that exists elsewhere, the outside source is named.
+
+An architecture conference is evidence for a book about industrial strategy for three reasons, none of which is that architects are good forecasters. The first is timing: the questions this book asks---what is scarce, who owns the interface, where the rent sits---are settled in silicon two to three years before they appear in a trade statistic, and the conference is where the design decisions that will produce the 2029 market are first stated in public. The second is that decks are the only venue in which competitors describe their assumptions about each other's workloads on the record; a vendor's choice of what to benchmark is a disclosure about what it believes the market will buy. The third is specific to this book's argument and is the single most striking datum of the week: nine of the conference's decks report inference economics on \emph{Chinese open-weight models}, among them d-Matrix on GLM~5.2 and Kimi~K3, OXMIQ's cost model on Kimi-K2 1T, NVIDIA's Rubin deck on DeepSeek-v4-PRO and its Spectrum-X deck on DeepSeek~V3 training-step time, Intel's capacity thesis plotted across every published frontier model from Llama~2 70B to Kimi~K2 1T, SambaNova on MiniMax M2.7, OpenAI on DeepSeek~R1---while no Chinese chip is named anywhere in the conference and no Chinese vendor presented~\cite{hc2026-china-bench}. US silicon vendors now validate and publish their inference economics against Chinese weights, because those are the frontier-scale weights that can be obtained and published against. Chapter~\ref{ch:model}'s claim about where the commons sits does not need a stronger corroboration than a competitor's own measurement harness [V].
+
+\section{The methodological warning: disclosure has collapsed unevenly}
+
+One caution governs every table below, and it is not a complaint about vendors---it is a finding. \emph{Disclosure has collapsed unevenly, and the pattern is not accidental: the parts with the strongest competitive position disclose least.} Table~\ref{tab:hc-accel} carries twelve parts, nine of them custom accelerators---every entry but the three merchant GPUs---and the counts below are taken against that nine. Eight publish no clock. Six publish no process node in the deck. Six publish no third-party benchmark of any kind. On power the count has to be given twice, because the deck and the wider record differ: six of the nine print no power figure at all, and of the three that do, only OpenAI's Jalape\~no disclosed it in the deck---Maia~200's 750\,W comes from a Microsoft blog and MTIA~400's 1.2\,kW from outside coverage---so eight of the nine published no power figure \emph{in the deck}. Google's TPU~8t and 8i decks, which describe two concurrently shipped parts in unusual architectural detail, publish no per-chip FLOPS, power, node or die size at all~\cite{hc2026-tpu8}.
+
+The right inference is narrower than ``the industry stopped disclosing.'' Much of what the decks withheld exists elsewhere---in datasheets, vendor blogs, or the notes of favoured analysts---and Maia~200's full specification, for instance, was published in a Microsoft blog post seven months before the conference~\cite{maia200}. What changed is the venue: \emph{the architecture conference is no longer where disclosure happens; it now happens at the product launch}, where the framing is controlled and the comparison set is chosen. The consequence for analysis is concrete. A peak-FLOPS table across this generation is partly unbuildable, and any that is built is comparing formats---NVFP4 against MXFP4 against MX8S---that do not normalize cleanly. The only axes available for every part are memory capacity, memory bandwidth, fabric bandwidth and scale-up domain size. That is a smaller set than one would want and, conveniently, it is close to the set that actually determines serving cost, which is why the tables below are organized around it rather than around arithmetic throughput.
+
+\section{The data-centre CPUs}
+
+Five server CPUs were presented, from vendors with almost nothing else in common, and they converged on the same four choices (Table~\ref{tab:hc-cpu}).
+
+\begin{table}[htbp]
+  \centering
+  \scriptsize
+  \setlength{\tabcolsep}{3pt}
+  \caption{Data-centre CPUs at Hot Chips 2026, as presented [P; vendor decks, unaudited]. ``n/s'' = not stated in the deck.}
+  \label{tab:hc-cpu}
+  \begin{tabular}{p{20mm}p{25mm}p{29mm}p{24mm}p{36mm}}
+    \toprule
+    Part & Cores & Memory & On-die AI & The notable choice \\
+    \midrule
+    Intel Diamond Rapids & 256 uniform P-cores, 22 dies & MRDIMM-12800, 16\,ch, 1.6\,TB/s; 1.28\,GB LLC & AMX + AVX10.2; no TOPS quoted & The P/E split abandoned; a very large last-level cache in place of HBM \\
+    \addlinespace
+    NVIDIA Vera & 88 Olympus Arm v9.2 & LPDDR5X-9600 SOCAMM, 1.2\,TB/s & none & 1.8\,TB/s NVLink-C2C: the AI is the GPU beside it, not the CPU \\
+    \addlinespace
+    Fujitsu MONAKA & 144 Armv9.3-A, 2\,nm & DDR5-8000+, 12\,ch & ${\sim}96.2$ INT8 TOPS (est.) & FP64 retained: the mixed simulation/AI socket \\
+    \addlinespace
+    Arm AGI & 136 Neoverse V3, 2 chiplets & DDR5-8800, 12\,ch & no matrix engine & Arm's own reference platform ships without one \\
+    \addlinespace
+    IBM Z & 11 SMT-2 cores, 5.7+\,GHz & n/s & n/s & Presented as a hardware AArch64 v9.3 implementation inside the z core (2,792 instructions, 239 system registers), with z/OS and Linux-ARM64 as peer partitions~\cite{hc2026} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Four findings, of which the third bears most directly on this book's argument. \emph{Uniform performance cores everywhere}: the performance/efficiency split that dominated CPU design for half a decade is gone from the server socket, most visibly at Intel, which shipped 256 identical P-cores. \emph{Agentic orchestration is the uniform justification}: every vendor gave the same reason---many concurrent, latency-sensitive, branch-heavy control threads driving accelerators---which is a striking degree of consensus about a workload class that barely existed in 2023 and which nobody sized. \emph{No HBM on any CPU}: after two generations in which HBM on the CPU looked like the direction of travel, all five parts attach commodity DRAM, whether MRDIMM, LPDDR or DDR5, which is the same capacity-over-bandwidth trade that Section~\ref{sec:lpddr6} attributes to a sanctions-driven Chinese design and which turns out to be the choice five unconstrained Western vendors also made. And \emph{on-die AI acceleration is conceded}: Vera has none, Arm's AGI has no matrix engine, Intel quotes no TOPS for AMX, and only MONAKA carries a sized figure---the CPU vendors have collectively agreed that the matrix work happens on the part next door.
+
+The RISC-V thread runs alongside and is treated fully in Chapter~\ref{ch:compute}; three of its 2026 data points belong in this ledger. NVIDIA stated the requirements for RISC-V to become CUDA's third host ISA---RVA23 plus the Server SoC and Server Platform specifications, Boot and Runtime Services, and ACPI, with the CUDA-specific asks reducing to coherent PCIe I/O and full-speed peer-to-peer---which is the incumbent publishing a conformance target for an ISA it does not own~\cite{hc2026-nv-riscv}. Against that, \emph{no ratified matrix extension exists}: one fast-track dot-product proposal and three competing task groups, with ratification targets spanning August 2026 to April 2027~\cite{hc2026-riscv-profiles}---with the caveat that IME's 27~August target fell a fortnight before this edition's currency date and no ratification announcement had appeared by then [A]. And the software readiness gap is measured rather than asserted---Canonical's own figure is that roughly 95\% of archive packages build on riscv64, while only 55.1\% of tested packages pass, against 92.3\% on amd64, on about one seventh the test coverage~\cite{hc2026-canonical}---while the first rackable enterprise RISC-V server shipped in the same week, in limited quantities, with no price, no SPEC result and no named customer tape-out~\cite{sifive-bigsky}. An open ISA with a ratified server platform, no matrix extension and a 55\% package pass rate is exactly as far along as those three numbers say, and no further.
+
+\section{The accelerators}
+
+Eleven accelerator programs, twelve parts, were presented or are current enough to belong in the comparison (Table~\ref{tab:hc-accel}). The columns are the four axes that survived the disclosure collapse.
+
+\begin{table}[htbp]
+  \centering
+  \scriptsize
+  \setlength{\tabcolsep}{3pt}
+  \caption{Accelerators, on the axes every vendor published [P; vendor-presented and unaudited unless otherwise sourced]. Precision labels are the vendors' own and do not normalize across parts. One discrepancy is disclosed rather than reconciled: MTIA~400's MX4 figure is printed here at 12\,PF, which is the number in Meta's March 2026 announcement table~\cite{mtia400}, while a May 2026 survey of the same part reports 18\,PF; no vendor has explained the difference [A].}
+  \label{tab:hc-accel}
+  \begin{tabular}{p{21mm}p{27mm}p{19mm}p{29mm}p{33mm}}
+    \toprule
+    Part & Memory capacity & Memory BW & Scale-up domain & Headline throughput \\
+    \midrule
+    NVIDIA Rubin & 288\,GB HBM4 & 22.2\,TB/s & NVL72, 72 GPUs, NVLink~6 & 50\,PF NVFP4 dense; 2.3\,kW/GPU, 800\,VDC racks \\
+    \addlinespace
+    AMD MI455X & 432\,GB HBM4 & 23.3\,TB/s & UALoE, 72 GPUs, merchant Ethernet & 40.26\,PF MXFP4; ${\sim}2$\,kW/GPU \\
+    \addlinespace
+    Intel Crescent Island & up to 480\,GB LPDDR5x & not stated & none (no coherent multi-GPU domain) & no FLOPS quoted at any precision; 350\,W PCIe card \\
+    \addlinespace
+    Google TPU~8t & 6 HBM3E stacks & n/s & 9{,}600 chips, optical 3D torus & n/s~\cite{hc2026-tpu8} \\
+    \addlinespace
+    Google TPU~8i & 8 HBM3E stacks + 384\,MB SRAM & n/s & 1{,}152 chips, 7-hop Boardfly & n/s; claimed $>2\times$ perf/TCO gen-on-gen~\cite{hc2026-tpu8} \\
+    \addlinespace
+    Microsoft Maia 200 & 216\,GB HBM3E + 272\,MB SRAM & 7\,TB/s & 6{,}144 accelerators, one Ethernet protocol & $>$10\,PF FP4; 750\,W~\cite{maia200} \\
+    \addlinespace
+    Meta MTIA 400 & 288\,GB HBM3E & 9.2\,TB/s & RoCE on dedicated I/O chiplets & 6\,PF FP8/MX8, 12\,PF MX4; 1.2\,kW~\cite{mtia400} \\
+    \addlinespace
+    OpenAI Jalape\~no & 216\,GiB HBM4 & 15.4\,TB/s & 128 chips at 600\,GB/s; 2{,}048-chip pod & 13.4\,PF mxfp4; 700\,W~\cite{hc2026-jalapeno} \\
+    \addlinespace
+    SambaNova SN50 & 432\,MB SRAM + 64\,GB HBM2E & 1.84\,TB/s & 64 sockets, 10$\times$800G Ethernet & 3.2\,PF FP8 \\
+    \addlinespace
+    NVIDIA/Groq LP30 & 0.5\,GB SRAM per chip; no DRAM & ${\sim}156$\,TB/s & 256-chip rack, every chip a router & 315\,PF FP8 per rack~\cite{hc2026-lpu} \\
+    \addlinespace
+    Cerebras CS-4 & 44\,GB on-wafer SRAM; no DRAM & 43.2\,PB/s & wafer-scale (on-die) & 750\,PF sparse / 125\,PF dense \\
+    \addlinespace
+    d-Matrix Raptor & 3D-DRAM stacked under logic & 12.5\,TB/s per chiplet & n/s & 0.37\,pJ/bit measured \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Two observations before the architectures. First, the merchant GPU is not being attacked on arithmetic: normalizing the published figures to dense 8-bit throughput per package as best the formats allow, \emph{every custom accelerator sits between roughly $3\times$ and $30\times$ below a contemporary merchant GPU} [M; the author's normalization, since the vendors' formats do not compare directly]. They are competing on cost per served token at a fixed interactivity, which is what OpenAI's deck says outright when it declares per-chip throughput and chip count explicit non-goals and organizes the whole design around output tokens per second per all-in utility megawatt~\cite{hc2026-jalapeno}. Second, the money is now large enough that this is no longer a side market: Broadcom's AI semiconductor revenue reached \$10.8B in its second fiscal quarter of 2026, up 143\% year on year, with third-quarter guidance above \$16.0B, which annualizes to roughly 11--15\% of the combined merchant-plus-custom total depending on whether actuals or guidance are annualized on each side [M]~\cite{broadcom-q2fy26}.
+
+\section{Four schools of thought for beating the GPU}
+
+The eleven programs reduce to four theories of where the GPU is beatable, and each is falsifiable in a different measurement.
+
+\emph{Eliminate data movement.} Put the working set on the die and pay for it in capacity: Cerebras with 44\,GB of on-wafer SRAM at 43.2\,PB/s and no DRAM at all; the Groq-derived LP30 with 0.5\,GB per chip, no DRAM, and a rack that aggregates SRAM instead of adding memory tiers~\cite{hc2026-lpu}. The bet is that bandwidth is worth more than capacity and that model sharding can absorb the difference.
+
+\emph{Determine the schedule statically.} Remove the dynamic scheduler, the memory barriers and the kernel boundaries, and let a compiler place every operation on a cycle-exact global clock---the LP30's VLIW model, and SambaNova's dataflow lineage. The bet is that the GPU's utilization losses are scheduling losses, and that a compiler can recover them.
+
+\emph{Make the fabric fast enough that nothing stalls.} NVIDIA's NVLink~6 with in-network compute, AMD's 72-GPU UALink-over-Ethernet load/store domain, Microsoft's single Ethernet protocol from chip to a 6{,}144-accelerator Clos, Google's optically switched torus~\cite{hc2026-scaleup}. The bet is that the unit of design is the domain rather than the chip.
+
+\emph{Change the memory economics.} Intel's Crescent Island substituting 480\,GB of LPDDR5x for HBM; d-Matrix stacking 3D-DRAM under the logic at 12.5\,TB/s per chiplet and 0.37\,pJ/bit measured. The bet is that the memory system, not the arithmetic, is the cost.
+
+The sharpest intellectual disagreement of the conference is between the last school and the first two, and it is worth stating precisely because both sides have a measurement. Intel's case is that \emph{capacity} is what matters: plotted across published frontier models from Llama~2 70B to Kimi~K2 1T, the weight footprint that must be \emph{held} grew $7.5\times$ while the bytes \emph{read per generated token} fell $4.4\times$, because sparse mixture-of-experts routing activates a small fraction of parameters per token~\cite{hc2026-china-bench}. If that divergence continues, the machine to build is a large, cheap, slow memory pool. SambaNova's and Cerebras's case is that \emph{realizable bandwidth per watt} is what matters: decode occupies 75--97\% of an agentic session's wall-clock time and decode is bandwidth-bound, so the machine to build is a small, fast, expensive one. Both are correct inside their own regime, and the regime boundary is the batch size---at batch one the sparsity is real and capacity wins; at a batch of a few dozen the union of activated experts approaches the whole model and bandwidth wins. \emph{Nobody publishes the batch size}, which means the disagreement cannot be resolved from public evidence, and any vendor comparison that does not state it is comparing operating points rather than machines. This is the same batching-saturation boundary that Section~\ref{sec:memoryunlock} and Appendix~\ref{app:hbf} identify from the model side, arrived at independently from the silicon side.
+
+\section{FP64 bifurcated rather than disappeared}
+
+The double-precision story matters directly to any centre running simulation and AI on one estate, which is most national laboratories, and 2026 is the year it changed shape. AMD split double precision into a separate product: the MI455X publishes 5\,TFLOPS of FP64 against 78.6 on the MI355X---a compatibility rate rather than a capability---with a dedicated MI430X at 288\,TFLOPS arriving separately in early 2027. NVIDIA moved FP64 into software, claiming ${\sim}200$\,TFLOPS by emulation on the low-precision tensor units, which is the Ozaki-scheme direction: high-precision results assembled from many low-precision products. Intel kept a hardware rate and declines to size it.
+
+The procurement consequence is a single sentence and it changes how a machine is specified: \emph{double precision is now a product-line decision rather than a per-generation one}. A buyer can no longer assume that the AI part of a vendor's roadmap carries a usable FP64 rate as a by-product, and must instead choose a SKU, a year, and---if the emulation path is taken---an accuracy standard, because emulated FP64 is not bit-identical to hardware FP64 and the difference is a validation question rather than a benchmark question. Fujitsu's MONAKA, which retains FP64 in a general-purpose socket, is the third answer and the one that most resembles the machine a mixed estate actually wants.
+
+This is the line of argument this author has developed under the heading of \emph{Tensor-Memory Equilibrium}---that once matrix throughput is abundant relative to memory bandwidth, precision becomes an allocation choice made in software against a memory budget rather than a fixed property of the hardware, so the correct question is not how much FP64 a part has but what it costs to synthesize. If NVIDIA's emulated rate holds up under independent accuracy testing, that argument becomes the mainstream way to specify a scientific machine; if it does not, FP64 returns to being a SKU one buys. The companion study of the CPU--GPU design continuum reaches the adjacent conclusion from the die-area side---that either corner can be provisioned to do the other's job~\cite{dhm-cacm,dhm-long}.
+
+\section{What the conference says about openness}
+
+Two results, both about interfaces rather than about licences, and both cutting the way Chapter~\ref{ch:compute} predicts.
+
+\emph{Ethernet took the scale-up domain everywhere except NVIDIA.} Among the parts presented with an off-package scale-up fabric, the Ethernet-class designs are the clear majority: AMD constructs a 72-GPU load/store domain out of UALink-over-Ethernet on merchant 512-port 200G switch ASICs, deleting the scale-up NIC from the tray; Microsoft runs one Ethernet protocol from the chip to a 6{,}144-accelerator two-tier Clos, with a slide titled ``Why Unified?'' listing a standard switch ecosystem as the reason; SambaNova uses ten integrated 800G ports per socket into two merchant switches; Meta uses RoCE on dedicated I/O chiplets; and OpenAI's 2{,}048-chip pod runs over a Broadcom Tomahawk~6 Clos. Google's optically switched torus is proprietary but is not sold to anyone, which leaves NVIDIA's NVLink as the only proprietary scale-up fabric a third party can buy~\cite{hc2026-scaleup,hc2026-jalapeno,hc2026-tpu8}. The layer that was supposed to be the incumbent's deepest moat has been commoditized by its own customers, using parts anybody can buy---which is the mechanism of Chapter~\ref{ch:playbook}'s move~M6 executed by Western hyperscalers against a Western incumbent, and worth noting for a book that otherwise attributes that move to Chinese industrial policy.
+
+\emph{The Ultra Ethernet Consortium standardized the mechanism set and lost the wire format.} Every mechanism the UEC argued for shipped in production silicon in 2026---packet spraying, out-of-order placement with in-order delivery, selective retransmission, receiver-driven credit congestion control, packet trimming, programmable transport---but shipped as \emph{RoCEv2 extensions}. Broadcom brands its transport eRoCE and describes it as ``MRC++,'' preserving the verbs ecosystem so that xCCL, NCCL, RCCL and MPI run unmodified: ``the ecosystem cost is zero.'' Neither Broadcom's nor NVIDIA's deck presents a UET transport or a libfabric stack, and NVIDIA's networking deck does not mention the consortium at all~\cite{hc2026-uec}. The lesson generalizes past networking and is one this book's governance chapters should hold onto: a standards body can win the argument about \emph{what a protocol should do} and still lose the protocol, because the installed software ecosystem is worth more than protocol purity. Openness that arrives as an extension to the incumbent format is openness that leaves the incumbent's ecosystem in place.
+
+\section{What to watch}
+
+Eight resolving events, in the register idiom of Appendix~\ref{app:dashboard}: each is falsifiable, each has a venue, and each is dated where a date exists.
+
+\begin{enumerate}
+  \item \textbf{Per-stack bandwidth appears in bills of materials.} Watch for a procurement document, datasheet or hyperscaler disclosure specifying HBM4 or HBM4E in TB/s per stack rather than by generation name. If through 2027 the merchant part is still quoted only by generation, the $1.5\times$ spread of Section~\ref{sec:hbm4-spread} has become a permanent feature of the market rather than a transitional artefact.
+  \item \textbf{A custom-HBM (cHBM) part ships to a buyer without its own silicon team.} cHBM is the customer-specific 4\,nm logic base die, not the interposer-free stacking of the next item. If through 2028 every co-designed logic base die belongs to a company that designs accelerators, the merchant/co-design bifurcation is established and merchant buyers---national laboratories included---are structurally on the slower branch. Resolves on vendor announcements and teardowns.
+  \item \textbf{zHBM reaches silicon rather than a roadmap slide.} Samsung's phase three claims a 70\% reduction in I/O energy and 230\% of HBM4E bandwidth by deleting the interposer~\cite{hc2026-chbm}. Watch for a taped-out part. Absent by end-2029, treat the three-phase roadmap as a phase-one product with two phases of marketing.
+  \item \textbf{A published HBM-in-package yield figure.} No vendor printed one in 2026, and the assembly-order inversion means an HBM defect now scraps the whole system-in-package. The first vendor to publish a scrap rate at 16-high settles whether Eq.~\eqref{eq:pkgyield} is a cost problem or a capacity crisis; continued silence past 2028 is itself evidence about the number.
+  \item \textbf{The FP64 pair resolves by end-2027.} Whether AMD's MI430X ships at its stated 288\,TFLOPS in early 2027, and whether NVIDIA's ${\sim}200$\,TFLOPS emulated rate is independently reproduced against a published accuracy standard. Together they decide whether double precision is a product line or a software library.
+  \item \textbf{A custom accelerator submits to a neutral benchmark.} MLPerf Inference runs twice yearly. If by end-2028 none of Maia, MTIA, Jalape\~no or TPU~8i has appeared in a neutral round, the disclosure collapse documented above is structural rather than transitional, and third-party evaluation of the custom-ASIC fleet becomes impossible in principle rather than merely absent.
+  \item \textbf{A RISC-V matrix extension is ratified.} Three competing task groups (IME, VME, AME) carry targets spanning August 2026 to April 2027~\cite{hc2026-riscv-profiles}. Ratification of one, with a shipping core behind it, is the event that converts the open ISA from a host processor into an accelerator ISA; a fourth proposal appearing instead is the falsifier.
+  \item \textbf{A Chinese part is presented, or measured.} No Chinese chip was named at Hot Chips 2026 and no Chinese vendor presented, while nine decks benchmarked Chinese weights~\cite{hc2026-china-bench}. The first Huawei, Cambricon or Biren deck at a Western architecture conference---or a Chinese-hosted equivalent that Western vendors attend and publish at---is a datable event with strategic content in either direction, and its continued absence past 2028 is evidence that the two silicon ecosystems have stopped reading each other's papers.
+\end{enumerate}
+
+One further item belongs on the list without a clean resolving event, because it bears on the fastest-moving claim in this book. Only two of the conference's decks claimed AI inside the silicon design flow, and both came from companies that design accelerators for their own frontier models: Google reported an ``AI Designer'' taking specification to RTL on O(100) TPUs in about a week and an ``AI Optimizer'' yielding a 6\% power and 5.8\% area reduction on the TPU~8t matrix unit; OpenAI reported block-level wins against an optimized human baseline, and separately an internal agent driving a DeepSeek MLA kernel from 0.31\% to 88.94\% of roofline in about forty hours. Neither reports full-chip power--performance--area, bug escapes or schedule saving against a baseline, and \emph{nobody claimed AI-driven verification}, which is where most of a chip program's cost sits~\cite{hc2026-ai-design}. The bring-up-software result is the one to watch: the historical reason a novel accelerator fails is that nobody can write fast kernels for it in time, and an agent that removes that barrier removes the strongest structural argument for why a Chinese accelerator ecosystem cannot converge quickly. Two decks are not a trend, and the absence of a verification claim is the reason to hold the inference loosely [A].

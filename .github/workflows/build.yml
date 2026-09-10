@@ -1,54 +1,25 @@
-name: Build the book
-
+name: build
 on:
   push:
     branches: [main]
-    paths:
-      - '**.tex'
-      - 'Makefile'
-      - '.github/workflows/build.yml'
+    tags: ['v*']
   pull_request:
-    paths:
-      - '**.tex'
-  workflow_dispatch:
-
-permissions:
-  contents: write
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - name: Install TeX Live
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends \
-            texlive-latex-base texlive-latex-recommended texlive-latex-extra \
-            texlive-fonts-recommended texlive-fonts-extra texlive-pictures \
-            texlive-science make
-
-      - name: Compile both editions (three passes each)
-        run: make
-
-      - name: Verify cross-references resolve
-        run: make check check-condensed
-
-      - name: Report page counts
-        run: |
-          sudo apt-get install -y poppler-utils
-          echo "full:";      pdfinfo main.pdf | grep Pages
-          echo "condensed:"; pdfinfo condensed/main.pdf | grep Pages
-
-      - name: Upload the built PDF
-        uses: actions/upload-artifact@v4
+        run: sudo apt-get update && sudo apt-get install -y texlive-latex-extra texlive-fonts-recommended texlive-science texlive-pictures lmodern
+      - name: Build both editions
+        run: make all
+      - name: Check references
+        run: make check && make check-condensed
+      - uses: actions/upload-artifact@v4
         with:
-          name: book-pdfs
-          path: How-China-Will-Win-the-AI-War-*.pdf
-          if-no-files-found: error
-
-      # On a tagged release, attach both PDFs so every version is downloadable.
+          name: pdfs
+          path: |
+            How-China-Will-Win-the-AI-War-*.pdf
       - name: Attach to release
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2

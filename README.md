@@ -4,7 +4,7 @@
 
 **Satoshi Matsuoka** — Director, RIKEN Center for Computational Science (R-CCS); Professor, Institute of Science Tokyo
 
-**Current edition: v0.20.2 — 18 August 2026** · [Full edition (PDF)](How-China-Will-Win-the-AI-War-v0.20.2.pdf) · 295 pages · [Condensed edition (PDF)](How-China-Will-Win-the-AI-War-Condensed-v0.20.2.pdf) · 49 pages
+**Current edition: v0.23 — 9 September 2026** · [What changed](CHANGELOG.md) · [Full edition (PDF)](How-China-Will-Win-the-AI-War-v0.23.pdf) · 390 pages · [Condensed edition (PDF)](How-China-Will-Win-the-AI-War-Condensed-v0.23.pdf) · 56 pages
 
 ---
 
@@ -20,15 +20,19 @@ The book is deliberately falsifiable. Four load-bearing propositions are stated 
 
 The **full edition** is the authoritative record: every claim cited to its source, graded, and carried in the evidence ledger, claim register, and quarterly dashboard.
 
-The **condensed edition** (`condensed/`, under fifty pages) is for readers who want the shape of the argument rather than the layers: what is being claimed, why, what would prove it wrong, and what it means for a government, laboratory, or company that is neither in Washington nor in Beijing. Part I's precedent campaigns are summarized in a single chapter; the weight is shifted toward the overall strategy and its international consequences. Nothing in it is new — every number, grade, and forecast is drawn from the full edition of the same version and date; it carries a selective reference list (entries copied in full, URLs included, from the full bibliography), a short glossary, and pointers into the full edition marked *[full edition, Ch. n]* throughout.
+The **condensed edition** (`condensed/`, fifty pages) is for readers who want the shape of the argument rather than the layers: what is being claimed, why, what would prove it wrong, and what it means for a government, laboratory, or company that is neither in Washington nor in Beijing. Part I's precedent campaigns are summarized in a single chapter; the weight is shifted toward the overall strategy and its international consequences. Nothing in it is new — every number, grade, and forecast is drawn from the full edition of the same version and date; it carries a selective reference list (every cited source with its full URL, drawn from the full bibliography), a short glossary, and pointers into the full edition marked *[full edition, Ch. n]* throughout.
 
 ## Structure
 
-**Part I — The Precedents.** How the solar, battery, and EV wars were actually fought and won, the playbook abstracted from them, and — in a chapter of equal weight — the campaigns where the same playbook has *not* worked: commercial aircraft, lithography, machine tools, operating systems, biotechnology.
+**Part I — The Precedents.** How the solar, battery, and EV wars were actually fought and won; the telecommunications campaign in lesser detail, as the precedent closest in structure to an exported AI stack and the one whose central instrument — sovereign vendor credit — AI has not yet reproduced; the playbook abstracted from them; and — in a chapter of equal weight — the campaigns where the same playbook has *not* worked: commercial aircraft, lithography, machine tools, operating systems, biotechnology.
 
-**Part II — The Elements of AI.** Opens with a chapter that states the strategy in whole — each element placed on the playbook of Part I and the campaign scored against it — and then analyses the model, the compute, the semiconductor, the watt, the data, and embodied AI separately before recombining them.
+**Part II — The Elements of AI.** Opens with a chapter that states the strategy in whole — each element placed on the playbook of Part I and the campaign scored against it — then analyses the model, the harness, the compute, the semiconductor, the watt, the data, and embodied AI separately, and closes with **The Mirror**: the finding that over 2026 the largest Western firms converged on the same method, each commoditizing a layer it does not own to defend the layer it does. The accelerator vendor gives away models with their training data and underwrites the buildout; the model laboratories and hyperscalers design the accelerators; the scale-up fabric is rebuilt from merchant Ethernet; a launch company is building a fab. The strategy is no longer Chinese, and what remains asymmetric is scope.
 
-**Part III — The Consequences.** Trust and agentic security, governance, the financial exposure of the incumbents, national strategies, how much compute a nation's science actually needs, and the international institution the analysis keeps arriving at.
+**Part III — The Consequences.** Trust and agentic security, governance, the financial exposure of the incumbents, how the non-aligned majority of the world chooses, and the strategies available to every actor class.
+
+**Part IV — AI for Science: The Largest Prize.** Why AI for science dominates the value case; **China's Scientific Machine**, which reads the Chinese policy record precisely and finds a programme organized around infrastructure and industrial delivery rather than around discovery; how much compute a nation's science actually needs; and the international institution the analysis keeps arriving at.
+
+**Part V — Synthesis and Summary.** The convergence argument assembled, then the whole book in short form with its odds and its falsifiers attached.
 
 ## Reading apparatus
 
@@ -39,7 +43,7 @@ The **condensed edition** (`condensed/`, under fifty pages) is for readers who w
 | Claim register CR-01–CR-12 | Machine-readable, with a next verification event per claim |
 | Currency date | Every fact in the stable chapters is current as of the edition date on the title page — the cutoff *is* the edition date, so it cannot contradict the book |
 | Notation glossary | Front matter; a strict suffix discipline means no bare single letter carries two meanings |
-| Technical dossiers | Appendix A (the LPDDR6X socket) and Appendix B (High Bandwidth Flash: lineage, announcement record, the OCP specification and its omissions, power, endurance, cost structure, the debate, the literature) — every load-bearing hardware assumption in Chapter 10 checked against the primary record |
+| Technical dossiers | Appendix A (the LPDDR6X socket), Appendix B (High Bandwidth Flash: lineage, announcement record, the OCP specification and its omissions, power, endurance, cost structure, the debate, the literature), and Appendix C (the Hot Chips 2026 ledger: the datacentre CPUs and accelerators as presented, the four schools of thought for beating the GPU, the bifurcation of FP64, and what the collapse of disclosure means for comparative analysis) — every load-bearing hardware assumption checked against the primary record |
 
 ## Data
 
@@ -75,12 +79,16 @@ Every push to `main` rebuilds both PDFs via GitHub Actions, so the committed sou
   author    = {Matsuoka, Satoshi},
   title     = {How China Will Win the AI War: The Convergence Strategy---A Structural Path to AI Dominance},
   year      = {2026},
-  note      = {Living book, v0.20.2, 18 August 2026},
+  note      = {Living book, v0.22, 9 September 2026},
   url       = {https://github.com/matsutitech3/China-AI-War}
 }
 ```
 
 See [`CITATION.cff`](CITATION.cff) for the machine-readable form.
+
+## Release history
+
+`CHANGELOG.md` records what changed at each release, newest first, with the corrections applied at each one. Every release is tagged; the tag message carries the same summary.
 
 ## Corrections
 

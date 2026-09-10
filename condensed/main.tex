@@ -36,6 +36,7 @@
 \usepackage[hidelinks,breaklinks]{hyperref}
 \usepackage{xurl}
 \usepackage{xcolor}
+\usepackage{xspace}
 
 % Same figure palette as the full edition.
 \definecolor{sOne}{HTML}{2A78D6}
@@ -70,13 +71,22 @@
   },
 }
 
+% Float placement: this edition runs chapters on, and the default parameters
+% strand a tall figure on a page of its own. Let text share the page.
+\renewcommand{\topfraction}{0.92}
+\renewcommand{\bottomfraction}{0.70}
+\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.88}
+\setcounter{topnumber}{3}
+\setcounter{totalnumber}{4}
+
 \sisetup{group-separator={,}, group-minimum-digits=4}
 \urlstyle{same}
 \Urlmuskip=0mu plus 2mu
 
 % Version stamp: kept identical to the full edition it condenses.
-\newcommand{\bookversion}{v0.20.2 --- 18 August 2026}
-\newcommand{\datafreeze}{18 August 2026}
+\newcommand{\bookversion}{v0.23 --- 9 September 2026}
+\newcommand{\datafreeze}{9 September 2026\xspace}
 
 % Pointer to the full edition, by chapter number of the same version.
 \newcommand{\full}[1]{{\small\color{inkSec}[full edition, Ch.~#1]}}
@@ -118,12 +128,15 @@
 \input{chapters/c02-precedents}
 \input{chapters/c035-assembled}
 \input{chapters/c03-elements}
+\input{chapters/c035-mirror}
 \input{chapters/c04-trust}
 \input{chapters/c05-trade}
 \input{chapters/c06-world}
 \input{chapters/c065-strategies}
 \input{chapters/c07-science}
+\input{chapters/c07b-china-ai4s}
 \input{chapters/c08-convergence}
+\input{chapters/c09-summary}
 
 \clearpage
 \appendix

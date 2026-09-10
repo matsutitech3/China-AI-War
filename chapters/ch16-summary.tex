@@ -1,0 +1,106 @@
+\chapter{The Argument in Summary}
+\label{ch:summary}
+
+This chapter is the book in short form. It exists because a reader who has followed twenty-eight chapters is entitled to see the argument assembled in one place with its odds attached, and because a reader who has not is entitled to know what the book concludes before deciding whether to read it. It repeats nothing that has not been argued elsewhere, and it adds one thing the preceding chapters deliberately withhold: a single statement of where the author thinks the balance of evidence now sits, with the specific observations that would move it.
+
+Chapter~\ref{ch:assembled} placed the elements on the playbook before the evidence was presented; this chapter states what the evidence did to that map. The two should be read as a pair, and where they disagree, this one is later.
+
+\section{The question, and the answer in one page}
+\label{sec:summary-answer}
+
+The question is not whether China can build a better model than the United States. That question is nearly settled and it was the wrong question: the measured capability gap at the top is a few points on an independent index, it has been a few points for over a year---three on the launch-week board of August 2026, widening to eight when Artificial Analysis re-based its index on 7~September (v4.3) and weighted the agentic tail more heavily~\cite{aa-v43}---and nothing about the contest turns on which side holds those points in a given quarter, though the direction of the re-basing is a reminder of where the closed lead lives.
+
+The question is where the \emph{rent} lands when intelligence becomes cheap---because a technology contest is decided by who owns the layer that stays scarce after the technology has diffused, and every one of this book's three precedent campaigns was won that way rather than by building the better artifact. Solar, batteries and electric vehicles were not won by a superior cell, pack or car. They were won by making the artifact a commodity and owning what the commodity had to be made from.
+
+The answer this book reaches is in three parts.
+
+\textbf{First, the strategy is real, coherent, and further along than a layer-by-layer reading suggests.} Every one of the playbook's nine moves can be found in the AI campaign in a recognizable form and at a recognizable stage (Chapter~\ref{ch:assembled}). Open weights at marginal price, an open harness, an open instruction set, open interconnect and framework specifications, state-arranged demand, subsidized overcapacity, Darwinian domestic selection, and an energy position that converts a grid surplus into cheap tokens---all of these are documented, dated and graded in Part~II. The campaign is not a plan on paper; it is an execution in progress.
+
+\textbf{Second, and this is the finding that most changed the book, the method is no longer Chinese.} Over 2026 the largest Western firms converged on the same instrument, each commoditizing a layer it does not own in order to defend the layer it does (Chapter~\ref{ch:mirror}). The accelerator vendor gives away model weights with their training data, and has now bought the training platform and the researchers who make them. The model laboratories design accelerators. The hyperscalers rebuilt the scale-up fabric out of merchant Ethernet. A launch company is building a fab. This strengthens Part~I considerably---a playbook that predicts the behaviour of actors it was not derived from is doing more work than one that does not---and it complicates every score in Part~II, because a layer being commoditized by two parties at once tells you less about either of them.
+
+\textbf{Third, the outcome is not settled, and the book's own thesis is the claim most at risk from its own findings.} If every layer is cheap, the surplus accrues to whoever holds the layer that stays scarce; and at the currency date the scarce layers---the installed programming model, the enterprise deployment surface, the trust and certification apparatus, deployment-generated data---are still mostly Western-held. A West that commoditizes competently captures the surplus of a cheap-intelligence world as surely as a China that does. The honest statement of the book's position is therefore conditional: China is executing the strategy that has won three technology wars, it is executing it well, and whether that wins a fourth depends on where the rent lands, which is not yet observable.
+
+\section{The four propositions, and where they now stand}
+\label{sec:summary-props}
+
+Table~\ref{tab:summary-props} restates the four load-bearing propositions of Section~\ref{sec:propositions} with the status the evidence supports at \datafreeze. The probabilities are the author's, they are scenario judgments [S] rather than measurements, and they are stated so that they can be scored against later rather than defended now.
+
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{The four propositions at \datafreeze. ``Status'' is the grade the evidence supports; the probability is the author's subjective judgment [S] and is entered in the register of Appendix~\ref{app:dashboard}.}
+\label{tab:summary-props}
+\begin{tabular}{@{}p{9mm}p{40mm}p{55mm}p{28mm}@{}}
+\toprule
+& \textbf{Claim} & \textbf{Where the evidence stands} & \textbf{Status} \\
+\midrule
+P1 & Open weights become the global default for deployed intelligence & Majority of routed tokens; a self-enforcing ratchet that survived a Western re-entry; the gap at the top a few index points (eight on the re-based v4.3 index); enterprise \emph{spend} share still falling while usage rises & Distribution done; monetization contested \\
+\addlinespace
+P2 & China builds a sovereign, capacity-first compute stack sufficient to serve it & Open ISA qualified as a CUDA host; a GPU-free machine at No.~1 on both HPL and HPCG; production-scale serving on a domestic cluster; HBM still the binding constraint, and the end-to-end training test not passed & Trending; integration test outstanding \\
+\addlinespace
+P3 & The rent financing the Western frontier is destroyed or relocated & Mechanism now overdetermined---the incumbent supplier funds open weights itself---but the incumbent's own data-centre revenue grew 117\% in the quarter this edition closes in, and its cheapest tier undercut the commodity and took share & Mechanism operating; magnitude contested \\
+\addlinespace
+P4 & The resulting position converts into durable strategic advantage & Endgame begun on consolidation, not on gatekeeping; the scarce layers are still mostly Western-held; deployment-generated data and trust unresolved & Pending; least evidenced \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The coupling matters more than any single row. P1 without P2 is adoption without a hardware base to serve it, which the precedents say decays. P2 without P1 is a sovereign stack with nothing running on it. P3 without P4 is a price war that destroys a rent pool and hands it to nobody---which, as Chapter~\ref{ch:mirror} argues, is a live possibility rather than a rhetorical one, because the two sides are now destroying each other's rents simultaneously. P4 is the proposition on which the book's title depends and the one with the least evidence behind it, and a reader who wants to know where to attack the argument should start there.
+
+\section{What would change the answer}
+\label{sec:summary-falsifiers}
+
+The book's discipline is that every claim states what would falsify it. The eight observations below would move the author's position more than anything else that could plausibly occur before the end of 2027, and each is entered in the register of Appendix~\ref{app:dashboard}.
+
+\begin{enumerate}
+\item \textbf{A frontier-class model trained end to end on domestic silicon, packaging and memory.} The single integration test that moves P2 from ``trending'' to ``done.'' Production-scale \emph{serving} on a domestic cluster has now been claimed; training has not been demonstrated to an auditable standard, and the distinction is the whole of the remaining gap.
+\item \textbf{Merchant-GPU data-centre revenue growth decelerating while merchant custom-ASIC revenue holds its guided trajectory.} Confirms the silicon-commoditization pincer of Chapter~\ref{ch:mirror}. The contrary observation---custom accelerators continuing to converge onto the incumbent's interconnect and memory, as one already has---confirms absorption instead, and absorption currently has the better of the evidence.
+\item \textbf{A sustained fall in closed-frontier gross margin, disclosed.} P3's transmission observed on the line that matters. One price cut to a cheapest tier, with the flagship held and the counterparty raising prices in the same fortnight, is not that.
+\item \textbf{Enterprise open-weight \emph{spend} share turning upward.} The strongest single piece of evidence against P1's monetization leg is that the spend share fell during the period capability reached parity. If it turns, the deployment-layer objection weakens sharply.
+\item \textbf{A ratified matrix extension for the open instruction set, and a coherent chip-to-chip standard to go with it.} Four competing matrix proposals and no ratified coherence interface are the two gaps that keep the open ISA a host rather than an accelerator architecture.
+\item \textbf{Gatekeeping exercised on any AI layer.} The endgame move that has a template in batteries and rare earths and has not yet been used here. Its use would settle P4 quickly and in one direction.
+\item \textbf{A called guarantee, or a disorderly repricing of compute residuals.} The exposure catalogued in Chapter~\ref{ch:trade} is disclosed, large and growing; whether it is sound is not yet demonstrated either way, and the first call would be the test.
+\item \textbf{An audited instance of a research loop closing---a model materially accelerating the science that produces its successor, or the silicon that runs it.} This is the observation that would make the recursive-improvement counter-thesis of Section~\ref{sec:rsi-branch} decisive against everything else in this book, and it is the falsifier the author takes most seriously.
+\end{enumerate}
+
+\section{What to do about it}
+\label{sec:summary-actions}
+
+Chapter~\ref{ch:strategies} argues the cases; Table~\ref{tab:summary-actions} states the instructions. The common instruction beneath all of them is the one the precedent campaigns teach and the mirror confirms: \emph{commoditize the layer you do not own before somebody commoditizes the layer you do}, and know which layer you are actually defending before you choose an instrument.
+
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{The instruction by actor class, in one line each. The full argument for each is in Chapter~\ref{ch:strategies}; the buyer's decision problem is in Chapter~\ref{ch:nonaligned}.}
+\label{tab:summary-actions}
+\begin{tabular}{@{}p{28mm}p{118mm}@{}}
+\toprule
+\textbf{Actor} & \textbf{Instruction} \\
+\midrule
+United States & Choose between the two instruments that are aimed at the same object from opposite sides. A denial policy whose effectiveness depends on the conduct of firms the government does not control is not a strategy; decide whether the commoditization or the chokepoint is the policy, and stop paying for both. \\
+\addlinespace
+Europe & Regulation is not production. The asset neither commons supplies is independent evaluation and certification, and it is the one Europe is institutionally best placed to build. \\
+\addlinespace
+Japan and the middle powers & Take from both commons, depend on neither, and treat the commoditization of the scale-up fabric onto merchant parts as a dated procurement opportunity rather than a research horizon. \\
+\addlinespace
+The Global South & The buyers write the ending. Adopt the commons---now plural---and audit the \emph{provenance} of the openness, not only the licence: who funds it, which layer they earn on, and whether the distribution channel is independent of both. \\
+\addlinespace
+Scientific institutions & The largest prize is the one with the weakest constituency. Build the measurement first: nobody publishes useful work per unit of compute, and until somebody does, every claim about scientific return is unfalsifiable. \\
+\addlinespace
+China & The principal move is now being run against you. If the model layer is commoditized competently from the other side, the durable edge reallocates to energy, deployment-generated data, physical production and the domestic silicon floor---which is where it should have been planned to land in any case. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{What this book is not claiming}
+\label{sec:summary-limits}
+
+Four disclaimers, stated at the end rather than buried, because a book with a title like this one attracts readings it does not support.
+
+It is not claiming that China has won, or that victory is inevitable. It is claiming that a recognizable strategy is being executed competently against a stack whose rent layers are being dismantled from both sides, and that the outcome turns on an ownership question that is not yet observable.
+
+It is not claiming that the West is passive or incompetent. The evidence of 2026 is the opposite: the incumbent priced underneath the commodity at the bottom of its ladder and took share doing it, grew data-centre revenue 117\% in the quarter this edition closes in, and is executing the same commoditization strategy with more capital behind it than any Chinese actor commands.
+
+It is not claiming that openness is a Chinese property or a Chinese virtue. Openness is an instrument, it is available to anyone with an adjacent layer to defend, and the largest single act of open-model funding in the period this book covers was American.
+
+And it is not claiming more confidence than the evidence carries. The load-bearing weaknesses are stated in Appendix~\ref{app:evidence} and repeated here without softening: several mid-2026 details rest on secondary aggregators; the capacity-first architecture at the centre of Part~II is a modeled design with no measured realization; the national compute sizing is measurement-anchored for one country only; and the architectural judgment that breadth compounds faster than depth is a judgment rather than a measurement, and is the claim most likely to be shown wrong.
+
+The book is a living document. The register in Appendix~\ref{app:dashboard} exists so that it can be scored rather than believed, and the fastest way to change its conclusions is to falsify an entry in it.
