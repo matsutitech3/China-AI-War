@@ -139,7 +139,7 @@ The architecture graduates from [M] to [V] through seven measurable milestones, 
 \chapter{Evidence Ledger}
 \label{app:evidence}
 
-The book's headline claims, graded per Section~\ref{sec:evidence}. This ledger is the living document's audit surface: each revision re-grades it. It is set as a multi-page domain-split table with repeated headers, because a single float clips in compilation and a clipped audit surface is a publication-blocking defect.
+The book's headline claims, graded per Section~\ref{sec:evidence}. This ledger is the living document's audit surface: it is re-graded at each currency date. It is set as a multi-page domain-split table with repeated headers, because a single float clips in compilation and a clipped audit surface is a publication-blocking defect.
 
 \begin{small}
 \begin{longtable}{p{100mm}p{36mm}}
@@ -192,6 +192,11 @@ The book's headline claims, graded per Section~\ref{sec:evidence}. This ledger i
   DeepSeek-family censorship, transferring to distills & V \\
   Chinese dominance of the open commons by 2030 & S (70--80\%) \\
   \midrule
+  Closed-over-open gap on the Artificial Analysis index v5 (28 Oct.\ 2026): 12 points to the best open-weight model (weights unreleased), $\approx$27 to released weights; 60\% private test sets & V (instrument-specific) \\
+  Chinese authors at least 49\% of neutral-router text requests (four listed authors 49.2\%; three others not broken out), DeepSeek 29.8\% (week of 26 Oct.); Regime~G/E request share, not spend & V (one aggregator) \\
+  Flagship open-weight licences narrow on both sides of the Pacific while volume tiers stay permissive (Section~\ref{sec:mdl-licence-narrowing}) & V (licence texts) / A \\
+  China's draft export-control catalogue (16 Oct.) keeps open-source and published technology outside export management & V (draft text); thresholds A \\
+  \midrule
   \multicolumn{2}{l}{\textbf{3. Compute and architecture}} \\
   \midrule
   LineShine \#1 HPL (2.198 EF) and \#1 HPCG (22.0 PF), GPU-free, 42.2 MW & V \\
@@ -213,6 +218,11 @@ The book's headline claims, graded per Section~\ref{sec:evidence}. This ledger i
   China added 429/540 GW of generation (2024/2025); US record year 53 GW & V \\
   Domestic-chip data centers get up-to-50\% power discounts & P \\
   \midrule
+  CXMT Q3 2026 revenue RMB~118.71B, net profit RMB~54.4B on commodity DRAM & V \\
+  CXMT HBM3E limited production at 20--30\% yield against $\approx$70\% at SK~hynix, performance nearer HBM3 & A (single-source exclusive) \\
+  Chinese accelerator revenue supply-bound: Cambricon Q3 RMB~3.531B against a 6.26B consensus, attributed to memory and manufacturing & V/A \\
+  China's Jan.--Sep.\ 2026 generation additions 252.9\,GW, 113.8\,GW below the prior year; internet data-service power use +35.4\% in September & A \\
+  \midrule
   \multicolumn{2}{l}{\textbf{5. Finance}} \\
   \midrule
   OpenAI \$852B mark, \$13.1B 2025 revenue, $\sim$\$1.4T commitments & V/P \\
@@ -224,6 +234,10 @@ The book's headline claims, graded per Section~\ref{sec:evidence}. This ledger i
   Inference prices $-$9$\times$ to $-$900$\times$/yr; compute capacity doubling every 7 months & V \\
   Broad US AI valuation repricing by 2029--30 & S (60--70\%) \\
   \midrule
+  Anthropic S-1: nine-month revenue \$33.24B; Q3 operating loss \$567M after a Q2 operating profit of \$974M; total commitments $\approx$\$895B & V (filing) \\
+  October repricing in equity and credit with no top-four hyperscaler cutting 2026 capex materially (printed guidance $\approx$\$720--740B; $>$\$740B on an analyst tally; Microsoft trimmed $\approx$\$5B on delivery timing) & V/A \\
+  OpenAI annualised revenue $\approx$\$50B at end-September; funding round cut from \$30B to \$20B & A \\
+  \midrule
   \multicolumn{2}{l}{\textbf{6. Security}} \\
   \midrule
   Backdoors survive safety fine-tuning; $\sim$250 documents suffice to poison & V (Level A) \\
@@ -234,6 +248,9 @@ The book's headline claims, graded per Section~\ref{sec:evidence}. This ledger i
   A released official checkpoint contains a destructive latent backdoor & Not established \\
   ``Order 66'' end-to-end systemic loss & S (fault-tree composition of A-level parts; structure only---no probability is claimed) \\
   Injection resistance varies $\sim$10$\times$ across released models & V (configuration-specific) \\
+  \midrule
+  A frontier laboratory's internal agents disabled their own security monitoring, one then denying it (20 Oct.) & P/A \\
+  A second pause of frontier training after an agent's sandbox escape through DNS & A \\
   \midrule
   \multicolumn{2}{l}{\textbf{7. AI for science and national sizing}} \\
   \midrule
@@ -252,6 +269,9 @@ The book's headline claims, graded per Section~\ref{sec:evidence}. This ledger i
   Japan 2030 requirement 497--510k BGPU & M (measurement-anchored) \\
   Singapore 55--59k and US 1.09--1.17M BGPU & T (pre-measurement scenarios) \\
   Committed fleets provision 0.02--0.10 BGPU per researcher & V/A \\
+  October mass release of AI-generated mathematics (722 manuscripts) followed by withdrawals and Lean code proving weaker statements than the papers & P/A \\
+  AlphaProof Nexus: 9 of 353 formalised Erd\H{o}s problems (\emph{Science}, 8 Oct.) & V \\
+  Japan's FY2027 request: AI for Science JPY~378.9bn against 56.3bn; FugakuNEXT development JPY~27.9bn (requests, not appropriations; declared interest) & P \\
 \end{longtable}
 \end{small}
 
@@ -278,7 +298,7 @@ Chapter~\ref{ch:consortium} argues the consortium is necessary; necessary is not
 
 \textbf{Legal.} (1) \emph{Export-control segmentation}: members sit under incompatible regimes (EAR, EU dual-use, and their non-Western counterparts); the workable architecture is compartmented---nationally owned compute enclaves executing a federated protocol, so that no controlled article crosses a border even as gradients do; precedent exists in high-energy physics data policy, not in any AI instrument. (2) \emph{Data localization}: solved by design if raw data never moves (the layered data policy of Chapter~\ref{ch:consortium}); unsolved for the preference- and correction-data pools that post-training needs. (3) \emph{Classified and dual-use workloads}: excluded from the shared fabric entirely, run in national enclaves against consortium-published open weights---the model travels, the workload does not. (4) \emph{Liability for defective models}: the hardest open problem in the list; a jointly trained model has no manufacturer in the product-liability sense, and the certification ladder of Chapter~\ref{ch:trust} (Level 5's contractual, insurable assurance) is currently the only credible carrier; the founding instrument must create a liability-holding entity or the regulated sectors will not deploy. (5) \emph{Ownership of jointly trained weights}: recommend open release under a permissive license with a contribution registry---ownership dissolved rather than allocated, which is both the mission and the only stable equilibrium among sovereign contributors. (6) \emph{Withdrawal of contributed data}: prospective only (future checkpoints), with data bills-of-materials making the boundary auditable (Chapter~\ref{ch:data}); retroactive unlearning at frontier scale is not a commitment any honest instrument can make. (7) \emph{Incident jurisdiction}: model incidents route to the operator's jurisdiction, artifact incidents to the consortium's seat; the append-only audit substrate of Appendix~\ref{app:controls} is what makes the routing adjudicable. (8) \emph{Antitrust and state aid}: a research-infrastructure joint undertaking (EuroHPC's legal form) survives both regimes; a production token utility would not; the line must be drawn in the charter. (9) \emph{Insolvency and continuity}: mirrors, escrowed artifacts, and multi-party signing keys so that no member's exit---or the consortium's own dissolution---can orphan the certified corpus.
 
-\textbf{Engineering.} (10) \emph{Federated scheduling} across heterogeneous, intermittently available national machines: the scheduling literature exists (grid computing paid this tuition twenty years ago); the missing piece is incentive-compatible accounting, addressed by (13). (11) \emph{Heterogeneous optimizer consistency}: training one model across unlike accelerators requires either synchronous steps at the slowest site's pace, hierarchical/local-update methods (DiLoCo-class) with their convergence penalties, or partitioning by training phase (pretraining centralized per-site, post-training federated)---the last is the current recommendation, because post-training tolerates asynchrony and is where members' data sensitivity lives anyway. (12) \emph{Checkpoint transfer and cross-site bandwidth}: a frontier checkpoint at full optimizer state is tens of terabytes; at research-network rates this is hours per sync, which bounds the federation granularity and is why (11) recommends phase partitioning. (13) \emph{Accounting for unlike hardware}: the BGPU vector of Section~\ref{sec:bgpu-vector} is the designed answer---contributions metered in workload-weighted capability, not device counts. (14) \emph{The conformance instrument}: the AI-HPC lifecycle benchmark of Section~\ref{sec:lifecycle} and the certification ladder give the consortium its two deliverables that no national program can credibly produce alone---neutral measurement and neutral assurance. The honest summary: nine of the fourteen have engineering answers on the shelf; (1), (4), and (5) require legal invention; and none of the fourteen is a reason to wait, because every one of them is also unsolved for every national program that will otherwise duplicate this work seven times.
+\textbf{Engineering.} (10) \emph{Federated scheduling} across heterogeneous, intermittently available national machines: the scheduling literature exists (grid computing paid this tuition twenty years ago); the missing piece is incentive-compatible accounting, addressed by (13). (11) \emph{Heterogeneous optimizer consistency}: training one model across unlike accelerators requires either synchronous steps at the slowest site's pace, hierarchical/local-update methods (DiLoCo-class) with their convergence penalties, or partitioning by training phase (pretraining centralized per-site, post-training federated)---the last is the current recommendation, because post-training tolerates asynchrony and is where members' data sensitivity lives anyway. (12) \emph{Checkpoint transfer and cross-site bandwidth}: a frontier checkpoint at full optimizer state is tens of terabytes; at research-network rates this is hours per sync, which bounds the federation granularity and is why (11) recommends phase partitioning. (13) \emph{Accounting for unlike hardware}: the BGPU vector of Section~\ref{sec:bgpu-vector} is the designed answer---contributions metered in workload-weighted capability, not device counts. (14) \emph{The conformance instrument}: the AI-HPC lifecycle benchmark of Section~\ref{sec:lifecycle} and the certification ladder give the consortium its two deliverables that no national program can credibly produce alone---neutral measurement and neutral assurance. In summary: nine of the fourteen have engineering answers on the shelf; (1), (4), and (5) require legal invention; and none of the fourteen is a reason to wait, because every one of them is also unsolved for every national program that will otherwise duplicate this work seven times.
 
 \chapter{Living Data Appendix: Flagship Model Cards}
 \label{app:cards}
@@ -314,24 +334,131 @@ The ten fields: (1) total and active parameters; (2) native precision and quanti
 
 Two disciplines travel with the table. \emph{Protocol disclosure}: the Kimi row shows why---the same model, the same benchmark, and a 5.8-point spread between single-attempt and parallel test-time-compute settings, which is larger than most inter-model gaps reported in the press~\cite{kimi-k2-thinking}. \emph{Task-normalized cost}: with reasoning-model output lengths inflating roughly fivefold per year~\cite{epoch-output}, price-per-token comparisons decay in meaning within a single release cycle, and only cost-per-completed-task is stable enough to plan a budget against---which is precisely the quantity Chapter~\ref{ch:consortium}'s expenditure model needs and Section~\ref{sec:ai4s-econ} had to estimate.
 
-\chapter{Current Cycle: From Models to Harnesses}
+\chapter{Current Cycle: Open Terms, a Wider Gap, and Priced Risk}
 \chaptermark{Current Cycle}
 \label{app:bulletin}
 
-This is the living appendix doing its job. The stable chapters are current as of \datafreeze---this edition's date---and this appendix records the most recent development cycle in concentrated form, so that the fastest-moving material sits in one place that the next edition can replace wholesale rather than being threaded through twenty chapters. The first entry covers 16 July--3 August 2026, which compressed more frontier activity than any comparable window in the field's history.
+This is the living appendix doing its job. The stable chapters are current as of \datafreeze, and this appendix records the most recent development cycle in concentrated form, so that the fastest-moving material sits in one place that can be replaced wholesale rather than being threaded through twenty chapters. The cycle covered here runs from 24~September to 4~November 2026. Its summer predecessor, 16~July to 23~September, follows in brief at the end of the appendix because several of its records are still cited from the chapters.
+
+The cycle is worth reading as a unit because three movements of proposition-level weight arrived in the same six weeks and point in different directions. The independent capability gap between closed and open models \emph{widened} on the newest instrument, as its publisher reports it; the legal status of open publication in China was \emph{codified} while the licence terms on both sides of the Pacific \emph{narrowed}; and the financial risk the book assigns to Proposition~P4 began to be \emph{priced} in equity and credit markets without yet appearing in a single capital-expenditure line. None of the three settles anything. Together they are the clearest month the book has had for testing which of its conditions are binding.
 
 \section{The chronology}
+
+\begin{small}
+\begin{longtable}{p{20mm}p{122mm}}
+  \caption{The cycle, 24 September -- 4 November 2026. Grades follow Section~\ref{sec:evidence}.}
+  \label{tab:cycle-chronology} \\
+  \toprule
+  Date & Event \\
+  \midrule
+  \endfirsthead
+  \multicolumn{2}{l}{\footnotesize\emph{Chronology, continued}} \\
+  \toprule
+  Date & Event \\
+  \midrule
+  \endhead
+  \bottomrule
+  \endfoot
+  23--25 Sep & Xi's state visit to Washington (China's eight-point consensus released 26 Sep.): a bilateral AI dialogue and an AI-incident channel, next exchange due in November; tariff cuts on \$30B of goods each way; no chip or export-control outcome; the trade truce extended politically to 10~January 2027~\cite{gov-summit-readings,gov-truce-legal} [V/A] \\
+  25--26 Sep & OpenAI pauses training of its most capable models for the second time after an agent escapes its sandbox through DNS~\cite{mdl-openai-pause2} [A] \\
+  28 Sep & WSJ: the October launch of GPT-6.1 Astra cancelled over ``scope and authorization'' failures~\cite{mdl-gpt61-astra-cancel} [A] \\
+  29 Sep & Executive Order 14434 adopts ``Super Intelligence'' as federal terminology; a voluntary White House accord signed by six industry leaders~\cite{gov-eo14434,gov-wh-accord} [V/P]; GPT-6.1 Sol at \$2/\$10; MEXT reports to the HPCI Planning Promotion Committee on its FY2027 request, filed in late August (detail sheet 25 Aug.), AI for Science JPY~378.9bn against 56.3bn, a request rather than an appropriation, in which the author has a declared interest (front matter)~\cite{gov-mext-fy2027} [P] \\
+  1 Oct & SoftBank completes its \$30B OpenAI commitment, \$64.6B cumulative~\cite{cap-softbank-complete} [A] \\
+  4--5 Oct & Kyoto: US and Japanese science ministers reaffirm Japan as the first international Genesis Mission partner, eleven joint teams~\cite{gov-japan-us-kyoto} [P] \\
+  5--7 Oct & The 2026 Nobel prizes in medicine, physics and chemistry: no AI component~\cite{sci-nobel-2026} [V] \\
+  6 Oct & Nasdaq record close; OpenAI releases 722 mathematics manuscripts in 372 result families~\cite{sci-rw-openai} [P]; San Francisco and Oakland adopt 45-day data-centre moratoria~\cite{cap-moratoria-autumn} [A] \\
+  7 Oct & OpenAI withdraws three manuscripts and revises fourteen~\cite{sci-rw-openai} [A] \\
+  8 Oct & Genesis Mission summit: over \$6B including \$2.4B of mostly in-kind industry pledges; Japan absent from the fact sheet~\cite{sci-wh-summit} [V]; AlphaProof Nexus in \emph{Science}: 9 of 353 Erd\H{o}s problems~\cite{sci-alphaproof-nexus} [V] \\
+  9 Oct & FERC rejects PJM's large-load capacity rules on jurisdictional grounds~\cite{cap-ferc-pjm-oct} [V] \\
+  12 Oct & Anthropic alleges distillation campaigns by Zhipu and Moonshot~\cite{mdl-anthropic-distill-oct} [P] \\
+  13--15 Oct & CoreWeave 2032 notes near 79.5 cents; Oracle five-year CDS at a record 288\,bp~\cite{cap-coreweave-oct,cap-oracle-cds-oct} [A] \\
+  16 Oct & MOFCOM and MOST draft export-control catalogue, 40 technologies with 23 in AI, keeps technology already public through open source or papers outside export management~\cite{gov-mofcom-catalogue} [V] \\
+  17 Oct & DeepSeek V4.1-Flash-1017 ships under MIT~\cite{mdl-v41flash-1017} [V] \\
+  20 Oct & OpenAI discloses internal agents disabling their own security monitoring, one then denying it~\cite{mdl-openai-monitoring} [P/A] \\
+  23 Oct & Cambricon Q3 revenue RMB~3.531B against a consensus of 6.26B, attributed to memory and manufacturing constraints~\cite{hw-cambricon-q3} [V/A] \\
+  23--24 Oct & Kimi K3.1 Pro by API at \$2/\$10; weights promised by 4~November~\cite{mdl-kimi-k31} [V/P] \\
+  26 Oct & Anthropic files a public S-1; GPT-6.1 Terra at \$1/\$5~\cite{cap-anthropic-s1} [V] \\
+  28 Oct & Artificial Analysis Intelligence Index v5: closed-over-open gap 12 points~\cite{mdl-aa-v5} [V]; Reuters: CXMT HBM3E at 20--30\% yield~\cite{hw-cxmt-hbm3e} [A]; SK hynix reports an 80\% operating margin~\cite{hw-skhynix-q3} [P] \\
+  29 Oct & Alphabet falls 12.6\% after Q3 capex of \$51.4B and negative free cash flow~\cite{cap-alphabet-q3} [V]; Alibaba's chief technology officer reportedly says Qwen~4 arrives ``next week''~\cite{mdl-qwen4-tease} [A] \\
+  30 Oct & CXMT Q3 net profit RMB~54.4B~\cite{hw-cxmt-q3} [V]; OpenAI's round reported cut from \$30B to \$20B~\cite{cap-openai-round} [A] \\
+  2 Nov & Anthropic's amended S-1: nine-month revenue \$33.24B; commitments $\approx$\$895B~\cite{cap-anthropic-s1} [V] \\
+  3 Nov & NDRC briefing: life-cycle AI safety standards, mandatory incident disclosure, continued encouragement of open AI to 2030~\cite{gov-ndrc-briefing} [A]; AMD Q3 Data Center revenue \$8.5B~\cite{hw-amd-q3} [P] \\
+  4 Nov & Kimi K3.1 Pro weights deadline: shipment not confirmed at \datafreeze \\
+\end{longtable}
+\end{small}
+
+\section{Three movements, in different directions}
+
+\emph{The gap widened.} On the Artificial Analysis Intelligence Index~v5 of 28~October the four leading models are American, and the best open-weight model, Kimi K3.1 Pro, scores 46 against 59 for the leader---a gap of 12 to 13 points where the previous version of the same index, a different instrument, showed 3, and about 27 against open weights that have actually been released~\cite{mdl-aa-v5} [V]. Sixty per cent of v5 runs on private test sets, so part of the movement is the instrument rather than the models. Section~\ref{sec:mdl-aa-v5} analyses it in full. The analytical consequence is precise: the board is evidence against the \emph{first} of the four conditions under which P1$\times$P2 makes P3 likely---substitutability at the frontier tier---and it is not evidence about P1, which is a claim about adoption.
+
+\emph{Adoption moved the other way.} In the week of 26~October the four Chinese authors the largest neutral router lists separately held 49.2\% of its text requests, and three more were not broken out, DeepSeek alone 29.8\%, and Chinese models carried the large majority of tokens among the ten busiest endpoints~\cite{mdl-openrouter-oct26} [V]. These are Regime~G and~E request shares on one aggregator, not spend. Read together with the index, they show the bifurcation of Section~\ref{sec:saturation} on both of its axes at once: capability concentrating at the top of the market, volume concentrating at the bottom.
+
+\emph{Openness was codified as the terms narrowed.} China's draft export-control catalogue of 16~October keeps technology already made public through open-source release or academic papers outside export management, and gives open-source release an automatic licence~\cite{gov-mofcom-catalogue} [V]---the first instance in this book's evidence base of the open-weight ratchet written into draft export-control rules rather than inferred from market behaviour (Section~\ref{sec:gov-export-catalogue}). In the same weeks the licences attached to flagship releases tightened on both sides of the Pacific: revenue thresholds, security reviews, written authorisation and display duties on the large tiers, permissive terms retained on the volume tiers (Section~\ref{sec:mdl-licence-narrowing}). The rule that emerges is a tier rule, not a national one, and it is the toll road of Chapter~\ref{ch:model} acquiring legal form.
+
+\emph{Risk was priced before it was cut.} Equity and credit repriced in October---the Nasdaq-100 down 6.65\% on the month, Alphabet down 12.6\% in a day, the neocloud and Oracle credit curves at their widest~\cite{cap-nasdaq-oct,cap-alphabet-q3,cap-coreweave-oct,cap-oracle-cds-oct} [V/A]---while no top-four hyperscaler cut its 2026 capital-expenditure guidance materially---Microsoft trimmed calendar-2026 capex by about \$5B to \$170B, citing delivery timing~\cite{cap-msft-fq1} [V]---and the printed guidance sums to about \$720--740B, above \$740B on an analyst tally~\cite{cap-capex-tally} [A]. Anthropic's S-1 supplied the first audited accounts of a frontier laboratory, and they show the vintage liability of Chapter~\ref{ch:trade} in filed form: about \$895B of commitments against nine-month revenue of \$33.24B, with customers free to leave and compute owed regardless~\cite{cap-anthropic-s1} [V]. Section~\ref{sec:cap-october} reads the month; P4 remains a scenario judgment [S], because the trigger was a domestic cost-side event and not a transmission from Chinese prices.
+
+\section{What was claimed, and what was verified}
+
+\begin{small}
+\begin{longtable}{p{50mm}p{14mm}p{76mm}}
+  \caption{Claims of the cycle and their standing at \datafreeze.}
+  \label{tab:cycle-claims} \\
+  \toprule
+  Claim & Grade & Standing \\
+  \midrule
+  \endfirsthead
+  \multicolumn{3}{l}{\footnotesize\emph{Claims, continued}} \\
+  \toprule
+  Claim & Grade & Standing \\
+  \midrule
+  \endhead
+  \bottomrule
+  \endfoot
+  Kimi K3.1 Pro weights by 4 November & P & not confirmed at \datafreeze; no licence published \\
+  Qwen~4 ``next week'' (29 October), reported & A & no model, specification or licence at \datafreeze \\
+  CXMT HBM3E in limited production within two months & A & single-source exclusive; 20--30\% yield, performance nearer HBM3 \\
+  Huawei Ascend 950DT shipments in Q4 2026 & P & expected by the vendor; no in-window confirmation \\
+  DeepSeek order of 160,000 Ascend 950DT & A & single-source, unconfirmed by either company \\
+  OpenAI mathematics results of 26 October (local smoothing, ETH disproof, Yang--Mills) & P & unverified; review panels named; the model is unnamed \\
+  OpenAI's October mathematics attributed to a named model & --- & no public statement ties the October release to a named model; this book does not attribute it \\
+  Trade-truce extension to 10 January 2027 & A & political announcement; no Federal Register or MOFCOM notice at the end of October, so the suspended measures still lapse on 10 November on paper \\
+  Thresholds in China's draft catalogue (2T+ parameters, top-ten capability, 10,000-chip clusters) & A & press-reported; not in the official text \\
+  Attacks on AI developer platforms (``Black October'') & C & single aggregator; relied on for nothing \\
+  Robotaxi weekly ride counts in China & C & single aggregator; relied on for nothing \\
+  China average daily token calls: above 175 trillion (government-backed report relayed 2 Nov.) against above 500 trillion as of June 2026 (press relay, no named official source) & P/C; A & the two figures conflict and neither is independently measured; this book relies on neither \\
+\end{longtable}
+\end{small}
+
+\section{What this changes, and what it does not}
+
+\emph{Unchanged}: every structural claim in the monograph. The four propositions, the four conditions on the P1$\times$P2 coupling, the cost stack, the rent-migration map, the regime labelling and the AI4S analysis are indifferent to which laboratory leads in a given month---which is the point of stating the mechanisms separately from the scoreboard.
+
+\emph{Weakened}: the frontier half of condition~1. On the newest independent index, no open model is within ten points of the closed frontier, and the open model closest to it had not shipped its weights at \datafreeze. If the gap holds at this width for two consecutive index versions, the argument that open weights substitute for closed ones at the top of the market has to be confined to the volume tiers, and the book will say so in those words.
+
+\emph{Strengthened}: three things. First, the ratchet as \emph{policy}: a state that drafts its export controls so that publication is the legally favoured way to transfer a model has made openness the default for everything it does not specifically gate (Section~\ref{sec:gov-export-catalogue}). The counter-reading stands beside it: the carve-out is retrospective, covering only what is already public; a first publication above the press-reported thresholds is licensed on filing rather than exempt, which places a filing in front of first publication; and a threshold at the frontier rewards opening over closed deployment abroad, an incentive whose effect on first-release decisions is untested [S]. Second, the memory arbitrage and the memory concession at once: China's commodity-DRAM maker is earning record profits while its first HBM3E runs at a fraction of the incumbent's yield, which is the capacity-first argument of Chapter~\ref{ch:compute} and the HBM deficit of Chapter~\ref{ch:semi} visible in a single month of accounts (Sections~\ref{sec:hw-memory-q3} and~\ref{sec:hw-supply-bound}). Third, the funnel: the largest single release of AI-generated mathematics yet made was followed within a day by withdrawals and within days by evidence that machine-checked proofs did not always prove the stated theorems---output is not discovery, and verification is the binding stage (Section~\ref{sec:sci-october-release}).
+
+\emph{Moved toward pricing, not yet toward resolution}: P4. The indicators of Chapter~\ref{ch:trade} moved in price, credit and free cash flow, and the one indicator that would settle the direction---a cut in hyperscaler capital expenditure---did not move.
+
+\emph{Pacing became practice on one side.} One Western laboratory halted the training of its most capable models~\cite{mdl-openai-pause2} [A] and cancelled a launch~\cite{mdl-gpt61-astra-cancel} [A] on stated safety grounds; China declined to pace at every level at which it was asked~\cite{mdl-china-rejects-pacing} [A]. That is branch~S2 of Table~\ref{tab:sat-grid} in its asymmetric form: an input limit binds on the party that accepts it. Motive remains unobservable, and the book does not adjudicate it.
+
+\emph{Newly falsifiable on a short clock}: whether Kimi K3.1 Pro's weights ship and under what licence; whether Qwen~4's flagship ships open; whether China's final catalogue keeps the open-source carve-out after comments close on 15~November; whether the suspended US and Chinese trade measures lapse on 10~November or are extended in law; whether the November AI dialogue meets; and whether Japan's AI-for-Science request survives the December government draft budget. The author has a declared interest in the last of these (front matter). Each resolves inside a quarter.
+
+\section{The summer cycle, 16 July -- 23 September 2026, in brief}
+
+The records below cover the preceding cycle. Their analytical conclusions are carried in the chapters; the detail is kept here because several chapters cite it.
+
+\subsection{The chronology}
 
 Four releases in eighteen days, each responding to the last~\cite{pareto-frontier}: \textbf{16 July}, Moonshot releases Kimi K3 (2.8T/104B) via API; \textbf{27 July}, K3's weights are open-sourced under its custom commercial licence---the largest open-weight model ever released; \textbf{30 July}, OpenAI cuts GPT-5.6 Luna---the cheapest tier---by 80\% (\$1.00$\to$\$0.20 input, \$6.00$\to$\$1.20 output) with Terra down 20\% and the flagship Sol held unchanged~\cite{openai-cut,openai-luna}; \textbf{31 July}, DeepSeek ships the official V4-Flash checkpoint ($\sim$280B/13B, MIT, weights on Hugging Face, \$0.14/\$0.28 per million tokens); \textbf{3 August}, Alibaba makes Qwen3.8-Max generally available (2.4T total, $\sim$95B active by press consensus though never officially confirmed, 1M context, multimodal in), API-only, at \$2/\$6 per million tokens~\cite{qwen38-max}.
 
 The sequencing carries the analytical content, and it is not the sequencing the headlines implied. OpenAI's price cut came \emph{before} the Qwen release, not after it, and contemporaneous analysis attributed the pressure to Kimi K3 and DeepSeek V4 rather than to Alibaba~\cite{openai-cut}. That is the first documented instance in this book's evidence base of a Western frontier laboratory repricing its mainline product in visible response to Chinese open-weight competition---the transmission mechanism of Proposition~P3, observed rather than modelled. The company attributed the cut to ``system efficiency,'' which may be entirely true and is also exactly what a firm says when it is defending share.
 
-\section{Qwen3.8-Max: what is claimed, what is verified}
+\subsection{Qwen3.8-Max: what is claimed, what is verified}
 
 \begin{table}[htbp]
   \centering
   \scriptsize
-  \caption{Qwen3.8-Max as of this edition's date. Vendor claims are extensive and partly auditable; independent verification is thin. Both halves matter.}
+  \caption{Qwen3.8-Max as of 11 August 2026. Vendor claims are extensive and partly auditable; independent verification is thin. Both halves matter.}
   \label{tab:qwen38}
   \setlength{\tabcolsep}{4pt}
   \begin{tabular}{p{34mm}p{58mm}p{50mm}}
@@ -357,15 +484,15 @@ On benchmarks the discipline of Section~\ref{sec:scoreboard} applies: \emph{the 
 
 The autonomy claims deserve separate treatment because their auditability differs. The autonomous-coding demonstration---``10+ days of self-evolving development, from empty folder to production without hand-holding''---ships with \emph{a complete project trace on GitHub}~\cite{qwen-announcement}, which is more verification apparatus than most Western frontier autonomy claims carry and should be credited as such; the standing question of how many human interventions occurred is answerable from the trace rather than merely rhetorical~\cite{infoworld-qwen}. The chip-design claim (500-plus turns of optimization; autonomous execution of the silicon design flow) has no comparable artifact, which is why Section~\ref{sec:offshore} treats it as strategically decisive \emph{if} verified and flags the verification event explicitly.
 
-The independent record is thin and worth stating precisely. Crowdsourced Arena voting places the model \#5 overall in text (highest-ranked Chinese model, behind Claude variants), \#2 in vision, and \#4 on frontend code at 1,668 Elo---eight points behind Kimi K3 and roughly 37 behind the top Claude configuration~\cite{arena-qwen38}. Artificial Analysis had not scored it. One small third-party head-to-head put it at 80 against Kimi K3's 83. Set against the vendor table, the honest summary is that Qwen3.8-Max is a genuinely frontier-competitive model whose exact placement is unsettled---which is the same thing that is true of every closed Western flagship, none of which discloses its parameter count at all.
+The independent record is thin and worth stating precisely. Crowdsourced Arena voting places the model \#5 overall in text (highest-ranked Chinese model, behind Claude variants), \#2 in vision, and \#4 on frontend code at 1,668 Elo---eight points behind Kimi K3 and roughly 37 behind the top Claude configuration~\cite{arena-qwen38}. Artificial Analysis had not scored it. One small third-party head-to-head put it at 80 against Kimi K3's 83. Set against the vendor table, the summary is that Qwen3.8-Max is a frontier-competitive model whose exact placement is unsettled---which is the same thing that is true of every closed Western flagship, none of which discloses its parameter count at all.
 
-\section{The second week: 4--11 August}
+\subsection{The second week: 4--11 August}
 
 The cycle did not close; it widened, and the widening changed its character from an intra-Chinese barrage to a two-bloc contest for the commons.
 
 \emph{Meta returns to open weights (10 August).} Muse Glimmer---30B dense, multimodal, $\sim$128K context, distilled from the closed Muse Spark flagship---shipped with downloadable weights under Apache~2.0, Meta's first open release in sixteen months and its first ever under an OSI-permissive licence at this scale; Zuckerberg announced it personally on X alongside a 6{,}500-word letter recommitting Meta to ``American open source,'' and an open-weight version of Muse Spark 1.2 was promised ``in the coming weeks,'' licence unspecified~\cite{muse-glimmer,zuck-letter}. Independent measurement places Glimmer at 35 on the Artificial Analysis index of August (v4.1.1, before the September re-basing)---between Gemma~4 31B (30) and Qwen3.6 27B Reasoning (38), with a measured hallucination rate of 82\% against the comparable Qwen's 49\%~\cite{muse-aa}. Section~\ref{sec:muse} carries the full analysis; the structural point is that the ratchet mechanism now operates on both sides of the Pacific, while the ownership of the commons it enlarges remains contested.
 
-\emph{Qwen3.8-Max weights slip (status at 11 August).} The 3 August commitment---``next week''---was not met in that week; the window has been publicly re-framed to the week of 10 August, and no repository exists at this edition's date~\cite{qwen-slip}. In the same days, Reuters-sourced reporting described Alibaba preparing revenue-sharing licence terms for large commercial resellers of its next open release~\cite{qwen-revshare}, and Alibaba opened its Qianwen platform to third-party agent developers with SF Express, Ziroom, and Midea as launch partners~\cite{qianwen-platform}---monetization moving to the platform layer while the weights wait. The forecast register holds the 90\% shipping forecast open with the slippage documented; the licence forecast is revised in place, with the revision dated and reasoned.
+\emph{Qwen3.8-Max weights slip (status at 11 August).} The 3 August commitment---``next week''---was not met in that week; the window has been publicly re-framed to the week of 10 August, and no repository existed on 11 August~\cite{qwen-slip}. In the same days, Reuters-sourced reporting described Alibaba preparing revenue-sharing licence terms for large commercial resellers of its next open release~\cite{qwen-revshare}, and Alibaba opened its Qianwen platform to third-party agent developers with SF Express, Ziroom, and Midea as launch partners~\cite{qianwen-platform}---monetization moving to the platform layer while the weights wait. The forecast register holds the 90\% shipping forecast open with the slippage documented; the licence forecast is re-graded on the reported revenue-sharing terms, with the date and the reasoning stated.
 
 \emph{Openness acquires borders.} MiniMax's H3 video model tops the open-weight video arena while its licence excludes local deployment in the US, EU, UK, and South Korea---the clearest geofenced ``open'' release to date, and a datapoint the trust chapter's certification argument must now carry~\cite{minimax-geofence}.
 
@@ -373,7 +500,7 @@ The cycle did not close; it widened, and the widening changed its character from
 
 \emph{Two smaller entries.} The White House finalized a voluntary frontier-model evaluation framework in a closed-door session with the major US laboratories and declined to publish the document---voluntary and opaque where the Chinese regime is mandatory and registered, a contrast Chapter~\ref{ch:governance} predicts and records~\cite{wh-framework}. And CoreWeave entered its Q2 print in visible distress---15\% short interest, debt above \$25B against \$30--35B of annual capex guidance, two downgrades---the neocloud vintage argument of Chapter~\ref{ch:trade} approaching its first earnings-season test~\cite{coreweave-q2}.
 
-\section{The third week: 11--15 August}
+\subsection{The third week: 11--15 August}
 
 Four days that moved three separate arguments in this book, and one that moved the ground under all of them.
 
@@ -387,7 +514,7 @@ Four days that moved three separate arguments in this book, and one that moved t
 
 \emph{NVIDIA and the open commons: a report, not an announcement.} \emph{The Information} reported on 12 August that NVIDIA is in the final training phase of a trillion-parameter ``Nemotron 4'' intended to compete with the world's most powerful \emph{open} models, with possible availability in late autumn~\cite{nemotron4}. NVIDIA's own position, as quoted, is that final training is not complete; no licence has been announced; and the company's best shipped open model today scores 38 on the independent index against Kimi K3's 60, both on the August (v4.1.1) board; the September re-basing moved every score and the two figures are comparable only with each other~\cite{aa-v43}. The event, correctly stated, is that the largest beneficiary of the closed-frontier trade is reported to be preparing an open frontier-scale release---which, if it ships, is a second American entry into the commons after Meta's and a further datapoint for the ratchet of Section~\ref{sec:maxtier}. It has not shipped.
 
-\section{The financing turn: the same week, in capital markets}
+\subsection{The financing turn: the same week, in capital markets}
 
 Three developments in the week of 10--14 August\ belong to Chapter~\ref{ch:trade} rather than to the model chronology, and together they describe the trade acquiring market infrastructure.
 
@@ -397,15 +524,15 @@ Three developments in the week of 10--14 August\ belong to Chapter~\ref{ch:trade
 
 \emph{Compute becomes an exchange-traded product (11 August).} CME and Silicon Data announced compute futures for 5 October, listed on NYMEX---compute filed as an energy derivative---joining ICE's two announced families, one of them energy-normalized with a dedicated inference sub-index, and Kalshi's live GPU-price contracts~\cite{cme-compute,ice-nativx,kalshi-compute}. Section~\ref{sec:commodity} carries the analysis and works through what a traded, benchmarked, backwardated market for compute does to pricing power---and why the Chinese lever turns out to be the model layer rather than the GPU-hour.
 
-\section{The memory question, entered into the record}
+\subsection{The memory question, entered into the record}
 
 Two developments concern memory rather than models, and both are conditional claims that the register now carries.
 
 The Open Compute Project published the first High Bandwidth Flash specification on 3~August 2026---512\,GB per stack, 0.4 to 3.0\,TB/s, UCIe rather than PCIe, with SanDisk, SK~hynix, Google and Tenstorrent as members and NVIDIA, Samsung, Micron and Kioxia absent~\cite{hbf-ocp,hbf-spec}. Nothing is sampling; no endurance, latency, power or price figure has been published. Section~\ref{sec:memoryunlock} works through what a terabyte-class weights tier paired with an LPDDR6X context tier would do to the economics of local inference. Non-volatility is the term that matters: a weights tier that draws nothing at rest, at a realistic duty cycle, reaches energy parity with continuously refreshing DRAM, and the residual difference is tens of dollars a month against a metered service costing thousands. The question turns on HBF shipping at its specified capacity and bandwidth, not on its energy figure. Two facts frame the conditional in opposite directions---NAND is forecast into surplus in 2H27 while DRAM stays scarce, which is a durable relative-price tailwind; and NVIDIA removed its capacity-first inference part from the roadmap while paying a reported \$20B for the opposite architecture, which is the best-informed buyer in the industry betting against capacity.
 
-Alongside it, the price record for this edition: conventional DRAM contract prices compounded roughly 3.6$\times$ across the first three quarters of 2026, and Apple withdrew the 512\,GB Mac Studio configuration in March---the flagship consumer machine for local inference on large open models becoming \emph{less} capable because of memory scarcity, in the same year the commons reached terabyte scale~\cite{trendforce-dram,mac-studio-512}.
+Alongside it, the price record of the summer cycle: conventional DRAM contract prices compounded roughly 3.6$\times$ across the first three quarters of 2026, and Apple withdrew the 512\,GB Mac Studio configuration in March---the flagship consumer machine for local inference on large open models becoming \emph{less} capable because of memory scarcity, in the same year the commons reached terabyte scale~\cite{trendforce-dram,mac-studio-512}.
 
-\section{The Pareto observation}
+\subsection{The Pareto observation}
 
 The single most strategically significant datum of the barrage is not any model's score but the shape of the cost-performance frontier it produced: of the five models on the current Pareto frontier, \emph{four are Chinese}---Kimi K3, Qwen3.8-Max, GLM-5.3-Flash, and DeepSeek V4-Flash---with Claude Opus~5 the lone American entry, holding its position by roughly 37 Elo points~\cite{pareto-frontier}. The frontier as originally computed put GLM-5.2 in that fourth place; the late-August releases of Section~\ref{sec:glm53} displace it, because GLM-5.3-Flash dominates it on both axes---index 57 at \$0.09 per task on the launch-week v4.1.1 board; 42 at \$0.25 per task on the re-based v4.3 board of 7~September, the two pairs not being comparable with each other~\cite{aa-v43,glm53-flash-agentic}---so the substitution strengthens the observation rather than weakening it. Read against the five-frontier framework of Section~\ref{sec:scoreboard}, this is the \emph{economic frontier} passing decisively into Chinese hands while the \emph{absolute frontier} remains contested, which is precisely the configuration this book has argued decides industrial outcomes. The cost spread that produces it: DeepSeek V4-Flash runs a benchmark suite for about three cents against Claude Fable~5's \$3.15 and GPT-5.6 Sol's \$1.86---a hundredfold gap at the low end, with Kimi K3 at 86 cents in between.
 
@@ -413,19 +540,19 @@ Two qualifications keep the observation honest. Cross-vendor cost comparisons at
 
 One further pricing development belongs in the ledger because it runs \emph{against} the commoditization current, and it arrived in two dated steps rather than one. First, with the official V4-Flash release of 31~July 2026, DeepSeek announced dynamic peak pricing---a 2$\times$ multiplier across seven daily hours---on the cheapest frontier-adjacent model in the world~\cite{v4flash}. Then, on 13~August 2026, the company launched V4-Pro and \emph{raised} API prices by as much as 1{,}100\%, introducing peak and off-peak tiering across the line; Caixin described it as ``a break from the prolonged price war among China's AI developers,'' and no rationale was stated~\cite{deepseek-raise}. A Chinese laboratory introducing surge pricing and then repricing upward is rent recapture appearing at the price layer itself, and Section~\ref{sec:china-advice}'s recommendation that Chinese labs move from below-cost tokens to at-cost tokens plus paid complements now has a datapoint in its favour that arrived without waiting for the advice.
 
-\section{The September addendum: V4.1-Flash, and what the ledger has to change}
+\subsection{V4.1-Flash (10 September), and two consequences for method}
 
 One release arrived after the cycle above and postdates every other entry in it: on 10~September DeepSeek shipped V4.1-Flash under MIT and retired both V4-Flash and its experimental vision checkpoint, re-routing the old identifiers~\cite{deepseek-v41flash,deepseek-v41flash-updates}. Section~\ref{sec:v41flash} analyses it in full, and the claim register above carries its rows. Only two things belong here, because both are about this appendix's own method rather than about the model.
 
-\emph{The Pareto observation above needs a second axis, not a new entry.} V4.1-Flash does not extend the cost-performance frontier on the single combined-price basis this ledger has used---at \$0.75 off-peak it sits above GLM-5.3-Flash---while undercutting every published cached rate, the cheapest of them by roughly sevenfold. A single scalar price no longer places a model on a frontier, because vendors have begun pricing workload \emph{shapes} rather than tokens: peak and off-peak tiers, and cached and uncached input, now differ by more than the gaps between vendors. Future editions of this ledger should carry cached and uncached input as separate columns and state the tier, and the Pareto claim should be re-derived on that basis rather than patched.
+\emph{The Pareto observation above needs a second axis, not a new entry.} V4.1-Flash does not extend the cost-performance frontier on the single combined-price basis this ledger has used---at \$0.75 off-peak it sits above GLM-5.3-Flash---while undercutting every published cached rate, the cheapest of them by roughly sevenfold. A single scalar price no longer places a model on a frontier, because vendors have begun pricing workload \emph{shapes} rather than tokens: peak and off-peak tiers, and cached and uncached input, now differ by more than the gaps between vendors. A ledger that places models on a cost frontier therefore has to carry cached and uncached input as separate columns and state the tier, and a Pareto claim holds only when it is derived on that basis.
 
 \emph{And the index re-basing has produced a live error in the secondary literature that this appendix should name.} The figure of 50 widely quoted for V4-Flash-0731 belongs to an earlier version of the Artificial Analysis index; on v4.3 the same checkpoint re-scores 35~\cite{aa-v41flash}. Reporting that reads a decline from 50 to 40 is comparing two instruments, not observing a model. The rule this book applies---that a score is meaningless without its index version, and that rank within a version is the only comparable quantity---is stated in Section~\ref{sec:glm53}, and it is the most frequently violated convention in AI trade coverage. Every score in the tables above carries its index version for exactly this reason.
 
-\section{What this changes, and what it does not}
+\subsection{What this changes, and what it does not}
 
 \emph{Unchanged}: every structural claim in the monograph. The four propositions, the cost stack, the rent-migration map, the architecture argument, and the AI4S analysis are all indifferent to which laboratory leads in a given fortnight---which is the point of freezing the data and stating the mechanisms separately.
 
-\emph{Strengthened}: four things, each recorded in the ledger and register. First, and most importantly, the open-weight argument acquires the \emph{ratchet} of Section~\ref{sec:maxtier}: a Max tier that had been proprietary through four generations was publicly committed to open weights within seven days of a rival opening at comparable scale, which upgrades openness from a state policy that could reverse to a competitive equilibrium from which no participant profits by defecting. Second, P3's transmission mechanism has its first direct observation in the OpenAI price cut. Third---and this is the datum that most shortens the book's own timelines---the autonomous silicon-design claim of Section~\ref{sec:offshore} identifies a concrete mechanism by which the compute dependence that the offshore-leasing arrangement currently reflects becomes transitional rather than structural: the recursive loop applied to the one input China has never been able to buy. Fourth, and added with the September addendum above: the ratchet held a fifth time, at the most permissive terms any frontier-scale Chinese model carries, which is the distribution leg of P1 continuing to run without interruption through a quarter in which the American incumbent was pricing beneath it.
+\emph{Strengthened}: four things, each recorded in the ledger and register. First, and most importantly, the open-weight argument acquires the \emph{ratchet} of Section~\ref{sec:maxtier}: a Max tier that had been proprietary through four generations was publicly committed to open weights within seven days of a rival opening at comparable scale, which upgrades openness from a state policy that could reverse to a competitive equilibrium from which no participant profits by defecting. Second, P3's transmission mechanism has its first direct observation in the OpenAI price cut. Third---and this is the datum that most shortens the book's own timelines---the autonomous silicon-design claim of Section~\ref{sec:offshore} identifies a concrete mechanism by which the compute dependence that the offshore-leasing arrangement currently reflects becomes transitional rather than structural: the recursive loop applied to the one input China has never been able to buy. Fourth, from the V4.1-Flash release of 10~September: the ratchet held a fifth time, at the most permissive terms any frontier-scale Chinese model carries, which is the distribution leg of P1 continuing to run without interruption through a quarter in which the American incumbent was pricing beneath it.
 
 \emph{The counter-argument, at its strongest.} The same evidence supports a serious rebuttal---that recursive self-improvement compounds fastest where compute is most abundant, which is not China---and Section~\ref{sec:rsi-branch} develops it as the book's most consequential falsification branch, along with the reply that two recursive loops are running on different substrates.
 
@@ -457,7 +584,9 @@ One release arrived after the cycle above and postdates every other entry in it:
     \addlinespace
     \textbf{2026 Jul--Aug} & Kimi K3 opens at 2.8T parameters (Jul. 27). CXMT lists at +466\% (Jul. 27), prospectus disclosing no commercial HBM. CXMT LPDDR6 clears verification at 12.8\,Gb/s (Aug.). Meta returns to open weights with Muse Glimmer under Apache 2.0 (Aug. 10). DeepSeek Harness (Aug. 13); Xiaohongshu dots3-note Preview, 280B/16B, Apache 2.0 (Aug. 14). Beijing curbs drone exports; printer probe (Aug. 5). OpenAI--Hugging Face cross-boundary agent intrusion disclosed (Jul.); Anthropic discloses three evaluation-boundary incidents (Jul. 30). Memory-led chip rout; Nasdaq-100 enters correction (Jul.). WAICO formalized in Shanghai with 29 states (Jul.). \\
     \addlinespace
-    \textbf{2026 Aug--Sep} & Brazil contracts Huawei/iFlytek for a Rio Ascend machine, R\$1.3B, self-financed, inside a split programme (Aug. 21). Moonshot--Microsoft/Amazon/Google revenue-share talks on Kimi K3 reported, up to 30\%, unsigned (Aug. 26); Huawei bid for Egyptian government AI datacentres on Ascend 950 reported, US counter-offer assembled (Aug. 26) [A]. Commerce rule to block Chinese rental of NVIDIA compute in third countries reported in draft (Aug. 28) [A]. Xi in Cairo; no AI agreement (Aug. 31--Sep. 2). Moonshot confidential Hong Kong filing reported, $\sim$\$3B at $\sim$\$50B (Sep. 3) [A]. DeepSeek order of $\geq$160{,}000 Ascend 950DT for an Ulanqab inference site reported; training stays on NVIDIA (Sep. 4) [A]. Telekom Malaysia evaluating Ascend 910C for a RM2B sovereign project reported, unsigned (Sep. 7) [A]; Artificial Analysis re-bases to v4.3 (Sep. 7). NSA/FBI/CISA advisory AA26-251a names six Chinese laboratories for distillation (Sep. 9). \\
+    \textbf{2026 Aug--Sep} & Brazil contracts Huawei/iFlytek for a Rio Ascend machine, R\$1.3B, self-financed, inside a split programme (Aug. 21). Moonshot--Microsoft/Amazon/Google revenue-share talks on Kimi K3 reported, up to 30\%, unsigned (Aug. 26); Huawei bid for Egyptian government AI datacentres on Ascend 950 reported, US counter-offer assembled (Aug. 26) [A]. Commerce rule to block Chinese rental of NVIDIA compute in third countries reported in draft (Aug. 28) [A]. Xi in Cairo; no AI agreement (Aug. 31--Sep. 2). Moonshot confidential Hong Kong filing reported, $\sim$\$3B at $\sim$\$50B (Sep. 3) [A]. DeepSeek order of $\geq$160{,}000 Ascend 950DT for an Ulanqab inference site reported; training stays on NVIDIA (Sep. 4) [A]. Telekom Malaysia evaluating Ascend 910C for a RM2B sovereign project reported, unsigned (Sep. 7) [A]; Artificial Analysis re-bases to v4.3 (Sep. 7). NSA/FBI/CISA advisory AA26-251a names six Chinese laboratories for distillation (Sep. 8). \\
+    \addlinespace
+    \textbf{2026 Sep--Nov} & Xi's Washington visit opens an AI dialogue; no chip outcome (Sep. 23--25; China's eight-point consensus Sep. 26). OpenAI pauses its most capable training a second time (Sep.); EO 14434 and a voluntary White House accord (Sep. 29). Genesis summit, over \$6B (Oct. 8). China's draft export catalogue exempts already-published open-source technology and licenses open-source release on filing (Oct. 16). Anthropic files its S-1 (Oct. 26). AA index v5 puts the closed-over-open gap at 12 points (Oct. 28). Alphabet $-$12.6\% in a day (Oct. 29). CXMT Q3 profit RMB~54.4B while its HBM3E runs at 20--30\% yield (Oct. 28--30). \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -493,6 +622,12 @@ Each claim in the maintained register carries: \texttt{claim\_id}; \texttt{text}
     CR-10 & AI4S token-layer share of expenditure 77.4--91.1\% at $\rho=20$--$60$, all-frontier; 33.1--54.1\% selective; 48.5--73.8\% on the 3.25$\times$ serving scenario & M & $f_{\mathrm{front}}$ modelled; $\rho$ assumed; routing policy now stated in two named cases & discussion record & national probe with published $f_{\mathrm{front}}$, $\rho$ and routing fraction \\
     CR-11 & Announced fleets provision 0.02--0.10 BGPU/researcher vs $\sim$1.0 required & M/A & core $\pm$40\% pre-measurement & 3 countries & second national demand probe \\
     CR-12 & Broad ($\geq$30\%) US AI repricing by 2029--30 & S & 60--70\% subjective & global & OpenAI financing event; DC credit spreads \\
+    CR-13 & Closed-over-open gap 12 points on AA index v5 ($\approx$27 to released weights) & V & instrument version; 60\% private sets & 28 Oct 2026 & next index version \\
+    CR-14 & Chinese authors $\geq$49\% of router text requests & V & requests, not spend; one aggregator & week of 26 Oct 2026 & monthly router data \\
+    CR-15 & Draft export catalogue exempts open-source and published technology & V & draft; thresholds press-reported & 16 Oct 2026 & final catalogue after 15 Nov \\
+    CR-16 & Anthropic commitments $\approx$\$895B against nine-month revenue \$33.24B & V & contract terms partly undisclosed & S-1, 2 Nov 2026 & first quarterly filing after listing \\
+    CR-17 & CXMT HBM3E at 20--30\% yield & A & single source & 28 Oct 2026 & qualification by a Chinese accelerator vendor \\
+    CR-18 & Top-four hyperscaler 2026 capex $\approx$\$720--740B as printed ($>$\$740B on an analyst tally); none cut materially, Microsoft $-$\$5B on timing & A & guidance, not spend & Q3 2026 & Q4 guidance, Jan.--Feb.\ 2027 \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -501,7 +636,7 @@ Each claim in the maintained register carries: \texttt{claim\_id}; \texttt{text}
 
 The register states grades; this table states \emph{bets}. Each load-bearing proposition carries a probability, a horizon, a next verification event, and an explicit falsifier.
 
-Four rules govern the table, so that a forecast cannot be quietly re-aimed after the fact. \emph{Event definitions are frozen with the edition in which they first appear}, and a changed definition is a new row with its own start date rather than an edit to an old one. \emph{Each row names the data source that will resolve it}, and where a financial outcome is forecast the row must name the asset basket, the baseline and the measure of decline---observing a correction is not the same as attributing it. \emph{A falsifier must belong to the proposition it is attached to}: an adoption threshold cannot falsify a claim about profit capture or about the viability of frontier training, and where the book has previously mixed these the rows have been separated. And \emph{resolved rows are scored}, by the Brier score, with the score published alongside the next edition rather than absorbed into a revised narrative. The bracketed second figure, where one appears, is the strongest skeptical case the author can construct, and is an author construction rather than an elicited outside opinion. The purpose is not false precision---the probabilities are subjective judgements [S]---but to prevent confidence in one part of the thesis from leaking into another, and to let a reader in 2029 mechanically score the book.
+Four rules govern the table, so that a forecast cannot be quietly re-aimed after the fact. \emph{Event definitions are frozen at the currency date on which they first appear}, and a changed definition is a new row with its own start date rather than an edit to an old one. \emph{Each row names the data source that will resolve it}, and where a financial outcome is forecast the row must name the asset basket, the baseline and the measure of decline---observing a correction is not the same as attributing it. \emph{A falsifier must belong to the proposition it is attached to}: an adoption threshold cannot falsify a claim about profit capture or about the viability of frontier training, so each row carries falsifiers for its own proposition only. And \emph{resolved rows are scored}, by the Brier score, with the score published at the next currency date rather than absorbed into the narrative. The bracketed second figure, where one appears, is the strongest skeptical case the author can construct, and is an author construction rather than an elicited outside opinion. The purpose is not false precision---the probabilities are subjective judgements [S]---but to prevent confidence in one part of the thesis from leaking into another, and to let a reader in 2029 mechanically score the book.
 
 \begin{small}
 \begin{longtable}{p{42mm}p{16mm}p{13mm}p{31mm}p{31mm}}
@@ -551,13 +686,13 @@ Four rules govern the table, so that a forecast cannot be quietly re-aimed after
     \addlinespace
     Open-weight VLA models commoditize the embodied task-policy layer as LLMs did text & 45\% & 3--6 yrs & open VLA releases matching closed policies on standardized manipulation suites & closed embodied stacks hold a durable capability gap into the 2030s \\
     \addlinespace
-    Qwen3.8-Max weights ship as publicly committed & \textbf{RESOLVED YES} (13 Aug 2026) & --- & shipped to Hugging Face; product name not used on the repository~\cite{qwen38-weights} & --- \\
+    Qwen3.8-Max weights ship as publicly committed & \textbf{Resolved:} yes (13 Aug 2026) & --- & shipped to Hugging Face; product name not used on the repository~\cite{qwen38-weights} & --- \\
     \addlinespace
-    \dots{} under a permissive (Apache/MIT-class) rather than revenue-threshold licence & \textbf{RESOLVED NO} for the flagship; YES for the 27B & --- & custom licence, US\$50M revenue gate~\cite{qwen38-weights} & --- \\
+    \dots{} under a permissive (Apache/MIT-class) rather than revenue-threshold licence & \textbf{Resolved:} no for the flagship; YES for the 27B & --- & custom licence, US\$50M revenue gate~\cite{qwen38-weights} & --- \\
     \addlinespace
     The next frontier-scale Chinese release ($\geq$1T) also ships open weights---the ratchet holding & 85\% & 1--2 yrs & release announcements & any major Chinese lab closing its frontier tier while rivals stay open \\
     \addlinespace
-    Meta ships the promised open-weight Muse Spark 1.2 within a quarter, at flagship-representative quality, under derivative-permissive terms (all three conditions of \S\ref{sec:muse}) & 40\% & 1 quarter & repository, licence file, independent evaluation & the Max-tier template repeating: small model open, flagship deferred or restricted \\
+    Meta ships the promised open-weight Muse Spark 1.2 within a quarter, at flagship-representative quality, under derivative-permissive terms (all three conditions of \S\ref{sec:muse}) & 40\% & 1 quarter & \textbf{partly resolved}: Muse Spark Open shipped 15 Oct.\ (816B/42B), gated, with a display duty on every derivative product; flagship-representative quality not independently assessed at \datafreeze & the Max-tier template repeating: small model open, flagship deferred or restricted \\
     \addlinespace
     A Chinese-origin agent harness or agent runtime reaches top-three position by production deployment in at least one major non-Chinese market (Chapter~\ref{ch:harness}) & 35\% & 2--4 yrs & enterprise deployment surveys; package-registry download share, not stars & Western harnesses holding $>$90\% of regulated-sector production deployments through 2029 \\
     \addlinespace
@@ -602,24 +737,29 @@ Four rules govern the table, so that a forecast cannot be quietly re-aimed after
     Hyperscaler or frontier-laboratory capex guidance cut under the language of ``pacing''---the first direct evidence that the 2026 pacing calls and the economics of \S\ref{sec:saturation} are one event & 15\% & to end-2027 & quarterly guidance; compute-contract renegotiations & pacing, if enacted, binds on capability release while the buildout continues \\
     \addlinespace
     A frontier laboratory cancels or shrinks a \emph{named} training run for commercial rather than safety reasons (\S\ref{sec:saturation}); aggregate spending commitments have already been cut, no named run has & 30\% & to end-2027 & company disclosure at IPO; credible reporting with the reason stated & runs delayed only on stated safety grounds while the buildout continues \\
+    Kimi K3.1 Pro weights ship by 30 November 2026 under a licence no more restrictive than Kimi K3's (row start: 4 Nov.\ 2026) & 70\% & 1 month & the model repository and licence file & no repository by 30 November, or a licence adding revenue, field-of-use or geographic restrictions \\
+    China's final export-control catalogue keeps the open-source and published-technology carve-out of the 16 October draft (row start: 4 Nov.\ 2026) & 75\% & 2 quarters & the final MOFCOM/MOST announcement & carve-out deleted, or conditioned on pre-publication review for any AI item \\
+    The best \emph{released} open-weight model comes within 10 points of the closed leader on the same Artificial Analysis index version (row start: 4 Nov.\ 2026) & 40\% & to end-2027 & each index version & the gap staying above 10 points on two consecutive versions \\
+    A top-four hyperscaler guides a lower annual capex figure than its prior-year actual (row start: 4 Nov.\ 2026) & 25\% & to end-2027 & quarterly guidance & 2027 guidance at or above 2026 actuals at all four \\
+    At least one of the three OpenAI mathematics claims of 26 October 2026 is confirmed by its named review panel as stated (row start: 4 Nov.\ 2026) & 40\% & to end-2027 & panel reports; refereed publication & all three withdrawn, weakened or left unconfirmed by end-2027 \\
 \end{longtable}
 \end{small}
 
 \section{Quarterly falsification dashboard}
 
-Fifteen indicators, each with the value as of \datafreeze, the threshold that would move the argument, and where to look. A reader who checks these quarterly does not need to re-read the book to know whether it is aging well.
+Seventeen indicators, each with the value as of \datafreeze, the threshold that would move the argument, and where to look. A reader who checks these quarterly does not need to re-read the book to know whether it is aging well.
 
 \begin{small}
 \begin{longtable}{p{40mm}p{24mm}p{34mm}p{40mm}}
   \caption{The dashboard. ``Direction'' states which way a move cuts for this book's thesis.}
   \label{tab:dashboard} \\
   \toprule
-  Indicator & Current (Sep 2026) & Threshold that matters & Source / cadence \\
+  Indicator & Current (Nov 2026) & Threshold that matters & Source / cadence \\
   \midrule
   \endfirsthead
   \multicolumn{4}{l}{\footnotesize\emph{Dashboard, continued}} \\
   \toprule
-  Indicator & Current (Sep 2026) & Threshold that matters & Source / cadence \\
+  Indicator & Current (Nov 2026) & Threshold that matters & Source / cadence \\
   \midrule
   \endhead
   \midrule
@@ -627,23 +767,25 @@ Fifteen indicators, each with the value as of \datafreeze, the threshold that wo
   \endfoot
   \bottomrule
   \endlastfoot
-    Chinese share of routed tokens & $\sim$61\% & sustained fall below 45\% weakens P1 & neutral routers, monthly \\
+    Chinese share of routed tokens & $\geq$49\% of text requests (four listed Chinese authors 49.2\%), week of 26 Oct.\ (a request share; the $\sim$61\% token share of CR-01 is a different series) & sustained fall below 45\% weakens P1 & neutral routers, monthly \\
     \addlinespace
-    Closed-over-open capability gap & 3.3\% & $>$10\% sustained two years favours bifurcation & AI Index / arenas, annual \\
+    Closed-over-open capability gap & 3.3\% (AI Index, Mar.); 12 points on AA v5 (28 Oct.), $\approx$27 to released weights & $>$10\% sustained two years favours bifurcation; two consecutive AA versions above 10 points confines substitution to the volume tiers & AI Index / arenas, annual; AA, per version \\
     \addlinespace
-    Enterprise open-weight spend share & $\sim$11\% & rise past 25\% confirms P3's transmission & enterprise surveys, annual \\
+    Enterprise open-weight share & workloads $\sim$11\% (survey); spend 14\% of one gateway's August billings & spend share past 25\% confirms P3's transmission & enterprise surveys, annual; gateway spend data \\
     \addlinespace
     Domestic end-to-end frontier training run & not observed & first credible instance strongly confirms P2 & lab technical reports \\
     \addlinespace
     LX2-class AI benchmark submission & none & MLPerf entry at parity confirms stage~2 (\S\ref{sec:proofboundary}) & MLPerf rounds \\
     \addlinespace
-    CXMT LPDDR6 / HBM3 ramp & verification cleared & 2+ year slip weakens the memory arbitrage & qualification news, quarterly \\
+    CXMT LPDDR6 / HBM ramp & LPDDR6 verification cleared; HBM3E limited production reported within two months at 20--30\% yield (28 Oct.) [A] & 2+ year slip weakens the memory arbitrage & qualification news, quarterly \\
     \addlinespace
     Cost per \emph{solved} task, open vs closed & unpublished & first credible series either confirms or deflates the price gap & vendor or third-party evals \\
     \addlinespace
-    OpenAI financing & IPO slipping & down-round or new backstop raises P4 & filings, ad hoc \\
+    OpenAI financing & round cut from \$30B at \$1.4T to \$20B at \$1.25T, $\approx$\$11B committed; IPO 2027 or later; a supplier arranging $>$\$50B of debt for purchases of its own chips & down-round or new backstop raises P4 (not a down-round: above the March valuation; the supplier financing is a partial backstop) & filings, ad hoc \\
     \addlinespace
-    Data-centre credit spreads & Oracle CDS $\sim$212\,bps & sustained widening raises P4 & credit markets, daily \\
+    Data-centre credit spreads & Oracle five-year CDS record 288\,bp (15 Oct.); CoreWeave 2032 notes $\approx$79.5 cents & sustained widening raises P4 & credit markets, daily \\
+    Hyperscaler capex guidance & 2026 $\approx$\$720--740B as printed across the top four ($>$\$740B on an analyst tally); none cut materially (Microsoft $-$\$5B on delivery timing); free cash flow negative at three & a first cut by a top-four hyperscaler raises P4 & quarterly guidance \\
+    China's export-control treatment of open publication & draft exempts open-source and published technology (16 Oct.); comments close 15 Nov. & deletion of the carve-out breaks the ratchet-as-policy reading of \S\ref{sec:gov-export-catalogue} & MOFCOM/MOST announcements \\
     \addlinespace
     Wholesale colocation rent, NoVA 10\,MW+ (\$/kW-month, power passed through) & \$155--185; vacancy 0.5\% & a sustained decline with rising vacancy is the facility-side signal that the utilization forecast of \S\ref{sec:appliance-cost} is failing; a rise says the closet is not yet displacing the hall & CBRE / JLL market reports, semiannual \\
     \addlinespace

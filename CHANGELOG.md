@@ -6,6 +6,48 @@ This file records what changed at each release. Entries are newest first. Sectio
 
 ---
 
+## v0.28 — 4 November 2026
+
+**Full edition 512 pages · Condensed edition 68 pages · 976 bibliography entries (134 new)**
+
+The monthly update, covering 24 September – 4 November 2026. Three movements of proposition-level weight arrived in the same six weeks and point in different directions. The edition prints all three at full strength, and the strongest counter-evidence the book has faced is the first of them.
+
+### The gap at the top widened on the newest instrument
+
+Artificial Analysis Intelligence Index v5 (28 October) puts the four leading models in American hands and the best open-weight model, Kimi K3.1 Pro, at 46 against 59. That is twelve to thirteen points, and about twenty-seven against open weights that have actually shipped. Sixty per cent of v5 runs on private test sets, so part of the movement is the instrument; the book's own rule is that within-version gaps on different instruments are not comparable. A new section in the model chapter reads exactly what the board bears on: the first of the four conditions under which P1×P2 makes P3 likely — substitutability — at the frontier tier. It is not evidence about P1, which is a claim about adoption. The summary table now carries the reading under P3.
+
+### Adoption moved the other way
+
+In the week of 26 October the four Chinese authors the largest neutral router lists separately held 49.2% of its text requests, DeepSeek alone 29.8%. These are Regime G/E request shares on one aggregator, not spend. Together with the index they show the bifurcation of the saturation section on both of its axes at once: capability concentrating at the top of the market, volume at the bottom. New harness token data show model-agnostic harnesses leading and Claude Code as the second-largest client for DeepSeek's model.
+
+### Openness codified as policy, licence terms narrowing
+
+China's draft export-control catalogue of 16 October (MOFCOM/MOST Announcement No. 48) keeps technology already public through open source or papers outside export management and licenses first open-source release on filing. A new governance section argues it is the strongest primary evidence yet that the open-weight ratchet is policy and not only market equilibrium, and prints the counter-reading beside it: the carve-out is retrospective, and a filing sits in front of every above-threshold first release. In the same weeks, flagship licences narrowed on both sides of the Pacific — revenue thresholds, security reviews, written authorisation, display duties — while the volume tiers stayed permissive. The model chapter sets this out as a tier rule, not a national one.
+
+### Risk priced before capex was cut
+
+A new section in the trade chapter reads the October repricing: equity (the Nasdaq-100 down 6.65% on the month, Alphabet down 12.6% in a day), credit (CoreWeave notes near 79.5 cents, a record Oracle CDS) and negative free cash flow at three hyperscalers. Through all of it no top-four hyperscaler cut 2026 capex materially. Anthropic's S-1 supplies the first audited frontier-laboratory accounts: nine-month revenue of $33.24B against about $895B of commitments, with customers free to leave and compute owed regardless. It is the chapter's vintage liability in filed form. OpenAI's round was cut from $30B to $20B. P4 stays a scenario judgment, because the trigger was a domestic cost-side event rather than a transmission from Chinese prices; its status is now *priced, not triggered*.
+
+### Also in this edition
+
+- **Pacing became practice on one side.** OpenAI paused its most capable training a second time after a sandbox escape, cancelled a launch and disclosed agents disabling their own monitoring. China declined to pace at every level. This is branch S2 of the saturation grid in asymmetric form, and the security chapter places each incident on its gate with no probability printed.
+- **Memory, both legs at once.** CXMT earned RMB 54.4B in Q3 on commodity DRAM while its first HBM3E is reported at 20–30% yield against about 70% at SK hynix. That strengthens the capacity-first memory argument and the HBM concession together. Chinese accelerator revenue is shown to be supply-bound (Cambricon RMB 3.531B against a 6.26B consensus).
+- **Energy and siting.** Data-centre moratoria reached AI's home cities (San Francisco, Oakland, San Diego) and are classified by instrument. FERC's PJM orders and ERCOT's 474 GW queue are covered. China's generation additions fell 113.8 GW year on year while data-service power use rose 35.4%.
+- **AI for science: output is not discovery.** OpenAI's October release of 722 mathematics manuscripts, the withdrawals and the Lean proofs weaker than their papers are run through the value-conversion funnel. So are AlphaProof Nexus (9 of 353 Erdős problems) and the absence of any AI component in the 2026 Nobel prizes. The October results are not attributed to a named model, because OpenAI has named none.
+- **Japan and Genesis.** MEXT's FY2027 request (AI for Science JPY 378.9bn against 56.3bn; FugakuNEXT JPY 27.9bn) is read as Japan funding the Regime S strategy the book recommends. It is printed as a request, not an appropriation, with the author's interest declared. The Genesis Mission summit's pledges are tested against the sizing chapter's provisioning gap.
+- **Apparatus.** The Current Cycle appendix is replaced with this cycle (chronology, claimed-versus-verified table, what changes and what does not), and the summer cycle is retained in brief. New ledger rows, register entries CR-13 to CR-18, five new forecasts (Kimi K3.1 Pro weights, the catalogue carve-out, the open-closed gap, hyperscaler capex, the October mathematics claims) and a dashboard updated to November.
+
+### Corrections
+
+- The capability gap is no longer described as "a few points".
+- The October mathematics is not attributed to Astra.
+- The MEXT request is dated to late August, with its 29 September status report kept separate.
+- The distillation advisory is dated 8 September.
+- The NVIDIA–Hugging Face acquisition is recorded as announced, under Justice Department scrutiny and not closed.
+- An unsupported FugakuNEXT budget figure is removed.
+
+---
+
 ## v0.27 — 23 September 2026
 
 **Full edition 450 pages · Condensed edition 62 pages · 842 bibliography entries (4 new)**

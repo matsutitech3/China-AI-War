@@ -4,7 +4,7 @@
 
 **Satoshi Matsuoka** — Director, RIKEN Center for Computational Science (R-CCS); Professor, Institute of Science Tokyo
 
-**Current edition: v0.27 — 23 September 2026** · [What changed](CHANGELOG.md) · [Full edition (PDF)](How-China-Will-Win-the-AI-War-v0.27.pdf) · 450 pages · [Condensed edition (PDF)](How-China-Will-Win-the-AI-War-Condensed-v0.27.pdf) · 62 pages
+**Current edition: v0.28 — 4 November 2026** · [What changed](CHANGELOG.md) · [Full edition (PDF)](How-China-Will-Win-the-AI-War-v0.28.pdf) · 512 pages · [Condensed edition (PDF)](How-China-Will-Win-the-AI-War-Condensed-v0.28.pdf) · 68 pages
 
 ---
 
