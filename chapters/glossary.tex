@@ -14,7 +14,7 @@ This book draws on economics, computer architecture, semiconductor manufacturing
 
 \emph{Second, a superscript names the physical dimension where two quantities share both letter and subscripts.} Electrical power is written $P^{\mathrm{el}}_{\bullet}$ throughout Chapter~\ref{ch:compute} and Appendix~\ref{app:lpddr}---$P^{\mathrm{el}}_{\text{facility}}$, $P^{\mathrm{el}}_{\mathrm{memory}}$---so that bare $P$ can remain the quality-adjusted price of Chapter~\ref{ch:theory} and Chapter~\ref{ch:trade} without ambiguity. Gross funnel output is $U^{\mathrm{gross}}$, distinguishing it from the net uplift $U$ that the same chapter reports.
 
-\emph{Third, a distinct letter or an alternative alphabet is chosen outright} where suffixing would be clumsy. Trust in the differentiated-competition model is $\tau$, not $T$, leaving $T$ for time and token streams. Fixed development cost is $K_i$, not $F_i$, leaving $F$ for arithmetic rates and facility equivalents. Decode throughput is $\Theta_m$ and $\Theta_s$, not $R_m$ and $R_s$, leaving $R$ for revenue and rent. Fleet availability is $\alpha$, not $a$, leaving $a$ for addressability in the AI4S funnel. Service-tier population share is $\varphi_i$, not $s_i$, leaving $s$ for speed-up. The frontier-expenditure share is $\Sigma_{\mathrm{front}}$, leaving the science-production metric $\boldsymbol{\mathcal{S}}$ as the only $S$-family object. In the security fault tree the common-cause \emph{events} are set in calligraphic type---$\mathcal{L}_{\mathrm{sys}}$, $\mathcal{M}$, $\mathcal{B}$, with beta factors $\beta_{\mathcal{M}}$ and $\beta_{\mathcal{B}}$---so that an event is never mistaken for a scalar.
+\emph{Third, a distinct letter or an alternative alphabet is chosen outright} where suffixing would be clumsy. Trust in the differentiated-competition model is $\tau$, not $T$, leaving $T$ for time and token streams. Fixed development cost is $K_i$, not $F_i$, leaving $F$ for arithmetic rates and facility equivalents. Decode throughput is $\Theta_m$ and $\Theta_s$, not $R_m$ and $R_s$, leaving $R$ for revenue and rent. Fleet availability is $\alpha$, not $a$, leaving $a$ for addressability in the AI4S funnel. Service-tier population share is $\varphi_i$, not $s_i$, leaving $s$ for speed-up. The frontier-expenditure share is $\Sigma_{\mathrm{front}}$, leaving the science-production metric $\boldsymbol{\mathcal{S}}$ as the only $S$-family object. In the security fault tree the common-cause \emph{events} are set in calligraphic type---$\mathcal{L}_{\mathrm{sys}}$, $\mathcal{M}$, $\mathcal{B}$---so that an event is never mistaken for a scalar.
 
 Two conventions are deliberately \emph{not} disambiguated because they are unambiguous by type. Probability is always written with the operator $\Pr(\cdot)$ rather than a letter. And the letter $C$ is cost everywhere in the mathematics; the claim identifiers CR-01\dots CR-12 of Appendix~\ref{app:dashboard} are an alphanumeric label, never a variable.
 
@@ -82,7 +82,7 @@ $\Delta t_{\text{eff}}$ & effective delay in years purchased by an export contro
 \midrule
 \multicolumn{2}{l}{\textbf{Security (Chapter~\ref{ch:order66})}} \\
 \midrule
-$\mathcal{L}_{\mathrm{sys}}$ & the systemic-loss \emph{event}; a fault tree over compromise, deployment, trigger, propagation, containment. Its probability is written $\Pr(\mathcal{L}_{\mathrm{sys}})$ \\
+$\mathcal{L}_{\mathrm{sys}}$ & the systemic-loss \emph{event}; a fault tree over compromise, deployment, trigger, propagation, containment. Chapter~\ref{ch:order66} uses the tree structurally and prints no value for $\Pr(\mathcal{L}_{\mathrm{sys}})$ \\
 $p_i$ & per-gate probabilities of the fault tree \\
 $\mathcal{M}, \mathcal{B}$ & common-cause events: monoculture depth ($\mathcal{M}$), and broad agent permissions ($\mathcal{B}$). Calligraphic, because they are events rather than scalars \\
 $\beta_{\mathcal{M}}, \beta_{\mathcal{B}}$ & beta factors---the share of a gate's failure attributable to each common cause \\
@@ -97,7 +97,9 @@ $\ell_j$ & lag-and-friction discount (calendar delay, organizational adjustment,
 $w_j$ & share of global research effort in task class $j$ \\
 $U, U_{\mathrm{AI4S}}$ & incremental uplift to realized research output; task-weighted form in Eq.~\ref{eq:funnel-weighted} \\
 $U^{\mathrm{gross}}$ & gross converted output, $U^{\mathrm{gross}} = asvd$---contrast the net uplift $U = a(s{-}1)vd$. Not to be confused with the capacity requirements $G_{\bullet}$ of Chapter~\ref{ch:sizing} \\
-$\boldsymbol{\mathcal{S}}$ & scientific production metric: a \emph{vector} of validated outcomes over scalar cost \\
+$\boldsymbol{\mathcal{S}}$ & scientific production objective: four oriented blocks (benefits $\uparrow$; costs, times, risks $\downarrow$) compared by Pareto dominance, or scalarized only with published trade-off weights $\pi,\tau,\kappa$ \\
+$\rho, \rho_{\mathrm{eff}}$ & purchased-token price premium, and its blended value under selective routing, $\rho_{\mathrm{eff}} = 1 + q(\rho-1)$ \\
+Regime G / E / S & general-consumer AI, enterprise streamlining, AI for science and industry: the three demand regimes; a demand share is meaningless without its regime \\
 \midrule
 \multicolumn{2}{l}{\textbf{National sizing (Chapter~\ref{ch:sizing}, Chapter~\ref{ch:consortium})}} \\
 \midrule
@@ -117,7 +119,7 @@ $f_{\mathrm{heavy}}, d_{\mathrm{duty}},$ \newline $w_{\mathrm{heavy}}$ & heavy-u
 $\chi_{\mathrm{sim}}$ & simulation share: fraction of agentic execution that is simulation rather than training \\
 $n_{\mathrm{prog}}, w_{\mathrm{prog}}$ & count and annual cost of persistent-surrogate programs \\
 $F_{\mathrm{eq}}, g_{\mathrm{fac}}$ & large-instrument facility equivalents, and installed BGPU each requires \\
-$\mathbf{B}_g, \omega_k$ & device capability vector for accelerator $g$ (seven components, each normalized to the reference device) and the declared national workload mix over those components \\
+$\mathbf{b}_g, w_k$ & per-class throughput-ratio vector for accelerator $g$ (each component normalized to the reference device) and the declared national workload mix as \emph{reference-time shares}; aggregated harmonically, $G(g)=\alpha_g/\sum_k w_k/b_{g,k}$, with availability $\alpha$ a multiplier and network/storage joint derates, not averaged rows \\
 $\Sigma_{\mathrm{front}}(f_{\mathrm{front}},\rho)$ & frontier share of AI4S expenditure at frontier-workload share $f_{\mathrm{front}}$ and frontier price premium $\rho$ \\
 \bottomrule
 \end{longtable}

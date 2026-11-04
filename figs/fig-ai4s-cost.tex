@@ -9,23 +9,30 @@
   xtick={1,10,20,30,40,50,60},
   legend style={at={(0.98,0.32)}, anchor=east},
 ]
-\addplot[color=sOne, mark=none, samples=80, domain=1:60] {100*0.14*x/(0.86+0.14*x)};
-\addlegendentry{$f=14\%$ (measured workload share)}
-\addplot[color=sThree, mark=none, samples=80, domain=1:60, densely dashed] {100*0.05*x/(0.95+0.05*x)};
-\addlegendentry{$f=5\%$}
+\addplot[color=sOne, mark=none, samples=80, domain=1:60] {100*0.146*x/(0.854+0.146*x)};
+\addlegendentry{$f=14.6\%$ (modelled token-layer share)}
+\addplot[color=sThree, mark=none, samples=80, domain=1:60, densely dashed] {100*0.045*x/(0.955+0.045*x)};
+\addlegendentry{$f=4.5\%$ (3.25$\times$ serving scenario)}
 \addplot[color=sFour, mark=none, samples=80, domain=1:60, densely dotted] {100*0.25*x/(0.75+0.25*x)};
 \addlegendentry{$f=25\%$}
-\addplot[only marks, mark=*, mark size=2.4pt, color=sTwo] coordinates {(20,76.5) (60,90.7)};
-\node[font=\scriptsize\color{inkSec}, anchor=south east] at (axis cs:20,78) {76.5\%};
-\node[font=\scriptsize\color{inkSec}, anchor=south east] at (axis cs:59,92) {90.7\%};
+\addplot[only marks, mark=*, mark size=2.4pt, color=sTwo] coordinates {(20,77.4) (60,91.1) (20,48.5) (60,73.8)};
+\node[font=\scriptsize\color{inkSec}, anchor=south east] at (axis cs:20,79) {77.4\%};
+\node[font=\scriptsize\color{inkSec}, anchor=south east] at (axis cs:59,93) {91.1\%};
+\node[font=\scriptsize\color{inkSec}, anchor=north west] at (axis cs:20,47) {48.5\%};
+\node[font=\scriptsize\color{inkSec}, anchor=north west] at (axis cs:53,72) {73.8\%};
 \end{axis}
 \end{tikzpicture}
 \caption[The AI4S expenditure asymmetry]{Why the token price is the science budget. With a fraction $f$ of
 physical work served by purchased frontier tokens at relative unit price $\rho$, the share of total expenditure that
-work consumes is $\Sigma_{\mathrm{front}}=f_{\mathrm{front}}\rho/((1-f_{\mathrm{front}})+f_{\mathrm{front}}\rho)$. At the measured $f_{\mathrm{front}}\approx14\%$ and the estimated 20--60$\times$ premium, a
-one-seventh workload share becomes 76.5--90.7\% of the budget [A/M]~\cite{consortium-record}. The curve's shape,
-not its exact position, is the policy argument: at $r$ near unity---which cheap open weights on owned hardware
-deliver---the problem dissolves, and the institution that solved it that way has acquired a dependency it never
-negotiated.}
+work consumes is $\Sigma_{\mathrm{front}}=f_{\mathrm{front}}\rho/((1-f_{\mathrm{front}})+f_{\mathrm{front}}\rho)$. The
+workload share is a \emph{modelled} portfolio share anchored in a discussion record [A/M]~\cite{consortium-record} and
+corroborated by the sizing framework's measured token layer at 14.3--14.6\% of Regime~S national demand
+(Chapter~\ref{ch:sizing}); it is not a metered measurement. At $f_{\mathrm{front}}=0.146$ and the two assumed premium
+cases, a one-seventh workload share becomes 77.4\% ($\rho=20$) or 91.1\% ($\rho=60$) of the budget. The lower curve is
+the 3.25$\times$ serving-efficiency scenario, $f_{\mathrm{front}}=0.045$ [F/S], at 48.5\% and 73.8\%. Selective
+routing of only a tenth of the token layer to the premium tier moves the same four cases to 33.1\%, 54.1\%, 12.0\% and
+24.5\% (Table~\ref{tab:ai4s-cases}). The curve's shape, not its exact position, is the policy argument: at $\rho$ near
+unity---which cheap open weights on owned hardware deliver---the problem dissolves, and the institution that solved it
+that way has acquired a dependency it never negotiated.}
 \label{fig:ai4s-cost}
 \end{figure}

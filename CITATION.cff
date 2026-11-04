@@ -10,12 +10,15 @@ authors:
     affiliation: RIKEN Center for Computational Science (R-CCS)
 abstract: >-
   A structural analysis arguing that China's position in artificial
-  intelligence should be read as the fourth run of an industrial playbook
-  that already won the solar photovoltaic, lithium-ion battery, and
-  electric-vehicle wars. The book treats the elements of AI separately —
+  intelligence should be read as the next run of an industrial playbook
+  that already won the solar photovoltaic, lithium-ion battery,
+  electric-vehicle and telecommunications-equipment wars. The book treats the elements of AI separately —
   the model, the compute, the semiconductor, the watt, the data, and
   embodied AI — before recombining them, and states four load-bearing
-  propositions with explicit falsification conditions. A living document,
+  propositions with explicit falsification conditions, plus a separately
+  marked strategic-conversion outcome. Demand shares are labelled by
+  regime: general-consumer, enterprise streamlining, and AI for science
+  and industry. A living document,
   revised as the underlying industrial and technical facts evolve.
 keywords:
   - artificial intelligence
@@ -27,5 +30,5 @@ keywords:
   - technology policy
 repository-code: https://github.com/matsutitech3/China-AI-War
 license: CC-BY-4.0
-version: '0.23'
-date-released: 2026-09-09
+version: '0.27'
+date-released: 2026-09-23

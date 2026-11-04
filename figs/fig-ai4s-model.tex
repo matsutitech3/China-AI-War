@@ -14,10 +14,10 @@
    \scriptsize interactive serving, SLO-provisioned};
 \node[cell, fill=sOne!5, below left=3mm and 0mm of tokhdr.south, anchor=north east, xshift=-2mm] (master)
   {\textbf{master}: 1T-class MLA MoE\\ $L_m = 2^{20}$ ctx, $\Theta_m = 115$ tok/s\\
-   \textbf{10\% of tokens, 88.7\% of cost}};
+   \textbf{10\% of tokens, 88.7\% of the token layer}\\ (13.0\% of national demand)};
 \node[cell, fill=sOne!5, below right=3mm and 0mm of tokhdr.south, anchor=north west, xshift=2mm] (sub)
   {\textbf{sub-agents}: 120B SWA\\ 128K ctx, $\Theta_s = 8{,}161$ tok/s\\
-   90\% of tokens, 11.3\% of cost};
+   90\% of tokens, 11.3\% of the token layer};
 
 % --- execution layer
 \node[layer, fill=sTwo!8, draw=sTwo, below=36mm of tokhdr] (scihdr)
@@ -27,7 +27,7 @@
 \node[cell, fill=sTwo!5, below left=3mm and 0mm of scihdr.south, anchor=north east, xshift=-2mm] (sim)
   {simulation: MD, DFT, CFD,\\ plus persistent surrogate programs};
 \node[cell, fill=sTwo!5, below right=3mm and 0mm of scihdr.south, anchor=north west, xshift=2mm] (tra)
-  {training \& fine-tuning\\ (GPU-substrate-pinned)};
+  {training \& fine-tuning\\ (capability-gated substrate)};
 \node[cell, fill=sTwo!5, below=3mm of scihdr.south, anchor=north, yshift=-14mm, text width=94mm] (dat)
   {facility pipelines: resident streaming inference at detector rate,
    $G_{\mathrm{dat}} = F_{\mathrm{eq}}\,g_{\mathrm{fac}}$};
@@ -42,15 +42,20 @@
 
 \node[font=\scriptsize\color{inkSec}, align=center, below=4mm of dat, text width=104mm]
   {$G_{\mathrm{nat}}(Y)=G_{\mathrm{tok}}(Y)+G_{\mathrm{sci}}(Y)$ --- both layers must be provisioned
-   \emph{concurrently} for the agentic loop to close};
+   \emph{concurrently} for the agentic loop to close.\\
+   Japan 2030: $G_{\mathrm{tok}}=72{,}731$ (master 64{,}540 $+$ sub 8{,}191) against
+   $G_{\mathrm{nat}}=496{,}709$--$509{,}837$ BGPU, i.e.\ a token layer of 14.3--14.6\%};
 \end{tikzpicture}
 \caption[The two-layer national AI4S demand model]{The demand model. A nation's agentic AI-for-Science
 requirement is the concurrent sum of a token-service layer, priced through a canonical master/sub-agent serving
 configuration, and a scientific-execution layer decomposed by function into simulation, training, and data
 processing---with training pinned to GPU-class substrate and simulation the only cross-substrate routable
-term. Note the master asymmetry carried in the top row: a tenth of the tokens, generated at million-token
-context, consume nearly nine-tenths of the token-service capacity. After the sizing
+term, with training gated on four measurable capability conditions rather than on a product category. Note the
+master asymmetry carried in the top row, and its denominator: a tenth of the tokens, generated at million-token
+context, consume nearly nine-tenths of the \emph{token-service layer}---which is itself 14.3--14.6\% of Regime~S
+national demand, so the master term is about 13.0\% of the national requirement. After the sizing
 framework~\cite{ai4s-framework}; the serving configuration is a versioned reference object [U]-r/[P], not a
-physical constant.}
+physical constant, and the 3.25$\times$ serving-generation scenario of \S\ref{sec:serving-scenario} takes the token
+layer to 22.4k BGPU and $\approx$5.0\% of national demand [F/S].}
 \label{fig:ai4s-model}
 \end{figure}

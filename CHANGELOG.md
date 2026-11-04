@@ -6,6 +6,257 @@ This file records what changed at each release. Entries are newest first. Sectio
 
 ---
 
+## v0.27 — 23 September 2026
+
+**Full edition 450 pages · Condensed edition 62 pages · 842 bibliography entries (4 new)**
+
+A discipline release. Nothing in the thesis changes; a great deal in how it is stated does. Three things were wrong in the way the book argued, and this edition fixes them rather than defending them: it claimed entailments it had only established as conditions, it printed a probability it did not have the inputs to compute, and it used the same percentage in three incompatible senses without saying which was meant.
+
+### The propositions are frozen, and W is separated from them
+
+P1–P4 are declared **canonical** in Chapter 1: where any later chapter paraphrases them, that wording governs. The claim that the coupling of P1×P2 *forces* P3 is withdrawn and replaced by four named conditions — substitutability, complementary assets, demand elasticity, financing exposure — each of which can fail and each of which is tested later. P4 follows from P3 only under the fourth. **There is no entailment anywhere in the chain**, and the text now says so.
+
+A fifth item, **W — Strategic conversion**, is added and explicitly marked as *not a proposition of the same kind*: it is the outcome on which the book's title depends, measured on five axes the book keeps apart — domestic productivity, technological autonomy, foreign adoption, control of standards, captured profit — and it is the least evidenced claim in the book. A reader looking for the weakest link should start there.
+
+P1's grade is corrected in the same pass. The routed-token and derivative majorities are verified; the *spend* leg of its own confirmation criterion is not met, and sits at the edge of its stated falsifier. The canonical text now prints both halves instead of leaving the second to a later chapter.
+
+### Three regimes, so that the book's own numbers stop contradicting each other
+
+A new section defines **Regime G** (general and consumer AI), **Regime E** (enterprise streamlining) and **Regime S** (AI for science and industry). G and E are essentially all token generation and are where the United States and China go head to head; every price table in the model chapter is a statement about them. S is dominated by *non-LLM* work — simulation, non-language-model training, instrument-rate data processing, integration with physical apparatus — with a token layer that is a minority of the requirement.
+
+This resolves an apparent contradiction the book had been carrying: "language models are one seventh of the workload" is a Regime S statement and is evidence about nothing in G or E; "token serving is the entire business" is a G/E statement and is evidence about nothing in S. Every share is now printed with its regime, and where a figure crosses regimes the crossing is named. The country strategies are re-cut on the same axis: Japan's value-add is in Regime S and its infrastructure, and it should buy the commodity layer rather than contest it.
+
+### The serving generation has an expiry date, and it is priced
+
+A new scenario cuts the serving coefficient by **3.25×** on a V4.1-Flash-class generation. Japan's token-service layer falls from 72.7k to 22.4k BGPU; the national requirement falls only about 10%, from 497k to 446k, because the other six sevenths are untouched by a serving advance; the token layer's share of Regime S demand falls from 14.3–14.6% to about 5%. Both figures are carried forward together rather than one replacing the other, because the 88.7% master term is a property of a serving generation and not of agentic science. The advance is attributed where it belongs: the published work driving it is Chinese.
+
+Two consequences are printed in opposite directions. For procurement it *strengthens* the argument — the layer a middle power can simply buy shrinks from a seventh to a twentieth while the layer nobody is organized to sell rises to nineteen twentieths. Against it, the Jevons caution applies at full force, and the scenario holds behaviour fixed by construction.
+
+The budget conversion is given in both premium cases throughout — **ρ = 20 and ρ = 60**, never averaged — across two serving generations and two routing policies, in one table of four cases.
+
+### The consortium is re-anchored off the token budget
+
+If the token layer shrinks, does the case for an international consortium shrink with it? It does not, and the chapter now says why in its own voice: **the emphasis was never competing with China, or anyone, for widespread LLM use.** Six justifications are stated — sovereignty, access, shared development, data stewardship, resilience, avoided duplication — and each is read against a shrinking token layer. None has a token term a cheaper serving generation removes; several get cheaper to exercise. The effort may overlap and converge with general-purpose open frontier work such as NVIDIA's Nemotron line rather than competing with it.
+
+### A probability is deleted
+
+The systemic-loss chapter's numeric estimate and its five-year range are **removed**. The fault tree does not have the inputs to produce a number, and printing one implied a precision the structure cannot support. What replaces it is the conditional form — what would have to be estimated, and in what order — and an ordinal configuration table. The chapter now states what its structure supports and stops there, and its one remaining strict ordering is downgraded to *plausibly* on the same grounds.
+
+### The appliance is priced as a machine, and then as a service
+
+The capacity-first appliance is rebuilt on a four-stack HBF baseline at about 123 tokens per second, with the stack price carried as three scenarios — $200, $500, $1,000 — giving machine prices of $5,033, $6,747 and $9,604. The term "fully loaded" is withdrawn from the appliance side of the comparison: what it reports is **machine cost**, and the rack it is compared against carries a building and staff. Priced as an operated service, one operator-hour a month takes the 300-million-token case from $0.64 to $0.97 and puts it *above* the rack's $0.90. The order-of-magnitude result against API list prices survives all of it; the crossover against the hyperscaler's own cost does not survive without high utilization. Both editions now state the comparison that way.
+
+### Saturation is not unconditionally good for China
+
+A six-branch grid replaces the previous unconditional reading. Two branches favour the strategy of Part I, three do not, and one is mixed: a frontier that stops advancing *freezes* the incumbent lead, and a world that stops funding frontier laboratories has fewer artifacts for the commons to copy. The pacing calls of July–September are described accurately — an essay separately endorsed, a two-week self-pause, a staff letter that explicitly declines to ask for an immediate one — and not as a joint call. A ΔNPV decision rule, a table of observable saturation proxies, and study designs that would settle the model-versus-harness question are added. The harness cost claim is corrected to cost per *solved* task: 2.8–17×, not 5–35× per attempt.
+
+### The funnel Monte Carlo ships
+
+`models/funnel-mc.py` is included in the repository: a fixed seed, 200,000 draws, triangular marginals from `funnel-model.csv`, correlated draws across the conversion stages. It reproduces every printed figure — central 10.74%, median 11.61%, P10–P90 6.73–18.98%, corners 0.83% and 67.50%, and all five one-at-a-time class sensitivities. The interval is model-conditional and the text says so; the "3–30%" band is demoted to a loose envelope.
+
+### A new evidence grade, and a collision flagged
+
+**[C] — claimed but unverifiable** is defined: a figure that circulates without a locatable primary, carried because omitting it would misrepresent the record, and relied on for nothing. Every [C] claim that had been load-bearing is rewritten so the argument stands without it. The limitation of a single tag — that it conflates provenance, verification and statement type — is stated, and the collision with Security Levels A/B/C is flagged with a positional reading rule rather than left to be discovered.
+
+### How this book was written
+
+The front matter now states it plainly: drafted with several versions of Anthropic's Claude, including Opus and Fable, and criticized with versions of ChatGPT including Astra. None of it is human peer assessment and none of it is independent empirical replication.
+
+---
+
+## v0.26 — 21 September 2026
+
+**Full edition 425 pages · Condensed edition 60 pages · 838 bibliography entries (20 new)**
+
+A same-day release adding one argument the previous edition raised against itself and could not answer: if serving cost falls 5–10× a year while frontier training cost rises ~3.5×, the commons has fewer and richer suppliers each year. This edition states the strongest counter-argument — that training investment will saturate for *economic* rather than technical reasons — and tests it link by link.
+
+### Will the training curve bend? The saturation debate (Chapter 10, new §10.9)
+
+**The thesis, in four links**, as the book's own branch on the author's earlier scenario analysis (arXiv:2607.07207) and graded [S]:
+- agentic value migrates from the model to the harness and tools;
+- a small model in a strong harness, iterating with review, substitutes for a frontier model run once;
+- the market bifurcates into a mass tier and a luxury tier costing $18–38B a run by 2030;
+- if the harness wins, the luxury tier becomes a niche that cannot finance the next run.
+
+**Link one — model or harness — both sides are right, and the difference is decisive.**
+- Among near-peer frontier models the harness dominates: one controlled factorial study finds harness variance 7.8× model variance, and on SWE-bench Verified the same model varies 15.6 points across scaffolds against a whole top-30 spread of 8.8.
+- Across capability tiers the model dominates: 12–44-point model spreads against 3–8-point harness spreads on a public leaderboard.
+- METR found that two leading proprietary harnesses did not significantly beat its plain scaffolds.
+- The thesis needs cross-tier substitution; the harness-dominance evidence is almost all intra-tier.
+
+**Link two — the "Claude Code + Qwen3.8-27B matches frontier one-shot" claim has no located source.**
+- The only published pairing is the vendor's own single-attempt figure against the previous generation (61.7 vs 53.4).
+- The independent decontaminated board has the predecessor model at 31.2% against 63.4–64.5%, at 5–35× lower cost per attempt — not two orders of magnitude.
+- The test-time-scaling literature gives the sharper version the book adopts: **small-model iteration substitutes for the frontier on verifiable, short tasks and fails on unverifiable, long ones, so the premium tier does not vanish but retreats to the work a test suite cannot check.**
+
+**Links three to five — bifurcation observed, saturation not.**
+- Open weights took 56% of one gateway's August tokens on 14% of spend.
+- The leading premium laboratory's run-rate rose roughly sevenfold in seven months, and hyperscaler capex was raised.
+- Chapter 21's losses and the walk-back of compute commitments from ~$1.4T to $600B are printed alongside.
+- Jev-style first tiers: the cascade literature supports inference savings of 45–98%, but no measured frontier-token reduction exists yet, and **no source anywhere links routing to lower training requirements — that half of the link is dropped.**
+
+**On whether the Epoch training series is out of date.** The objection is correct as far as it goes: the series is fitted since 2020 on pre-training-dominated runs, with no agentic-era measurement. But RL compute scaled ~10× in four months, so the agentic era added an expensive stage rather than removing one. The best technical support for saturation is Toby Ord's finding that RL scales so poorly its gains mostly move cost from training to inference — the thesis's mechanism, arrived at from the technical side.
+
+**The pacing calls, and the readings of them.**
+
+What happened, in order:
+- A July staff letter asked for international tools to "pace the frontier of automated AI development."
+- On 18 August OpenAI paused its own RL training for two weeks. It cited two triggers: a Hugging Face breach, which Hugging Face confirms was agentic and which OpenAI's own report attributes to its research model; and a self-assessed "Critical" cyber threshold.
+- On 12 September Anthropic's chief executive published an essay stating that "pacing does not mean halting model training." It proposed evaluators, democratic-country coordination under an antitrust waiver, and outreach to authoritarian governments.
+- The essay was endorsed separately by OpenAI, xAI and Google DeepMind, and rejected by Meta, NVIDIA, the US President and China's Foreign Ministry.
+
+Three readings are presented, each with what supports it and what cuts against it:
+- **Face value** — 2023 continuity and a confirmed incident; against: no unilateral slowdown in the essay, silence on open weights, self-attributed triggers, a $45B compute deal two weeks earlier.
+- **Regulatory moat** — the dominant critique, from the White House AI adviser and the FTC Chair; against: 2023 proposals predate the lead, external evaluators, signatories from outside the arrangement.
+- **Return-on-investment retreat** — the book's own construction, since no named commentator was located advancing it in full; for: the trade chapter's losses and commitment walk-backs, and its compatibility with the moat reading; against: it requires the stated capability claim to be insincere, and premium revenue was still rising.
+
+**The book does not adjudicate motive.** It states that the effect on training spend depends on *what is enacted*, not why it was proposed, and names the observable that separates the readings: capex cut under safety language, versus pacing that binds on release while the buildout continues.
+
+**Consequence:** if saturation comes, by market or by agreement, it is the most favourable outcome in the book for the strategy of Part I. Four falsifiers are entered in the register.
+
+### Related changes
+
+- **Chapter 18 (trust):** the Hugging Face breach passage now records OpenAI's own attribution of the breach to its research model, graded as the company's attribution, with the open/closed security implication stated in both directions.
+- **Chapter 11 (harness):** reconciled with the new evidence. The "one controlled study" and "no independent benchmark" statements are now scoped to *cost*; independent *score*-variance studies are acknowledged and cross-referenced.
+- **Chapter 21 (trade):** hyperscaler capex figures updated for the Q2 raises (combined ~$720–745B).
+- **Chapter 29 (summary):** now carries the saturation argument in one paragraph.
+
+### Audit
+
+An independent adversarial pass produced 22 findings, all applied. The most important was that **the first draft of the pacing subsection was tilted in the companies' favour**: counter-evidence was printed only against the ROI reading, the revenue growth was misstated as "tripling", the trade chapter's losses were omitted, and a third-party-confirmed breach was overstated as a third-party-confirmed attribution. The subsection was rewritten so that each reading carries its own evidence for and against. Other fixes:
+- an unsourced claim about an unnamed laboratory, removed;
+- an ungraded inference about a state's motive, removed;
+- an over-strong continuity claim, corrected to "one rate limit, one conditional self-pause";
+- a truncated quotation, restored;
+- a missing fourth register row, added.
+
+---
+
+## v0.25 — 21 September 2026
+
+**Full edition 415 pages, five parts, 29 chapters · Condensed edition 59 pages · 818 bibliography entries (30 new)**
+
+The largest release since the five-part restructure. Four bodies of new material, of which the first changes an argument rather than adding to one.
+
+### The cost collapse is a serving phenomenon (Chapter 10, new §10.7)
+
+The book has argued P3 throughout on the strength of falling prices. This section establishes that **the falling prices are entirely on the serving side, and that the training curve runs the other way** — which is the most consequential single correction in this edition.
+
+**The measurements.** MIT FutureTech prices *inference* at fixed benchmark performance and finds the cost–performance frontier falling **5–10× per year**, of which ~3× survives adjustment for hardware. Epoch AI's series — the only independent one tracking *training* — reports frontier training cost **rising about 3.5× per year since 2020**, a doubling time near seven months. DeepSeek's own V4.1-Flash report does not address pre-training cost at all: 45T tokens with no comparison to predecessors, every efficiency claim aimed at prefill, storage and decode.
+
+**The one training claim in the window, read precisely.** Alibaba's **Qwen3.8-Flash-Next** (26 Aug; 125B total / **6B active**, plus 51B N-gram parameters designed to sit in *system* rather than accelerator memory — the memory arbitrage of Chapter 12 appearing inside a model architecture; hybrid Gated DeltaNet and sparse attention; 512 experts, 11 active; licence **`qwen-community-1.0`, not Apache**, a widely repeated error from confusion with Qwen3.8-27B) claims training at **~1/9** the cost of a comparable predecessor. Graded [P], unreplicated, and — decisively — **a claim about reaching a given capability for fewer GPU-hours, not about the frontier becoming cheaper to push outward**. The same rhetorical move was made a generation earlier for Qwen3-Next in September 2025.
+
+**And the quantization tier is not what it is read as.** PrismML's **Ternary Bonsai 2 27B** (17 Sep, Apache, 1.76 bits/weight, 54GB → 5.9GB, ~2M downloads in a month) makes **no training claim and structurally cannot** — it is a *post-training* quantization **of Qwen3.8-27B**. An independent hands-on test found the 98.2% quality claim failing in practice, with complete failure on multilingual translation and a regression from Bonsai v1. The interesting fact is the base model: a venture-backed American startup compressed an open Chinese model ninefold and shipped it permissively without training anything — **the commons compounding, on top of someone else's training bill**.
+
+**What the asymmetry does.** Worse for the book in one respect: if the barrier to *being* a frontier laboratory rises 3.5×/year while the rent from operating one falls 5–10×, the commons has **fewer and richer suppliers** each year. That is the strongest available objection to P1's supply side, and sharper than any objection to P4. Better in another: the strategy of Part I never required cheap training — it required the serving rent destroyed while the state absorbs the training bill, which is exactly what four prior campaigns did with capital no private firm would commit. Entered as a falsifier: an independent measurement of frontier training cost *falling* in 2027 repairs P1's supply side; continued rise makes "who can still afford to train" the most important unanswered question in the book.
+
+### The harness swarm, the mortality, and five days in September (Chapter 11, two new sections)
+
+**Proliferation and death at comparable rates.** A curated index tracked 106+ harnesses by July 2026. Between January and July **six shut down** — and **Phind's shutdown statement named "commoditisation by foundation-model providers" as the cause of death**. A company that died of this book's mechanism and said so is better evidence than the proliferation is.
+
+**The sponsorship table is Chapter 17's argument in miniature** and is near-unbroken: DeepSeek, Anomaly, Nous, Alibaba and Moonshot all give the harness away and earn on *inference*; Microsoft keeps a proprietary one and earns on *seats* at $99/user/month. The cleanest case is same-day: **DeepSeek released an MIT-licensed Claude Code competitor on 13 August, the same day it launched V4-Pro with peak/off-peak tiering raising its own inference prices by 50% to over 1,100%.** The harness was not a product; it was a price move on the layer below. **OpenClaw** — the largest, and the only one with *no* adjacent revenue layer, a 501(c)(3) with no paid tier — is also the only one whose growth stalled: star velocity **−93%** and release cadence **−88%**, both inflecting in June 2026. At 389k stars and ~3.2M monthly actives, "growth flattened sharply" is defensible and "faded" is not.
+
+**Nobody can say which harness is better, and that is a finding.** The flagship leaderboards **deliberately hold the harness constant** so that models can be compared; the one purpose-built harness-comparison leaderboard publishes no finalised scores; every cross-harness figure located is vendor self-reported, and one widely circulated comparison could not be substantiated at its cited source.
+
+**Five days: §11.6.** On 15 September TypeSafe AI shipped **Jev**, a closed "System One Model" returning calibrated probabilities over a caller-defined schema at $0.042/M input, architecture and parameter count withheld. **The first open replications appeared on 17 September — two days later.** By the 20th there were twelve to fifteen, MIT or Apache where licensed at all, and a head-to-head benchmark existed. That benchmark puts the proprietary model first **by seven tenths of a point**, leading by 4.5 on intelligence and **10.1 on calibration** and losing decisively on cost. The decomposition is the finding: **what was cloned in 48 hours was the interface and the logit-reading trick, not the training method**, which remains unreproduced, and most open projects explicitly disclaim calibration. Two cautions the book prints because the errors are circulating: **"OpenJev" names at least four unrelated projects** (one a Minecraft bot framework), and **Laya's headline win is not like-for-like** — its 0.766 is a checkpoint fine-tuned on the benchmark's own training split against a zero-shot competitor; its *zero-shot* score is **0.362 against a 0.318 random baseline**, and on 77 labels it scores 0.425 against Jev's 0.870. The general proposition, falsifiable within a year: **when a layer is commoditized, what survives is the part that was hardest to measure, not the part that was hardest to build.**
+
+### The moratorium question, both sides at full strength (Chapter 14, new §14.7)
+
+**Mostly a taxonomy problem.** Exactly **one** statewide moratorium is in force — New York's EO 62 of 14 July, reaching only *discretionary state* environmental permits above 50 MW and **not local permits at all**. Pennsylvania's order is a conditional regime; Loudoun County voted only to *draft* one; Texas froze an interconnection queue; and **twelve of fourteen state "moratoria" are unpassed bills**.
+
+**The two headline numbers measure different objects**: $130bn of projects "blocked or delayed" (media scan, no megawatt figures, undisclosed funders) against **2.3 GW actually delayed** of ~20 GW inside restricted areas — three projects accounting for nearly all of it — versus 38 GW forecast for 2027 delivery, i.e. about **6% of one year's delivery**.
+
+**Both cases argued at their strongest.** For restriction: PJM billed **$6.2bn** of capacity cost against facilities *forecast but not built*, while clearing below its own reliability requirement at the price cap; Texas's queue holds **474 GW against a ~90 GW peak**; opposition runs 61–71%, exceeds 50% in *every* party group, and the House passed a ratepayer bill **417–3**. Against: **76–126 GW of headroom** exists for loads accepting curtailment of 0.25–1% of annual energy — thirty-three to fifty-five times what moratoria delay, with no new generation; Virginia's own legislative auditor found data centres **currently pay full cost of service**; the best-identified causal study finds they **lowered** retail rates 3.5% (with its weak first stage and EPRI affiliation printed); and a decomposition **commissioned by a consumer advocate** attributed $8.7bn of PJM's $12.5bn spike to an accreditation rule change and two plant retirements rather than to load.
+
+**Why the studies disagree** turns out to be partly a category error the book can resolve: they measure *capacity*, *wholesale* and *retail* prices respectively, and fixed-cost spreading and marginal dispatch are both real and act on different components of the same bill. What is genuinely unresolved is whether the $6.2bn attributed to unbuilt facilities ever meets real load.
+
+**Capacity is not fleeing abroad**, and the book says so explicitly — no source establishes it; what moved is *within* the US, Northern Virginia down 29% while Atlanta became the most active market. And the federal government has **expressly declined to preempt** local siting, carving data centres out of its own AI-preemption order.
+
+### What the Chinese siting advantage actually bought (Chapter 14, new §14.6.7)
+
+This cuts against a passage already in the book, and is written that way. The velocity advantage is real — 39 completed ultra-high-voltage lines, straightforward western interconnection. **The price advantage does not exist**: in the *coastal* provinces where Chinese data centres actually operate, industrial rates sit **near or above Virginia's**. East Data West Computing delivered measured energy savings of **4–12%** with negligible emissions or renewables benefit, and 75% of digital-industry income remains in East China. Against a 60% utilization target, **Beijing's own estimate is 20–30%**, with **100+ state-backed projects cancelled in eighteen months**. State siting authority bought velocity *and* bought stranded assets, and the two are causally linked. The utilization gap is entered in the register as the quantity that would settle it.
+
+### The stack above the commodity (Chapter 23, new §23.4)
+
+The corollary a middle power has to act on. A national planning decomposition of projected 2030 scientific compute demand — on the order of half a million accelerators — splits it **14% LLM token generation, procurable from any cloud, and 86% simulation, non-LLM training, data processing and experiment integration**, which nobody is organized to sell. **The entire contest this book describes is a fight over a seventh of a national scientific programme's compute.**
+
+The position therefore sits *above* the commoditizing layers, in four that resist: an integrated execution substrate carrying simulation, data, training, inference and agents together; science-domain models that are explicitly *not* LLMs, whose training data is instrument output that must be generated rather than scraped; a harness through which simulations, datasets and *laboratory instruments* become callable tools; and autonomous scientific workflows whose loop terminates in physical apparatus. This **inverts the usual sovereignty prescription** — building a national foundation model and national accelerators enters the two layers where two superpowers are spending most heavily to drive price to marginal cost and where the commons is already adequate. The economic claim is a rent claim: a programme running its own substrate does not pay the cloud's margin on the 86%, and that margin is the one the book finds intact and large.
+
+**Declared:** the source is a briefing the author prepared for a programme he directs. It is named as self-authored in the section, added to the front-matter declaration of interest, graded [P/M], and the section states three things it does not claim — a measured causal return, that the 86/14 split generalizes, or that the commodity layer is safe to ignore.
+
+### Corrections applied to premises that did not survive verification
+
+- **"Qwen-NEXT"** → Qwen3.8-Flash-Next (26 Aug 2026). A separate "Qwen3-Next" exists from **September 2025**; the two are not merged. Flash-Next is **not Apache**.
+- **"Bonsai 2 brings costs down for inference and also for training"** → it is a post-training quantization and **makes no training claim**; the training half is deleted rather than hedged.
+- **"JEV"** → **Jev**, and it is not a generative model.
+- **"OpenJEV"** → at least four unrelated projects; the book names authors.
+- **Laya's headline** → corrected to the like-for-like comparison with the zero-shot number printed.
+- **"OpenCode sprang up after OpenClaw"** → OpenCode launched **19 June 2025**, seven months before the OpenClaw name existed; it is excluded from the successor list and identified as predating the wave.
+- **"Hermis"** → **Hermes Agent** (Nous Research, 25 Feb 2026), which ships a one-command migration path importing OpenClaw installations.
+- **"OpenClaw has faded"** → split into the half that survives (growth) and the half that does not (usage).
+- **"harnesses that are much better"** → not verifiable; the absence of any controlled harness-versus-harness benchmark is reported as a finding.
+
+### Consistency and audit
+
+An independent adversarial pass produced 21 findings, all applied. Among them: a DeepSeek harness/price-rise date that contradicted itself in four places (resolved to same-day, matching the verified primary); eight relative-date phrases left stale by the nine-day move of the currency date; a curtailment figure stated in percent-of-time when the source means percent-of-energy; "roughly seventy per cent" sitting next to components summing to 90.3% on a different denominator; "thirty to fifty times" for a ratio that is 33–55; a sponsorship claim that did not hold for the two proprietary rows of its own table; a table caption contradicted by its own row; the strongest independent qualification of Jev's accuracy present in the bibliography but cited nowhere; a duplicate bibliography key; and an authorship disclosure that the book's own convention required and had omitted.
+
+### Build
+
+Both editions three-pass clean: **zero undefined references, zero undefined citations, zero duplicate labels, zero float-overflow warnings**, worst overfull hbox 16.7pt (all pre-existing). The model-timeline table was converted to a `longtable` to accommodate three new rows. Full edition 415 pages, condensed 59, 818 bibliography entries with no duplicate keys and no cited-but-missing keys in either edition.
+
+---
+
+## v0.24 — 12 September 2026
+
+**Full edition 394 pages, five parts, 29 chapters · Condensed edition 57 pages · 788 bibliography entries (10 new)**
+
+A minor release with two jobs: absorb DeepSeek's V4.1-Flash, and finish counting the fourth precedent that v0.23 added. Both turned into corrections. The model release does not do what the coverage says it does, and the precedent sweep found eleven surviving "three" constructions including the Part I title itself.
+
+### DeepSeek V4.1-Flash (Chapter 10, new §10.3.5)
+
+The claim arrived as "DeepSeek 4.1 Flash — the low cost, benchmark scores and tokens/s are amazing, but there are reported shortcomings especially on visual tasks." Three parts of that did not survive the check.
+
+**The name.** It is **DeepSeek-V4.1-Flash**, API string `deepseek-flash`, released **10 September 2026**: a 552B mixture-of-experts backbone activating **8B on prefill and 16B on decode**, a forty-layer causal encoder–decoder, one shared plus 384 routed experts with six live per token, 1M context, 45T pre-training tokens, MIT, weights shipped. The same announcement **retired** `deepseek-v4-flash` and `deepseek-v4-flash-vision-exp` and silently re-routed the legacy identifiers — an operational hazard in its own right, and the reason the next correction is easy to make.
+
+**The price is shaped, not simply low.** Off-peak $0.003 cached input / $0.15 uncached input / $0.60 output per million tokens; peak double. On the combined million-in, million-out basis this book orders its price table by, that is **$0.75 off-peak and $1.50 at peak — *above* GLM-5.3-Flash's $0.65 and above the retired predecessor's $0.42**, and at peak above GPT-5.6 Luna's $1.40. What is exceptional is one line the combined column cannot show: **cached input at $0.003**, roughly a seventh of the cheapest competing cached rate and a thirtieth to a hundred-and-sixtieth of the mid- and top tiers. That is a targeted subsidy of exactly one workload shape — the long, repeatedly re-read context of an agent loop — not a general cut. The ledger's own method changes as a result: vendors now price workload *shapes* rather than tokens, and future editions carry cached and uncached input as separate columns.
+
+**The ordering survives a basis this book did not choose.** Artificial Analysis blends cache-hit, uncached and output tokens 7:2:1 and prices V4.1-Flash at **$0.18 per million against GLM-5.3-Flash's $0.10** — a different basis from the combined million-in, million-out figure above, and the same result. The "not actually the cheapest" finding therefore does not rest on an arithmetic basis of the author's choosing.
+
+**The index went the other way.** On Artificial Analysis **v4.3** the model scores **40** — *behind* GLM-5.3-Flash's 42 and level with Qwen3.8. The new price leader is not the strongest model in its own weight class. The "50" circulating for its predecessor belongs to an **earlier index version**, where the same checkpoint re-scores **35**; any narrative of a decline from 50 to 40 compares two instruments rather than observing a model. DeepSeek's own table shows why: Terminal-Bench **2.1 at 90.6**, a win over Claude Opus 5's 89.1 — but **30.0 on v3.0** against 43.3 and **31.2 on v4.0** against 51.8. It wins the superseded variant and loses the two current ones by thirteen and twenty-one points, and Terminal-Bench v4.0 is one of the ten components of the v4.3 index. Strong when bounded and single-shot, weak when long-horizon and agentic.
+
+**The visual shortcomings belong to a different model.** V4.1-Flash is **natively multimodal** — a DeepSeek-ViT encoder with visual and text embeddings trained jointly from the start of pre-training — and **no independent third-party vision evaluation of it exists**: Artificial Analysis publishes no multimodal index and the public arena has not listed it. The concrete failures circulating in early coverage (an exponent absorbed into a multi-digit number, an Urdu passage dropped and a word hallucinated into an Indonesian handwriting sample, images tokenized at a fixed 384-token ceiling regardless of resolution) are tests of **DeepSeek-V4-Flash-Vision-Exp**, shipped 21 August and **retired on 10 September**, the same day the old identifier was pointed at the new model. The register entry for V4.1-Flash vision is therefore **"not measured," not "weak."** What *is* anomalous, and is recorded as a signal rather than a measurement: DeepSeek published vision numbers for the **base model only** and, uniquely among the sections of its suite, **with no competitor columns at all** — MMMU-Pro 56.5, CVBench 77.9, DocVQA 95.6, RefCOCO-avg 86.0, with **no MathVista, ChartQA, OCRBench or non-Pro MMMU** — and the instruct model's visual figures are **tool-assisted** (ZeroBench 49.0 *with Python*).
+
+**Speed holds, with the spread printed.** 217 output tokens/s and 1.13s time-to-first-token on DeepSeek's own endpoint against GLM-5.3-Flash's 98 and 2.49s — genuine leadership in the bracket — but the same aggregator's provider page says 199 and OpenRouter measures 127 as best of eleven providers, so the book quotes a band of roughly 125–220 rather than a number. And no source establishes what silicon served the measured requests, so the throughput figure is connected to neither the Cambricon day-zero adaptation nor DeepSeek's reported Ascend order.
+
+**The vendor's own caveats are the most useful in the file.** DeepSeek concedes that "CSA2 sparse-selection errors" and "approximate state reconstruction" can degrade output in extended-context sparse retrieval and at cache-resumption boundaries — a long-context fragility located precisely in the mechanism that produces the cheap KV cache, so the efficiency and the failure mode share a cause. And raising reasoning effort from 25 to 100 costs **~2.5× the output tokens**, which is the setting every headline benchmark uses.
+
+**What it does to the argument, and what it does not.** It confirms the open-weight ratchet at a **fifth consecutive frontier-family release to ship weights** (Kimi K3, Qwen3.8-Max, GLM-5.3, GLM-5.3-Flash, and this), on the most permissive terms any frontier-scale Chinese model carries. It cuts *against* two of the book's readings, both conceded in the text: **local deployment got harder, not easier** — from a 280B predecessor to a 552B backbone plus ~196B of resident N-gram weights and a floor in the high hundreds of gigabytes at FP8, so the personal-and-SME-hardware argument that made GLM-5.3-Flash strategically interesting does not transfer; and it does **nothing for Proposition P2**, since the integration test is *training* on domestic silicon and the customer best placed to buy that capacity has reportedly ordered it for inference only. One line of the price surface moved. The frontier did not.
+
+One methodological note recorded in both editions: the N-gram / conditional-memory construction behind the efficiency is **convergent industry practice** — Alibaba's Qwen3.8-Flash-Next and Google's Gemma line use comparable schemes — not a unilateral Chinese breakthrough. And the secondary account supplying the 763B total and the 567GB FP8 floor does not reconcile with itself (552 + 196 = 748), so the book takes the order of magnitude and not the figure, and says so.
+
+### The fourth precedent, counted through (both editions)
+
+v0.23 added the telecommunications campaign as a fourth Part I precedent but left the arithmetic of the earlier text alone. This release finishes it. **Part I is now "The Precedents: Four Wars Already Won."** Updated: the thesis chapter's opening section ("Four wars, one playbook") and its enumeration; the playbook chapter's "four surveys" and its table caption, which now states explicitly that the table covers the three commodity wars and that telecommunications is scored against the six steps in its own chapter rather than tabulated; "a playbook from four campaigns"; "won four technology wars" (three sites); "four precedent campaigns as its track record"; "four industrial precedents"; "a playbook argued from four victories" (both editions); Europe "having sat out the manufacturing of all four precedents"; the summary chapter's precedent sentence, which now names the switch alongside the cell, the pack and the car; and the front-matter definition of winning, which now includes the network case. The condensed edition's preface, thesis chapter, precedent chapter and summary carry the same corrections.
+
+**One ordinal decision, stated because it is a judgment.** "Why AI is the fourth war" becomes **"Why AI is the next war,"** and the strategy chapters now describe the playbook run on "a fifth industry." The ordinal was only ever counting *commodity* campaigns; with a network precedent in Part I it either has to move or has to keep being maintained, and the version that cannot drift is the one without a number in it.
+
+**Added to the claim register:** three telecommunications rows (Huawei's flat 31% share across the sanctions period, the CDB facility and the state-support reconstruction, and the finding that the bans bit only where security agencies held a veto) — a fourth precedent with no register entry was a structural gap.
+
+### Other consistency fixes
+
+- §10.5 retitled **"Five frontiers, three scoreboards"**: the section opened by describing five frontiers under a heading that said three.
+- The model-timeline table's caption ran to "August 2026" over a table that now ends in September, and said "Chinese" over a table containing Meta's Muse Glimmer; both fixed.
+- Two relative-date phrases ("in the last week before this edition's currency date," "in the week before") were stale by more than a fortnight after the currency date moved to 12 September; both now state the real interval.
+- The trust chapter's "on the currency date itself" for the 9 September NSA/FBI/CISA advisory is now "three days before the currency date."
+- The theory chapter's "Part I shows this sequence completing three times" is now scoped to three of Part I's four campaigns, since the below-cost mechanism is commodity-specific.
+- The bulletin appendix's closing "Strengthened: three things" is now four, accounting for its own newest section.
+
+### Build
+
+Both editions rebuilt three-pass: **zero undefined references, zero undefined citations, zero duplicate labels, no float-overflow warnings**, worst overfull hbox 16.7pt (pre-existing). Full edition 394 pages, condensed 57 pages, 788 bibliography entries with no duplicate keys and no cited-but-missing keys in either edition.
+
+---
+
 ## v0.23 — 9 September 2026
 
 **Full edition 390 pages, five parts, 29 chapters · Condensed edition 56 pages · 778 bibliography entries (30 new)**

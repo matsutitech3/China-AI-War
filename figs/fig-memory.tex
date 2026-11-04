@@ -11,20 +11,20 @@
   ytick={1,2,4,8,16}, yticklabels={1,2,4,8,16},
   legend style={at={(0.02,0.03)}, anchor=south west},
 ]
-\addplot[only marks, mark=*, mark size=2.6pt, color=sOne] coordinates {(192,8) (288,14.5)};
+\addplot[only marks, mark=*, mark size=2.6pt, color=sOne] coordinates {(192,8) (288,14.5) (432,14.5)};
 \addlegendentry{HBM-class accelerator}
 \addplot[only marks, mark=square*, mark size=2.6pt, color=sTwo] coordinates {(2300,7) (1500,1.2)};
 \addlegendentry{LPDDR-class socket}
 \addplot[only marks, mark=triangle*, mark size=3.2pt, color=sFour] coordinates {(32,4)};
 \addlegendentry{LX2 (accelerated CPU)}
 \node[font=\scriptsize\color{inkSec}, anchor=east] at (axis cs:170,8) {B200};
-\node[font=\scriptsize\color{inkSec}, anchor=west] at (axis cs:340,14.5) {HBM4 ceiling (288\,GB)};
+\node[font=\scriptsize\color{inkSec}, anchor=south west] at (axis cs:300,15.5) {HBM4: 288\,GB (8 stacks), 432\,GB (12)};
 \node[font=\scriptsize\color{inkSec}, anchor=south] at (axis cs:2300,7.8) {LPDDR6X proposal [M]};
 \node[font=\scriptsize\color{inkSec}, anchor=south] at (axis cs:1500,1.35) {Vera (shipped)};
 \node[font=\scriptsize\color{inkSec}, anchor=west] at (axis cs:36,3.6) {LX2};
 \draw[dashed, color=inkMut, line width=0.6pt] (axis cs:306,0.7) -- (axis cs:306,20);
 \node[font=\scriptsize\color{inkSec}, anchor=south east, align=right]
-  at (axis cs:290,21) {model state per accelerator,\\128-node run ($\sim$306\,GB)};
+  at (axis cs:290,21) {model state per accelerator,\\128-socket run ($\sim$306\,GB)};
 \end{axis}
 \end{tikzpicture}
 
@@ -53,8 +53,10 @@
 \end{tikzpicture}
 \caption[Memory design space and the MFU trade]{Why capacity is the arbitrage. \emph{Above}: capacity against
 bandwidth for shipped parts [V] and for the modeled LPDDR6X socket [M]. The dashed line is the per-accelerator
-model state for the reference 2.8T-parameter sparse-MoE run at 128 nodes ($\sim$306\,GB): everything to its left
-cannot hold the model at all, which is the sense in which the HBM path has a cluster-size floor. \emph{Below}:
+model state for the reference 2.8T-parameter sparse-MoE run at 128 sockets, i.e.\ 64 dual-socket nodes
+($\sim$306\,GB): a part to its left cannot hold that shard. The resulting cluster-size floor is
+\emph{configuration-specific rather than generational}---roughly 136 accelerators at 288\,GB and roughly 91 at
+432\,GB, for the same $\sim$39\,TB of state---so it moves with which vendor's HBM4 the buyer procured. \emph{Below}:
 the trade the substitution buys---22 points of MFU ceiling surrendered for an eightfold capacity gain and an
 order-of-magnitude better cost per bit. Curve shape is modeled, not measured; Appendix~\ref{app:lpddr} states the
 experiments that would confirm or refute it.}

@@ -26,11 +26,13 @@
 \node[font=\scriptsize\color{inkSec}, align=center, text width=24mm, below=2mm of e] {\$3.1T base,\\\$4--13 multiplier};
 
 \node[font=\scriptsize\color{inkSec}, align=left, text width=168mm, anchor=north west] at (-2.6,-3.5)
-  {The corner-to-corner product of these ranges spans $U=a(s{-}1)vd \approx 0.45\%$ to $59\%$; the task-weighted
-   Monte Carlo of \S\ref{sec:funnelmath}, which is the operative estimate, concentrates this into a central
-   $\approx$11\% with a 10--90\% range of 8--18\% [M]. Even the pessimistic corner is a socially consequential
-   annual research-output flow ($\sim$\$28B/yr against the \$3.1T base), whose present value exceeds the cost of
-   national AI4S infrastructure by a large multiple. What the claim does not survive is the assumption that
+  {The corner-to-corner product of these ranges spans $U=a(s{-}1)vd \approx 0.45\%$ to $59\%$ for a single pool;
+   the task-weighted Monte Carlo of \S\ref{sec:funnelmath}, which is the operative estimate, gives a central
+   10.74\%, a median of 11.61\% and a model-conditional 10th--90th-percentile range of 6.73--18.98\% [M]
+   (\texttt{models/funnel-mc.py}, seed 20260923). The all-pessimistic corner, 0.83\%, is still a socially
+   consequential annual research-output flow ($0.83\%\times\$3.1$T $=\$25.7$B/yr), whose present value exceeds the
+   cost of national AI4S infrastructure by a large multiple. The percentiles are conditional on the assumed
+   distributions, not empirical confidence intervals. What the claim does not survive is the assumption that
    acceleration equals discovery, which is why the funnel is drawn rather than asserted.};
 \end{tikzpicture}
 \caption[The AI4S value-conversion funnel]{From capability to output, with the losses shown. Each arrow carries a

@@ -3,16 +3,16 @@
 \begin{tikzpicture}
 \begin{axis}[bookbar, height=4.3cm, width=0.66\linewidth, bar width=15pt,
   ylabel={Share (\%)},
-  title={The master's asymmetry},
-  symbolic x coords={{tokens generated},{token-service GPUs}},
+  title={The master's asymmetry, within the token layer},
+  symbolic x coords={{tokens generated},{token-layer GPUs}},
   xtick=data, ymin=0, ymax=115,
   xticklabel style={font=\scriptsize\color{inkSec}},
   nodes near coords, nodes near coords style={font=\scriptsize\color{inkSec}},
   legend style={at={(0.5,-0.30)}, anchor=north, legend columns=2},
 ]
-\addplot[fill=sOne] coordinates {({tokens generated},10) ({token-service GPUs},88.7)};
+\addplot[fill=sOne] coordinates {({tokens generated},10) ({token-layer GPUs},88.7)};
 \addlegendentry{master (1M-token context)}
-\addplot[fill=sThree] coordinates {({tokens generated},90) ({token-service GPUs},11.3)};
+\addplot[fill=sThree] coordinates {({tokens generated},90) ({token-layer GPUs},11.3)};
 \addlegendentry{sub-agents (128K context)}
 \end{axis}
 \end{tikzpicture}
@@ -62,9 +62,12 @@
 \end{axis}
 \end{tikzpicture}
 \caption[The AI4S sizing results]{Three readings of the same framework~\cite{ai4s-framework}. \emph{Top}: ten
-percent of tokens, generated at million-token context, consume nearly ninety percent of the token-service
-capacity---the configuration's central structural fact, invariant across countries, and the reason master context
-length is the layer's primary scenario axis. \emph{Middle}: committed national fleets against two priced service
+percent of tokens, generated at million-token context, consume nearly ninety percent of the \emph{token-service
+layer}---and that layer is 14.3--14.6\% of Regime~S national demand, so the master term is about 13.0\% of the
+national requirement, not of it. The asymmetry is the configuration's central structural fact and is a property of
+a serving generation rather than of agentic science: the 3.25$\times$ scenario of \S\ref{sec:serving-scenario} takes
+the token layer to $\approx$5.0\% of national demand [F/S]. Master context length remains the layer's primary
+scenario axis. \emph{Middle}: committed national fleets against two priced service
 rungs and the full modeled requirement, log scale. Japan's and the United States' commitments already exceed the
 uniform-baseline rung but reach only $\sim$54\% and $\sim$70\% of the tiered rung; Singapore's clears neither.
 \emph{Bottom}: the same result per researcher---announced infrastructures provision 0.02--0.10 BGPU against a

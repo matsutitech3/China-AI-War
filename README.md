@@ -4,7 +4,7 @@
 
 **Satoshi Matsuoka** — Director, RIKEN Center for Computational Science (R-CCS); Professor, Institute of Science Tokyo
 
-**Current edition: v0.23 — 9 September 2026** · [What changed](CHANGELOG.md) · [Full edition (PDF)](How-China-Will-Win-the-AI-War-v0.23.pdf) · 390 pages · [Condensed edition (PDF)](How-China-Will-Win-the-AI-War-Condensed-v0.23.pdf) · 56 pages
+**Current edition: v0.27 — 23 September 2026** · [What changed](CHANGELOG.md) · [Full edition (PDF)](How-China-Will-Win-the-AI-War-v0.27.pdf) · 450 pages · [Condensed edition (PDF)](How-China-Will-Win-the-AI-War-Condensed-v0.27.pdf) · 62 pages
 
 ---
 
@@ -79,7 +79,7 @@ Every push to `main` rebuilds both PDFs via GitHub Actions, so the committed sou
   author    = {Matsuoka, Satoshi},
   title     = {How China Will Win the AI War: The Convergence Strategy---A Structural Path to AI Dominance},
   year      = {2026},
-  note      = {Living book, v0.22, 9 September 2026},
+  note      = {Living book, v0.26, 21 September 2026},
   url       = {https://github.com/matsutitech3/China-AI-War}
 }
 ```

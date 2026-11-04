@@ -11,26 +11,61 @@ The framing claim is worth stating plainly, because it inverts the usual vocabul
 
 The decisive argument is financial, and it is one that neither the model-capability literature nor the geopolitics literature makes, because it requires a workload model rather than a benchmark.
 
-Scientific computing is not a language-model workload. Measurements of a realistic AI-for-Science portfolio---traditional simulation, training and inference for non-language scientific models, search, data preparation, and agentic or frontier-LLM use---put the frontier-LLM and agentic share of \emph{physical} workload at roughly 14\%, with simulation and domain-specific AI consuming the rest. The language model is the connective layer of a scientific workflow, not the whole system~\cite{consortium-record}. That fact is usually deployed as a reassurance. It is the opposite, once the price asymmetry is applied: commercially purchased frontier tokens carry an estimated 20--60$\times$ unit-price premium relative to equivalent service from infrastructure and open models under institutional control [A/M].
+Scientific computing is not a language-model workload. This is a statement about Regime~S (Section~\ref{sec:regimes}) and about nothing else: in Regimes~G and~E---consumer AI through phones and applications, and enterprise streamlining of accounting, personnel and approvals---the provisioned capability is essentially all token generation, and the price tables of Chapter~\ref{ch:model} describe those regimes accurately. Regime~S is built differently. A realistic AI-for-Science portfolio---traditional simulation, training and inference for non-language scientific models, search, data preparation, and agentic or frontier-LLM use---puts the frontier-LLM and agentic share of \emph{physical} workload at roughly 14\%, with simulation and domain-specific AI consuming the rest; the language model is the connective layer of a scientific workflow, not the whole system~\cite{consortium-record}.
+
+The grade on that figure has to be stated plainly, because the whole arithmetic of this section rests on it. It is a \textbf{modelled portfolio share anchored in a discussion record} [A/M]---the considered judgement of two computing-centre directors about the composition of a realistic national portfolio---and \emph{not} a metered measurement of a running service. It is corroborated from a different direction---though \emph{not} independently, since both documents are this author's---by the sizing framework of Chapter~\ref{ch:sizing}, whose Japanese instantiation puts the token-service layer at 14.3--14.6\% of national Regime~S demand on a measured demand anchor; that is why $f_{\mathrm{front}} = 0.146$ is the value carried in the tables below rather than the round 0.14. Two model-based estimates agreeing is not a measurement, it is two models agreeing---and the national probe that would settle it is specified in Chapter~\ref{ch:sizing} and has been run in one country.
+
+That the share is a minority is usually deployed as a reassurance. It is the opposite, once the price asymmetry is applied: commercially purchased frontier tokens carry an estimated 20--60$\times$ unit-price premium relative to equivalent service from infrastructure and open models under institutional control [A/M]. That band is an assumption, not a measurement, so this chapter carries it as \emph{two named cases}, $\rho = 20$ and $\rho = 60$, rather than as a range that gets silently averaged into a single reassuring number.
 
 The consequence is arithmetic. If a fraction $f_{\mathrm{front}}$ of physical work is served by purchased frontier tokens at a relative unit price $\rho$, the share of total expenditure consumed by that minority workload is
 \[
 \Sigma_{\mathrm{front}}(f_{\mathrm{front}},\rho) \;=\; \frac{f_{\mathrm{front}}\,\rho}{(1-f_{\mathrm{front}}) + f_{\mathrm{front}}\,\rho},
 \]
-which for $f_{\mathrm{front}} = 0.14$ gives $\Sigma_{\mathrm{front}} = 76.5\%$ at $\rho = 20$ and $\Sigma_{\mathrm{front}} = 90.7\%$ at $\rho = 60$~\cite{consortium-record}. Table~\ref{tab:ai4s-cost} shows the sensitivity. \emph{A workload share of one seventh becomes a budget share of three quarters to nine tenths.}
+which at the sizing framework's $f_{\mathrm{front}} = 0.146$ gives $\Sigma_{\mathrm{front}} = 77.4\%$ in the $\rho = 20$ case and $91.1\%$ in the $\rho = 60$ case. \emph{A Regime~S workload share of one seventh becomes a budget share of three quarters to nine tenths}---and on the serving-generation scenario, a twentieth becomes roughly a half to three quarters. Table~\ref{tab:ai4s-cost} shows the sensitivity across the whole parameter plane; Table~\ref{tab:ai4s-cases} evaluates the four cases this chapter actually argues from.
 
 \input{figs/fig-ai4s-cost}
+
+\subsection{Four cases, carried rather than averaged}
+\label{sec:ai4s-cases}
+
+Two assumptions move $\Sigma_{\mathrm{front}}$ more than anything else, and both are decisions rather than discoveries, so both are carried as explicit cases.
+
+\emph{The premium.} $\rho = 20$ and $\rho = 60$ are the ends of the estimated band, and they are not close together: the same workload share produces 77.4\% or 91.1\% of the budget depending which is right. Averaging them would hide the fact that the policy conclusion is insensitive to the choice while the number is not.
+
+\emph{The serving generation.} Chapter~\ref{ch:sizing} prices a scenario in which a DeepSeek-V4.1-Flash-class serving generation cuts the token coefficient by 3.25$\times$, taking Japan's token-service layer from 72.7k to 22.4k BGPU while the national requirement falls only about 10\%, from 497k to 446k, because simulation and non-LLM training are untouched. The token layer's share then falls from 14.6\% to about 4.5--5.0\%, and $f_{\mathrm{front}} = 0.045$ is the corresponding case [F/S]. The provenance of that advance belongs in the sentence that uses it: the efficiency work driving it is recent Chinese work, DeepSeek's in particular, which is the same mechanism Chapter~\ref{ch:model} documents on price and this chapter's third implication below turns into a dependency argument.
+
+\emph{Selective routing} is the third case, and it is the one a competent institution actually operates. Not every token needs the frontier tier. If only a fraction $q$ of the token layer is escalated to purchased frontier service and the remainder is served in house at parity, the layer's blended premium is $\rho_{\mathrm{eff}} = 1 + q(\rho - 1)$, which at $q = 10\%$ is 2.9 in the $\rho=20$ case and 6.9 in the $\rho=60$ case. The budget share is then $\Sigma_{\mathrm{front}}(f, \rho_{\mathrm{eff}})$. Routing is thus the cheapest single intervention available---and it is available only to an institution that operates a credible non-frontier tier, which is the consortium's function and not a procurement option.
 
 \begin{table}[htbp]
   \centering
   \small
-  \caption{Share of total AI-for-Science expenditure consumed by purchased frontier tokens, $\Sigma_{\mathrm{front}}(f_{\mathrm{front}},\rho)$, as a function of the frontier-workload fraction $f_{\mathrm{front}}$ and the price premium $\rho$. Illustrative consequence of the stated assumptions [M], not an audited budget forecast.}
+  \caption{The conversion evaluated at the four cases this chapter argues from. $\Sigma_{\mathrm{front}}$ is the share of total Regime~S expenditure consumed by the token-service layer when that layer is bought at a premium. Two premium cases are carried throughout rather than averaged [A/M]; two serving generations, the current one ($f_{\mathrm{front}} = 0.146$, Chapter~\ref{ch:sizing}) and the 3.25$\times$ serving-efficiency scenario ($f_{\mathrm{front}} = 0.045$) [F/S]; and two routing policies, all-frontier and selective escalation of $q = 10\%$ of the token layer at $\rho_{\mathrm{eff}} = 1 + q(\rho-1)$. Entries are the formula evaluated at those inputs and rounded to one decimal; the scenario rows use $f_{\mathrm{front}} = 0.045$, the conservative end of the 4.5--5.0\% band that the 3.25$\times$ cut produces depending on which requirement denominator it is taken against.}
+  \label{tab:ai4s-cases}
+  \begin{tabular}{llrr}
+    \toprule
+    Serving generation & Routing policy & $\rho = 20$ & $\rho = 60$ \\
+    \midrule
+    Current, $f_{\mathrm{front}} = 0.146$ & all frontier & 77.4\% & 91.1\% \\
+    Current, $f_{\mathrm{front}} = 0.146$ & selective, $q = 10\%$ & 33.1\% & 54.1\% \\
+    \addlinespace
+    3.25$\times$ scenario, $f_{\mathrm{front}} = 0.045$ & all frontier & 48.5\% & 73.8\% \\
+    3.25$\times$ scenario, $f_{\mathrm{front}} = 0.045$ & selective, $q = 10\%$ & 12.0\% & 24.5\% \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Read the table as a policy instrument rather than a forecast. The worst cell, 91.1\%, is an institution that buys everything at the top tier on today's serving generation. The best, 12.0\%, is an institution that routes selectively on tomorrow's. \emph{Nothing in the difference between those two cells is a model-capability question}; all of it is procurement architecture and serving efficiency, which is precisely the ground a consortium can hold and a purchasing department cannot.
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \caption{Share of total AI-for-Science expenditure consumed by purchased frontier tokens, $\Sigma_{\mathrm{front}}(f_{\mathrm{front}},\rho)$, as a function of the frontier-workload fraction $f_{\mathrm{front}}$ and the price premium $\rho$. One symbol, one meaning: $\rho$ is the premium throughout this book and no other letter is used for it. Rows are round illustrative shares; the operative cases, evaluated at $f_{\mathrm{front}} = 0.146$ and $0.045$, are in Table~\ref{tab:ai4s-cases}. Illustrative consequence of the stated assumptions [M], not an audited budget forecast.}
   \label{tab:ai4s-cost}
   \begin{tabular}{lrrrrr}
     \toprule
-    & \multicolumn{5}{c}{Price premium $r$ (purchased frontier vs.\ self-operated open)} \\
+    & \multicolumn{5}{c}{Price premium $\rho$ (purchased frontier vs.\ self-operated open)} \\
     \cmidrule(l){2-6}
-    Frontier share $f$ & $1\times$ & $5\times$ & $20\times$ & $40\times$ & $60\times$ \\
+    Frontier share $f_{\mathrm{front}}$ & $1\times$ & $5\times$ & $20\times$ & $40\times$ & $60\times$ \\
     \midrule
     5\%  & 5.0\%  & 20.8\% & 51.3\% & 67.8\% & 75.9\% \\
     14\% & 14.0\% & 44.9\% & 76.5\% & 86.7\% & 90.7\% \\
@@ -40,11 +75,35 @@ which for $f_{\mathrm{front}} = 0.14$ gives $\Sigma_{\mathrm{front}} = 76.5\%$ a
   \end{tabular}
 \end{table}
 
-Three implications follow, and they connect this chapter to the book's central mechanism. First, \emph{whoever sets the frontier token price sets the science budget of every institution that buys it}---which is the proposition~P3 of Section~\ref{sec:propositions}, applied not to enterprise software margins but to national research capacity. A country that funds a supercomputer and then rents its intelligence layer has outsourced the majority of its own AI-for-Science expenditure to a foreign price list. Second, the same arithmetic explains why the Chinese price collapse (Chapter~\ref{ch:model}) is strategically effective without any coercion whatsoever: at $r$ near unity---which cheap open weights on domestic hardware deliver---the budget problem simply dissolves, and the institution that solved it that way has acquired a dependency it did not negotiate. Third, it quantifies what open capability is \emph{worth} to a public research system: not the marginal benchmark point, but the difference between spending 14\% and 90\% of a national AI budget on one layer.
+Three implications follow, and they connect this chapter to the book's central mechanism. First, \emph{whoever sets the frontier token price sets the science budget of every institution that buys it}---which is the proposition~P3 of Section~\ref{sec:propositions}, applied not to enterprise software margins but to national research capacity. A country that funds a supercomputer and then rents its intelligence layer has outsourced the majority of its own AI-for-Science expenditure to a foreign price list. Second, the same arithmetic explains why the Chinese price collapse (Chapter~\ref{ch:model}) is strategically effective without any coercion whatsoever: at $\rho$ near unity---which cheap open weights on domestic hardware deliver---the budget problem simply dissolves, and the institution that solved it that way has acquired a dependency it did not negotiate. The serving-efficiency advance of the preceding subsection is the same mechanism operating on the other term: a 3.25$\times$ cheaper token, from the same source, shrinks $f_{\mathrm{front}}$ as well as $\rho$. Third, it quantifies what open capability and competent routing are \emph{worth} to a public research system: not the marginal benchmark point, but the distance between the 12.0\% cell and the 91.1\% cell of Table~\ref{tab:ai4s-cases}, on an unchanged workload and unchanged science.
 
-The corresponding service design is a tiered one: a high-end path for genuinely demanding frontier use, cheaper models for routine tasks, and extensive support for the scientific long tail---where documentation, model selection, workflow integration, and knowledge assistance may expand effective coverage as much as raw accelerator capacity does~\cite{consortium-record}. The consortium's financial case must therefore separate physical utilization from expenditure. That distinction is the policy argument, not an implementation detail.
+The corresponding service design is a tiered one: a high-end path for genuinely demanding frontier use, cheaper models for routine tasks, and extensive support for the scientific long tail---where documentation, model selection, workflow integration, and knowledge assistance may expand effective coverage as much as raw accelerator capacity does~\cite{consortium-record}. That design \emph{is} the selective-routing policy of Table~\ref{tab:ai4s-cases} stated as an organization chart rather than as an equation, which is why the two rows differ by a factor of two and a half in budget share. The consortium's financial case must therefore separate physical utilization from expenditure. That distinction is the policy argument, not an implementation detail.
+
+\subsection{What a smaller token layer does---and does not do---to this proposal}
+\label{sec:consortium-anchor}
+
+The serving-generation scenario deserves a direct answer here rather than a footnote, because the obvious inference from it is the wrong one. If the token-service layer falls from a seventh of national scientific compute to a twentieth, and its budget share at the sixty-fold premium from nine tenths to three quarters---or to a quarter if selective routing is assumed as well, which is a second change and not the same one (Table~\ref{tab:ai4s-cases})---does the case for this institution shrink with it?
+
+It does not, and the reason is structural. \emph{The consortium's emphasis was never competing with China---or with anyone---for widespread LLM use.} Nothing in this chapter proposes that a coalition of middle powers out-serve the two principals in Regimes~G and~E (Section~\ref{sec:regimes}), where the contest is head to head, the provisioned capability is token generation, and price is already falling toward marginal cost without any assistance from a consortium. The justifications advanced here are six, and each should be read against a shrinking token layer to see whether it moves.
+
+\emph{Sovereignty.} The ability to decide what runs, on whose terms, under whose jurisdiction, with what continuity guarantees. A smaller token layer does not transfer that decision to a member state; it makes the decision cheaper to exercise.
+
+\emph{Access.} A researcher in a member country reaching a class of capability their own country does not operate---which is a statement about the whole Regime~S stack, and overwhelmingly about the nineteen twentieths that is simulation, non-LLM training and instrument-rate data processing.
+
+\emph{Shared development.} The return on pretraining is people who know how to do it, and that argument (Section~\ref{sec:pretraining-insurance}) is about maintained capability, not about market share in served tokens. It is unchanged if the served tokens get cheap; if anything a cheaper serving generation lowers the cost of exercising the capability.
+
+\emph{Data stewardship.} Cleaning, curating, documenting and making scientific data accountable is the service most users need and the one science is uniquely equipped to provide. It has no token term in it at all.
+
+\emph{Resilience.} Policy, verification and regulatory risk---the three named insurance risks below---are properties of dependence on artifacts produced elsewhere. They do not weaken when the artifacts get cheaper; a supplier that can restrict release can restrict a cheap release as easily as an expensive one.
+
+\emph{Reduced duplication.} One certified pipeline, one evaluation suite, one trust stack, one set of lifecycle obligations, built once across the membership rather than five times in parallel. This saving is in engineering effort and calendar, not in accelerator-hours, and it is the one Chapter~\ref{ch:sizing} finds federation delivers most reliably.
+
+None of the six is a claim about the size of the token layer, and none of them moves when the token layer shrinks. What moves is the price tag, and it moves in the institution's favour: \textbf{a smaller token layer makes the consortium cheaper to run, not less necessary}. The high-end serving tier it must operate to make selective routing possible is a fifth of the machine it would have been; the capital that frees goes to the substrate, the data operations and the lifecycle obligations, which are the functions nobody else is organized to supply.
+
+One further prospect belongs here, stated as a possibility rather than a plan. The consortium's open-model work may overlap and converge with general-purpose open frontier-model efforts rather than running parallel to them. \emph{NVIDIA's Nemotron line is the concrete example}: an open-weight family from the accelerator vendor itself, released with training data and recipes, and---on the router evidence of Chapter~\ref{ch:mirror}---at real volume, with Nemotron~3 Ultra among the largest models by routed tokens on its free endpoint [A]. A consortium that needed a strong open base model and found one already maintained at frontier scale by a commercial party would be right to use it, adapt it, and spend its own money on the layers above. The counter-evidence is in the same chapter and is not small: an open-model layer whose training platform is licensed from one accelerator vendor, whose researchers are on that vendor's payroll, and whose distribution hub is that vendor's subsidiary is a vendor-controlled distribution rather than a commons in the strict sense, and a consortium that depended on it would have swapped a token dependency for a weights-and-toolchain dependency. Convergence is therefore an opportunity to evaluate on published criteria---exactly the origin-neutral test of Table~\ref{tab:consortium-spec}---and not a reason to stop maintaining the capability.
 
 \section{Open pretraining as insurance, not as a benchmark contest}
+\label{sec:pretraining-insurance}
 
 The second pillar is capability retention, and it requires stating an uncomfortable proposition honestly: a national or consortium open model may never be the best production choice, and building it is still correct.
 
@@ -62,7 +121,7 @@ The HPC community supplies the working analogy: centers share software, publish 
 
 Four functions define the entity, and they are the test of whether it needs to exist:
 
-\emph{Federated compute.} Countries and centers contribute capacity into a pool under common accounting rather than transferring assets to one site. The concrete proof-of-concept discussed is a joint training campaign---a next-generation open model of order 15 trillion tokens, divided among compatible systems in several countries, with more than one national partner contributing substantial resources~\cite{consortium-record}. What such a pilot buys is not primarily the model: it is shared investment, shared know-how, and a live test of cross-border accounting, scheduling, licensing, and reproducibility. Those mechanisms, once built, are reusable for everything else.
+\emph{Federated compute.} Countries and centers contribute capacity into a pool under common accounting rather than transferring assets to one site. The concrete proof-of-concept discussed is a joint training campaign---a next-generation open model of order 15 trillion tokens, divided among compatible systems in several countries, with more than one national partner contributing substantial resources~\cite{consortium-record}. What such a pilot buys is not primarily the model: it is shared investment, shared know-how, and a live test of cross-border accounting, scheduling, licensing, and reproducibility. Those mechanisms, once built, are reusable for everything else. What it does \emph{not} buy has to be said in the same breath, because the federation literature routinely overclaims it: pooling conserves compute-hours. Chapter~\ref{ch:sizing} does the arithmetic---moving effective utilization from 0.90 to a theoretical 1.00 gains at most 11.1\% of delivered hours, against national shortfalls of roughly tenfold. Federation supplies access to machine classes a member does not operate, absorbs unsynchronized peaks, removes duplicated build cost, and raises utilization by a bounded amount. It does not supply missing aggregate capacity, and a proposal that implies otherwise will be measured against the implication.
 
 \emph{Scientific data stewardship.} Cleaning, curating, documenting, and making data accountable is the service most users actually need---small and medium enterprises typically need more help with data preparation than with machine-learning algorithms---and it is the service for which science is uniquely well equipped, because reproducibility and provenance are already scientific requirements rather than compliance overhead~\cite{consortium-record}.
 
@@ -122,7 +181,7 @@ A proposal that names functions but not instruments is a wish. Ten design parame
     \addlinespace
     Model and data licensing & Open weights plus documented recipes under a model-distribution licence; layered data policy (open commons, voluntary contribution with credits, secure private adaptation) & Ambiguity here blocks industrial participation entirely \\
     \addlinespace
-    Compute allocation & Published accounting unit (BGPU, Chapter~\ref{ch:sizing}), peer-reviewed scientific allocation, reserved and burst tiers, cross-border settlement & Heterogeneous contributions become incomparable; federation degrades to a mailing list \\
+    Compute allocation & Published accounting unit (BGPU, Chapter~\ref{ch:sizing}), peer-assessed scientific allocation, reserved and burst tiers, cross-border settlement & Heterogeneous contributions become incomparable; federation degrades to a mailing list \\
     \addlinespace
     Security certification authority & Operates the Level 0--5 ladder of Chapter~\ref{ch:trust}; publishes evaluations irrespective of artifact origin & The vacancy of Chapter~\ref{ch:governance} stays vacant, or is filled by a supplier \\
     \addlinespace
