@@ -6,6 +6,32 @@ This file records what changed at each release. Entries are newest first. Sectio
 
 ---
 
+## v0.30 — 6 November 2026
+
+**Full edition 518 pages · Condensed edition 68 pages · 989 bibliography entries (2 new)**
+
+A same-day update. Both source videos were read in full this time, transcripts included, through the browser.
+
+### Ripple, which the previous edition missed
+
+v0.29 said that "Ripple" could not be identified. That was wrong. The model is **Ripple65B-Preview** from **Ricursive** — spelled with an *i*, a different company from Recursive, which makes Flint. The searches failed because they looked for "Ripple" without the company name. Ricursive is a chip-design laboratory founded by the team behind Google's AlphaChip. Around 4 November it released the general-purpose version of the model behind its design platform; the chip-design version stays proprietary.
+
+- **The model:** a 65B **dense** model trained from scratch on 12T tokens, with up to 1M context. Base and instruct weights ship in BF16 and NVFP4 under Apache 2.0.
+- **The benchmark claim:** the vendor reports 80.52 on Terminal-Bench 2.1, above Beam's 80.1 and Muse Spark Open's 76.4, which makes it the best American open model on that board on the vendors' own figures. On the same self-reported board the leading Chinese open models are five to ten points higher. Independent Vals runs put two of them in the high 60s, so every vendor figure carries a harness effect of that size.
+- **Cost and method:** the full research-and-development cost is $32M, which Ricursive estimates at a tenth of the previous open-weight leader's. It used 1.4M RL rollouts, about seventy times fewer than Beam, and published the recipe, built on Ai2's OLMo 3 model ladder.
+
+The model chapter draws three readings. First, the cost floor reaches the training side in the middle of the market. Second, the open American stack is now a public-research stack. Third, Ripple is an American instance of the AI-designs-chips loop. None of the three changes the scoreboard.
+
+### The news round-up, read in full
+
+From the full transcript of the 5 November round-up:
+- **Kimi K3.1 Pro:** the vendor's charts put the released model first on Agents' Last Exam, second to Opus 5.5 on GDPval and third on OSWorld. Its 96 shards of about 17 GB each need on the order of 1.2 TB of accelerator memory to serve without further quantization, which the compute chapter's capacity argument predicts.
+- **Smaller American open releases:** Perplexity's open embedding models, ServiceNow's Apriel Voice 27B and Liquid AI's LFM3.
+- **India:** Sarvam's PRISM decision model, built on Sarvam's own 105B base rather than a Chinese one.
+- **Hydrogen-1.0:** priced by its vendor at $0.25 per FrontierScience problem against $0.88 for Astra. A third location claim ("MIT") is recorded as [C], since it is plausibly a conflation with the model's MIT licence.
+
+---
+
 ## v0.29 — 6 November 2026
 
 **Full edition 516 pages · Condensed edition 68 pages · 987 bibliography entries (11 new)**
