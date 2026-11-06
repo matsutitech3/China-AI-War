@@ -6,6 +6,39 @@ This file records what changed at each release. Entries are newest first. Sectio
 
 ---
 
+## v0.29 — 6 November 2026
+
+**Full edition 516 pages · Condensed edition 68 pages · 987 bibliography entries (11 new)**
+
+A short update, two days after the monthly one, prompted by the week's open-weight releases.
+
+### Kimi K3.1 Pro's weights shipped
+
+Weights released as Kimi K3.1 Pro were placed on Hugging Face on 2 November, two days inside the promised date, and announced on 4 November. They are 2.8T total / 104B active, MXFP4, under a custom licence whose reported terms mirror Kimi K3's: a separate agreement for service providers above $20M a year, and a display duty above 100M monthly users or $20M monthly revenue. The licence file itself was not read at first hand. Nor is it formally established that the released weights are the API model the Artificial Analysis v5 index scored at 46. Every passage that called the weights promised or unconfirmed is corrected. The downloadable closed-over-open gap is stated as twelve points *if* the released weights are the scored model, and twenty-seven against what was downloadable on 28 October. The forecast on the weights and their licence is marked provisionally resolved: yes.
+
+### The American open tier, scored
+
+A new section in the model chapter places October's US open releases on the v5 board. Meta's gated Muse Spark Open scores 25, Reflection AI's Beam (Apache, weights 16 October) 18, and NVIDIA's Nemotron 3 Ultra 12. Two releases are unscored. Recursive's **Flint** (21 October) is a 39.8B/2.5B Apache coding model from a company incorporated in London with offices in London and San Francisco. NVIDIA's **Nemotron Labs Dory** (16 October) is a 4B looped research model under OpenMDW 1.1, and it is *not* the trillion-parameter Nemotron flagship tied to the Poolside deal, which has not shipped. The best American open weights trail the best Chinese ones by seven points on October's releases and by twenty-one against K3.1 Pro. On that instrument, at the currency date, American laboratories are shipping open weights again, mostly on permissive terms, and the open frontier remains Chinese.
+
+### The derivative chain runs through Chinese bases
+
+The most widely covered open releases around the turn of the month were built on Chinese models:
+- **Hydrogen-1.0**, a 753B science model post-trained from GLM-5.3 under MIT.
+- **NorthCUA**, open computer-use agents on Qwen3.5.
+- **Pruna AI's P-H3-Image** and **Pika H3 Flex**, fine-tunes of MiniMax H3 shipped under H3's licence, which excludes the US, EU, UK and South Korea.
+
+The trust chapter records the consequence: a Munich firm's model now excludes its developer's own home market, because a derivative inherits its parent's jurisdictional terms. The China AI4S chapter reads one detail of Hydrogen's vendor evaluation as a product-level instance of dual-use regulation in science: GPT-6 Astra and Opus 5.5 were excluded from its experiment-planning questions for refusing more than half of them. The reading is graded [S], and the vendor reports no refusal rate for its own model.
+
+### Governance
+
+K3.1 Pro's weights shipped during the comment period of China's draft export-control catalogue. The governance chapter records this as consistent with the reading that the draft preserves publication, not as proof: the draft is not in force, and whether any filing was made is not public.
+
+### Not included
+
+"Ripple" could not be identified as any open-weight model; every search result was the XRP company Ripple Labs. Qwen 4 had not been released at the currency date.
+
+---
+
 ## v0.28 — 4 November 2026
 
 **Full edition 512 pages · Condensed edition 68 pages · 976 bibliography entries (134 new)**
